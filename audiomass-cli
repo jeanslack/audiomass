@@ -1,0 +1,107 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+import subprocess
+import sys
+import os
+import command_obj
+from cli_menu import Appetite
+from datastrings import usage, copying
+
+
+version =  "audiomass-cli Version 0.5  (https://github.com/jeanslack/audiomass.git)"
+
+if '-b' in sys.argv or '--batch' in sys.argv:
+	
+	batch = 'on'
+	
+	try:
+		if os.path.isdir(sys.argv[2]):
+			path_in = sys.argv[2]
+			
+		else:
+			usage()
+			sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
+			
+	except IndexError:
+		
+		path_in = os.getcwd()
+	
+	main = Appetite(None) # not have a ext input = None
+	a = main.input_selector() # let choice an input format
+	input_format = a # return a input format string
+	
+elif '-v' in sys.argv or '--version' in sys.argv:
+	print version; sys.exit()
+	
+elif '-h' in sys.argv or '--help' in sys.argv:
+	usage(); sys.exit()
+	
+elif '-c' in sys.argv or '--copying' in sys.argv:
+	copying(); sys.exit()
+	
+else:
+	
+	batch = 'off'
+	
+	supported_formats = {'wav': 1, 'aiff': 2, 'flac': 3, 'ape': 4, 
+						'mp3': 5,'ogg': 6
+						}
+	try:
+		if os.path.isfile(sys.argv[1]):
+			path_in = sys.argv[1]
+
+		else:
+			usage()
+			sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
+			
+	except IndexError:
+		
+		usage()
+		sys.exit('\033[1m Error:\033[0m must be a file\n')
+		
+	input_format = os.path.splitext(path_in)[1].replace(".","")
+	
+	if supported_formats.has_key(input_format) == False:
+		sys.exit('\nSorry, not format supported "%s"\nPlease, choice one of: '
+		   '%s\n' % (input_format, supported_formats.keys()))
+		
+	main = Appetite(input_format) # have a ext input
+	main.output_selector(supported_formats[input_format]) #choice an output format
+	
+# dammi il valore di questa chiave:
+command = main.retcode[0] 
+# dammi il dizionario per il confronto del fattore di compressione:
+dict_bitrate = main.retcode[1]
+# dammi il grafico del fattore compressione:
+graphic_bitrate = main.retcode[2]
+# dialogo immissione fattore di compressione
+dialog = main.retcode[3] 
+# l'estensione finale dei files convertiti:
+codec = main.retcode[4]
+
+#print command
+#print dict_bitrate
+#print graphic_bitrate
+#print dialog
+#print codec
+
+if dict_bitrate == None:
+	
+	command_obj.Process_Conversion(path_in, command, None, batch, codec, 
+									input_format)
+	
+else:
+	
+	a = Appetite(None)
+	bitrate = a.quality_level(dict_bitrate, graphic_bitrate, dialog)
+
+	#print path_in
+	#print command
+	#print bitrate
+	#print batch
+	#print codec
+	#print input_format
+
+	command_obj.Process_Conversion(path_in, command, bitrate, batch, 
+									codec, input_format)
