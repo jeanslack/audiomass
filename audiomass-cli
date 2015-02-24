@@ -16,12 +16,13 @@ Verify the arguments passed on command line interface.
 The arguments are audio files name or path name, these depends
 of the passed option type .
 """
-
+import subprocess
 import sys
 import os
 import command_obj
 from cli_menu import Appetite
-from datastrings import usage, copying
+#from datastrings import usage, copying
+from datastrings import *
 
 
 version =  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
@@ -40,10 +41,68 @@ if '-b' in sys.argv or '--batch' in sys.argv:
 			
 	except IndexError: 
 		path_in = os.getcwd() # if no dir-name use current work directory
+		
+		
+		
+		
+		
+	
+	subprocess.call(['clear'])
+		
+	main_menu()
+		
+	input_selection = raw_input("Enter here the corresponding number "
+								"and hit enter... "
+								)
 	
 	main = Appetite(None) # not have a ext input = None
-	a = main.input_selector() # let choice an input format
+	a = main.input_selector(input_selection) # let choice an input format
 	input_format = a # return a input format string
+	
+	if input_selection == 'q' or input_selection == 'Q':
+			sys.exit()
+	
+	elif input_format == None:
+			sys.exit("\n\033[1mEntry error in select input format!\033[0m\n")
+			
+			
+			
+	graphic_a_format = output_menu()
+	new = graphic_a_format[:] # make a new list
+	new.remove(graphic_a_format[int(input_selection)]) # remove input format
+	 
+	
+	subprocess.call(['clear'])
+
+	print ('\n\n    The audio input files format is "%s" \n\n'
+			'    Please, now type the output files format for '
+			'encoding\n' % input_format)
+	
+	for outformat in new:
+		print "    %s"%(outformat)
+		
+	output_selection = raw_input(
+				'\n Type a letter for your encoding and just hit enter: ')
+	
+	b = main.output_selector(output_selection)
+	output_format = b
+	
+	if output_selection == 'q' or output_selection == 'Q':
+			
+			sys.exit()
+			
+	elif output_format == None:
+		sys.exit("\n\033[1mEntry error in select output format!\033[0m\n")
+		
+	
+	
+	
+			
+			
+			
+			
+			
+			
 	
 elif '-v' in sys.argv or '--version' in sys.argv:
 	print version; sys.exit()
@@ -53,6 +112,12 @@ elif '-h' in sys.argv or '--help' in sys.argv:
 	
 elif '-c' in sys.argv or '--copying' in sys.argv:
 	copying(); sys.exit()
+
+
+
+
+
+
 	
 else:
 	
@@ -107,9 +172,22 @@ if dict_bitrate == None:
 									input_format)
 	
 else:
+	subprocess.call(['clear'])
+		
+	print graphic_bitrate
+		
+	level = raw_input(dialog)
 	
+	if level == 'c' or level == 'C':
+			sys.exit()
+			
 	a = Appetite(None)
-	bitrate = a.quality_level(dict_bitrate, graphic_bitrate, dialog)
+	bitrate = a.quality_level(dict_bitrate, level)
+	valid = bitrate
+	
+	if valid == False:
+		
+		sys.exit("\n\033[1m Error\033[0m, inexistent quality level\n")
 
 	#print path_in
 	#print command
