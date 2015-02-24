@@ -1,7 +1,22 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+#
+#########################################################
+# Name: audiomass (main script)
+# Porpose:  main audiomass script for command line interface
+# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license: GPL3
+# Version: (Ver.0.6) Febbruary 2015
+# Rev
+#########################################################
 
-import subprocess
+"""
+Verify the arguments passed on command line interface.
+The arguments are audio files name or path name, these depends
+of the passed option type .
+"""
+
 import sys
 import os
 import command_obj
@@ -9,23 +24,22 @@ from cli_menu import Appetite
 from datastrings import usage, copying
 
 
-version =  "audiomass-cli Version 0.5  (https://github.com/jeanslack/audiomass.git)"
+version =  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
 
 if '-b' in sys.argv or '--batch' in sys.argv:
 	
-	batch = 'on'
+	batch = 'on' 
 	
 	try:
-		if os.path.isdir(sys.argv[2]):
-			path_in = sys.argv[2]
+		if os.path.isdir(sys.argv[2]): 
+			path_in = sys.argv[2] # sys.argv[2] is a dir-name if not empty
 			
 		else:
 			usage()
 			sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
 			
-	except IndexError:
-		
-		path_in = os.getcwd()
+	except IndexError: 
+		path_in = os.getcwd() # if no dir-name use current work directory
 	
 	main = Appetite(None) # not have a ext input = None
 	a = main.input_selector() # let choice an input format
@@ -46,10 +60,10 @@ else:
 	
 	supported_formats = {'wav': 1, 'aiff': 2, 'flac': 3, 'ape': 4, 
 						'mp3': 5,'ogg': 6
-						}
+						} 
 	try:
-		if os.path.isfile(sys.argv[1]):
-			path_in = sys.argv[1]
+		if os.path.isfile(sys.argv[1]):# must be file only here
+			path_in = sys.argv[1] # is a file-name
 
 		else:
 			usage()
@@ -59,10 +73,11 @@ else:
 		
 		usage()
 		sys.exit('\033[1m Error:\033[0m must be a file\n')
-		
+	# input_format is the extension format	of path_in
 	input_format = os.path.splitext(path_in)[1].replace(".","")
 	
 	if supported_formats.has_key(input_format) == False:
+		# the file-name must be supported and match with dict keys
 		sys.exit('\nSorry, not format supported "%s"\nPlease, choice one of: '
 		   '%s\n' % (input_format, supported_formats.keys()))
 		

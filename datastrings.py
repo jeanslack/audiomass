@@ -2,6 +2,9 @@
 # -*- coding: UTF-8 -*-
 
 def main_menu():
+	"""
+	Menu for input audio selection format
+	"""
 	
 	print """\033[1m
     ======================= AUDIOMASS ==================                                                             
@@ -29,6 +32,9 @@ def main_menu():
         """
 
 def output_menu():
+	"""
+	Menu for output audio selection format
+	"""
 	
 	graphic_a_format = [
 					"----------------------",
@@ -46,6 +52,10 @@ def output_menu():
 
 
 def dictionaries(comparision):
+	"""
+	returns the required values for each pair of audio formats. 
+	Accept one only string argument in this form: 'exemple > exemple'.
+	"""
 	
 	flac_options = ("\n\033[1m"
 				" References on quality for Flac format:\033[0m\n\n\n"
@@ -193,34 +203,40 @@ def dictionaries(comparision):
 	return object_assignment[comparision]
 
 def usage():
+	"""
+	print a shortcut help
+	"""
 	
-	print """
-Audiomass-cli - A simple audio conversion interface to command
-                line for Flac, Lame, Ogg, Mac, Shntool and FFmpeg 
-                audio libraries
+	print """--------------------------------------------------------------
+Audiomass-cli - Copyright (c) 2015/2016 by Gianluca Pernigotto
+--------------------------------------------------------------
+Simple audio conversion interface to command line for Flac, 
+Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
 Usage: 
   aconvert-cli <infile>
   aconvert-cli [options] [indirectory]
   
-Exemples:
-  aconvert-cli '/path name/My directory/audiotrack.wav'
-  aconvert-cli -b '/path name/My directory'
-  aconvert-cli -b 
-
 Options:
   -b, --batch   (run a process on multiple files in a directory)
   -h, --help    (print this help and exit)
   -v, --version (print version and date of the program)
-  -l, --license (print license of the program)
-"""
+  -c, --copying (print license of the program)
+  
+Exemples:
+  aconvert-cli '/path name/My directory/audiotrack.wav'
+  aconvert-cli -b '/path name/My directory'
+  aconvert-cli -b 
+--------------------------------------------------------------"""
 
 def copying():
+	"""
+	print a shortcut license
+	"""
 	
 	print """
-Audiomass-cli - A simple audio conversion interface to command
-                line for Flac, Lame, Ogg, Mac, Shntool and FFmpeg 
-                audio libraries
+Audiomass-cli - Simple audio conversion interface to command line for 
+Flac, Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
     License:
 
