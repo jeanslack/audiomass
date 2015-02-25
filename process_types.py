@@ -9,7 +9,7 @@ import os
 import command_obj
 from audio_formats import Audio_Formats
 #from datastrings import usage, copying
-from datastrings import *
+from datastrings import input_menu, output_menu
 
 
 
@@ -17,7 +17,7 @@ def multiple_process(path_in):
 	
 	subprocess.call(['clear'])
 		
-	main_menu()
+	input_menu()
 		
 	input_selection = raw_input("Enter here the corresponding number "
 								"and hit enter... "
@@ -28,18 +28,17 @@ def multiple_process(path_in):
 	input_format = a # return a input format string
 	
 	if input_selection == 'q' or input_selection == 'Q':
+		
 			sys.exit()
 	
 	elif input_format == None:
+		
 			sys.exit("\n\033[1mEntry error in select input format!\033[0m\n")
-			
-			
-			
+				
 	graphic_a_format = output_menu()
 	new = graphic_a_format[:] # make a new list
 	new.remove(graphic_a_format[int(input_selection)]) # remove input format
 	 
-	
 	subprocess.call(['clear'])
 
 	print ('\n\n    The audio input files format is "%s" \n\n'
@@ -61,6 +60,9 @@ def multiple_process(path_in):
 			
 	elif output_format == None:
 		sys.exit("\n\033[1mEntry error in select output format!\033[0m\n")
+		
+	if main.retcode == 'KeyError':
+		sys.exit("\nSorry, this conversion is not possible\n")
 		
 		
 	vaiBit(main.retcode[0], main.retcode[1], main.retcode[2], main.retcode[3], 

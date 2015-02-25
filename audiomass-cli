@@ -11,60 +11,66 @@
 # Rev
 #########################################################
 
-"""
-Verify the arguments passed on command line interface.
-The arguments are audio files name or path name, these depends
-of the passed option type .
-"""
 import sys
 import os
 from datastrings import usage, copying
 from process_types import multiple_process, single_process
 
+def main():
+	"""
+	Verify the arguments passed on the command line interface.
+	The arguments are audio files name or path name, these depends
+	of the passed option type .
+	"""
+	version =  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
 
-version =  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
-
-if '-b' in sys.argv or '--batch' in sys.argv: 
-	
-	try:
-		if os.path.isdir(sys.argv[2]): 
-			path_in = sys.argv[2] # sys.argv[2] is a dir-name if not empty
+	if '-b' in sys.argv or '--batch' in sys.argv: 
+		
+		try:
+			if os.path.isdir(sys.argv[2]): 
+				path_in = sys.argv[2] # sys.argv[2] is a dir-name if not empty
+				
+			else:
+				usage()
+				sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
+				
+		except IndexError: 
+			path_in = os.getcwd() # if no dir-name use current work directory
 			
-		else:
+		multiple_process(path_in)
+			
+			
+	elif '-v' in sys.argv or '--version' in sys.argv:
+		print version; sys.exit()
+		
+	elif '-h' in sys.argv or '--help' in sys.argv:
+		usage(); sys.exit()
+		
+	elif '-c' in sys.argv or '--copying' in sys.argv:
+		copying(); sys.exit()
+		
+		
+	else:
+		
+		try:
+			if os.path.isfile(sys.argv[1]):# must be file only here
+				path_in = sys.argv[1] # is a file-name
+
+			else:
+				usage()
+				sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
+				
+		except IndexError:
+			
 			usage()
-			sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
-			
-	except IndexError: 
-		path_in = os.getcwd() # if no dir-name use current work directory
+			sys.exit('\033[1m Error:\033[0m must be a file\n')
+		# input_format is the extension format	of path_in
+		input_format = os.path.splitext(path_in)[1].replace(".","")
 		
-	multiple_process(path_in)
-		
-		
-elif '-v' in sys.argv or '--version' in sys.argv:
-	print version; sys.exit()
+		single_process(input_format, path_in)
 	
-elif '-h' in sys.argv or '--help' in sys.argv:
-	usage(); sys.exit()
-	
-elif '-c' in sys.argv or '--copying' in sys.argv:
-	copying(); sys.exit()
-	
-	
-else:
-	
-	try:
-		if os.path.isfile(sys.argv[1]):# must be file only here
-			path_in = sys.argv[1] # is a file-name
+	return 0
 
-		else:
-			usage()
-			sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
-			
-	except IndexError:
-		
-		usage()
-		sys.exit('\033[1m Error:\033[0m must be a file\n')
-	# input_format is the extension format	of path_in
-	input_format = os.path.splitext(path_in)[1].replace(".","")
-	
-	single_process(input_format, path_in)
+if __name__ == '__main__':
+	status = main()
+	sys.exit(status)

@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 #
 #########################################################
-# Name: cli_menu.py (module)
-# Porpose:  module for commands assembly in the audio conversion formats
+# Name: audio_formats.py (module)
+# Porpose: module to pair audio formats
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -12,9 +12,7 @@
 #########################################################
 
 
-import subprocess
-import sys
-from datastrings import *
+from comparisions import a_formats, comparision
 
 
 
@@ -36,28 +34,22 @@ class Audio_Formats(object):
 		"""
 		
 		self.input_format = input_format
-		
 		self.retcode = None # return a data tuple
 		
 		
 	def input_selector(self, input_selection):
 		"""
 		evaluate the audio input extension strings for combine format; 
-		return the attribute input_format and pass int number at the 
-		output_selection method
+		return the attribute input_format for batch conversions
 		"""
-		#case = {'1':'wav', '2':'aiff', '3':'flac', '4':'ape', '5':'mp3','6':'ogg',}
-		
 		supported_formats = a_formats()
 		
-		
 		if supported_formats[0].has_key(input_selection):
-		
-		#if input_selection in case.keys(): # keys sono numeri str
-			
-			self.input_format = supported_formats[0][input_selection][1] # mi da il formato
+			# mi da il formato
+			self.input_format = supported_formats[0][input_selection][1] 
 		
 		else:
+			
 			self.input_format = None
 			return self.input_format
 		
@@ -67,14 +59,11 @@ class Audio_Formats(object):
 		
 	def output_selector(self, output_selection):
 		"""
-		Show a graphic audio formats list without the input format 
-		for combine the user choice. This method can be called outside
-		from this class with:
-		exemple = Audio_Formats(input_format) # must have a not empty ext input
-		exemple.output_selector(int)
-		
-		when a output format is established, the pair of the formats is 
-		sent to the method diction_strings
+		looking for a comparison between the input format and the 
+		output format.
+		Accept integer only .
+		when both formats are paired they are sent to the method 
+		diction_strings
 		"""
 		case = a_formats()
 		
@@ -94,12 +83,20 @@ class Audio_Formats(object):
 			
 	def diction_strings(self, input_format, output_format):
 		"""
-		each pair of input and output audio formats here is 
-		compared with a database (dictionary) from which returns 
-		data for that pair
+		returns data for that pair input_format and output_format
 		"""
-		comparision = '%s > %s' % (input_format, output_format)
-		self.retcode = dictionaries(comparision)
+		pair = '%s > %s' % (input_format, output_format)
+		
+		
+		if self.retcode == 'KeyError':
+			
+			self.retcode = comparision
+			
+		else:
+			
+			self.retcode = comparision(pair)
+			
+			
 		
 		
 		
