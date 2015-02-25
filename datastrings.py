@@ -50,6 +50,21 @@ def output_menu():
 							]
 	return graphic_a_format
 
+def a_formats():
+	
+	support = ['wav','aiff','flac','ape','mp3','ogg']
+	
+	supported_formats = {'1': (1,'wav'), '2': (2,'aiff'), 
+					'3': (3,'flac'), '4': (4,'ape'), 
+					'5': (5,'mp3'),'6': (6,'ogg')}
+	
+	case = {'a':'wav', 'A':'wav', 'b':'aiff','B':'aiff', 'c':'flac', 
+				'C':'flac','d':'ape', 'D':'ape', 'e':'mp3', 'E':'mp3', 
+				'f':'ogg', 'F':'ogg',
+				}
+	
+	return supported_formats, support, case
+
 
 def dictionaries(comparision):
 	"""

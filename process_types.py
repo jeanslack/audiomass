@@ -71,19 +71,21 @@ def multiple_process(path_in):
 		
 def single_process(input_format, path_in):
 	
-	supported_formats = {'wav': 1, 'aiff': 2, 'flac': 3, 'ape': 4, 
-						'mp3': 5,'ogg': 6
-						} 
+	supported_formats = a_formats()
+	input_selection = None
 	
-	if supported_formats.has_key(input_format) == False:
+	for support in supported_formats[0].values():
+		if input_format in support[1]:
+			input_selection = support[0]
+	
+	if input_selection == None:
 		# the file-name must be supported and match with dict keys
 		sys.exit('\nSorry, not format supported "%s"\nPlease, choice one of: '
-		   '%s\n' % (input_format, supported_formats.keys()))
+		   '%s\n' % (input_format, supported_formats[1]))
 
 	graphic_a_format = output_menu()
 	new = graphic_a_format[:] # make a new list
-	nu =  supported_formats[input_format]
-	new.remove(graphic_a_format[nu]) # remove input format
+	new.remove(graphic_a_format[input_selection]) # remove input format
 	 
 	
 	subprocess.call(['clear'])
@@ -99,8 +101,6 @@ def single_process(input_format, path_in):
 				'\n Type a letter for your encoding and just hit enter: ')
 	
 	main = Audio_Formats(input_format) # have a ext input
-	#main.output_selector(supported_formats[input_format]) #choice an output format
-	
 	b = main.output_selector(output_selection)
 	output_format = b
 	
@@ -120,9 +120,6 @@ def single_process(input_format, path_in):
 	
 def vaiBit(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
 		   batch, input_format):
-	
-	
-	
 	# TEST
 	#- dammi il valore di questa chiave: 
 		#command = main.retcode[0] 

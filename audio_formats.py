@@ -28,8 +28,8 @@ class Audio_Formats(object):
 		"""
 		Can be accept one argument of type strings or None values.
 		
-		Pass argument with input audio extension strings without dot if you 
-		have already chosen a single file (one audio track conversion). 
+		Pass argument with audio input extension strings without dot, if 
+		you have already chosen a single file (one audio track conversion). 
 		
 		Pass None if you want also select the input format for batch 
 		file process. 
@@ -42,15 +42,20 @@ class Audio_Formats(object):
 		
 	def input_selector(self, input_selection):
 		"""
-		evaluate the input audio extension strings for combine format; 
-		return the attribute input_format and pass int number at the output_selection method
+		evaluate the audio input extension strings for combine format; 
+		return the attribute input_format and pass int number at the 
+		output_selection method
 		"""
-		case = {'1':'wav', '2':'aiff', '3':'flac', '4':'ape', '5':'mp3',
-				'6':'ogg',}
+		#case = {'1':'wav', '2':'aiff', '3':'flac', '4':'ape', '5':'mp3','6':'ogg',}
 		
-		if input_selection in case.keys(): # keys sono numeri str
+		supported_formats = a_formats()
+		
+		
+		if supported_formats[0].has_key(input_selection):
+		
+		#if input_selection in case.keys(): # keys sono numeri str
 			
-			self.input_format = case[input_selection] # mi da il formato
+			self.input_format = supported_formats[0][input_selection][1] # mi da il formato
 		
 		else:
 			self.input_format = None
@@ -71,14 +76,11 @@ class Audio_Formats(object):
 		when a output format is established, the pair of the formats is 
 		sent to the method diction_strings
 		"""
-		case = {'a':'wav', 'A':'wav', 'b':'aiff','B':'aiff', 'c':'flac', 
-				'C':'flac','d':'ape', 'D':'ape', 'e':'mp3', 'E':'mp3', 
-				'f':'ogg', 'F':'ogg',
-				}
+		case = a_formats()
 		
-		if output_selection in case.keys():
-			
-			output_format = case[output_selection]
+		if output_selection in case[2].keys():
+
+			output_format = case[2][output_selection]
 			self.diction_strings(self.input_format, output_format)
 			
 		else:
@@ -97,7 +99,6 @@ class Audio_Formats(object):
 		data for that pair
 		"""
 		comparision = '%s > %s' % (input_format, output_format)
-
 		self.retcode = dictionaries(comparision)
 		
 		
@@ -111,11 +112,9 @@ class Audio_Formats(object):
 		if level in dict_bitrate:
 			
 			valid = True
-			
 			return dict_bitrate[level]
 			
 		else:
 			
 			valid = False
-
 			return valid
