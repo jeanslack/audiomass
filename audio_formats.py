@@ -18,18 +18,21 @@ from datastrings import *
 
 
 
-class Appetite(object):
+class Audio_Formats(object):
 	"""
-	interactive menu for command line interface (cli)
-	in the input/output audio selection files format objects.
-	Accept only audio input extension string or None
+	Interface for combine audio formats in the conversion processes that 
+	use different libraries .
 	"""
 	
 	def __init__(self, input_format):
 		"""
-		accept input_format arg as audio extension string if 
-		there is a single process (one audio track conversion). 
-		Is None if batch file process (-b) arg. 
+		Can be accept one argument of type strings or None values.
+		
+		Pass argument with input audio extension strings without dot if you 
+		have already chosen a single file (one audio track conversion). 
+		
+		Pass None if you want also select the input format for batch 
+		file process. 
 		"""
 		
 		self.input_format = input_format
@@ -39,8 +42,8 @@ class Appetite(object):
 		
 	def input_selector(self, input_selection):
 		"""
-		evaluate the input key choose; return the attribute input_format
-		and pass int number at the output_selection method
+		evaluate the input audio extension strings for combine format; 
+		return the attribute input_format and pass int number at the output_selection method
 		"""
 		case = {'1':'wav', '2':'aiff', '3':'flac', '4':'ape', '5':'mp3',
 				'6':'ogg',}
@@ -62,7 +65,7 @@ class Appetite(object):
 		Show a graphic audio formats list without the input format 
 		for combine the user choice. This method can be called outside
 		from this class with:
-		exemple = Appetite(input_format) # must have a not empty ext input
+		exemple = Audio_Formats(input_format) # must have a not empty ext input
 		exemple.output_selector(int)
 		
 		when a output format is established, the pair of the formats is 
@@ -116,6 +119,3 @@ class Appetite(object):
 			valid = False
 
 			return valid
-		
-		
-			

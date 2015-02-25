@@ -50,17 +50,23 @@ class Process_Conversion(object):
 						
 			'shntool':"shntool conv -o %s '%s'" % (self.codec,  self.path_in),
 						}
+			
+		print "\n\033[1m Convert '%s'\033[0m\n" % self.path_in
 
 		subprocess.check_call(command_dict[self.command], shell=True)
+		
+		print "\n\033[1mDone...\033[0m\n"
 			
 		
 	def process_batch(self):
 		
 		exe = 'False'
+		count = 0
 		
-		for f in glob.glob("%s/*.%s" % (self.path_in, self.input_format)):
+		for f in glob.glob("%s/*.%s" % (self.path_in, self.input_format)) :
 			
 			exe = None
+			count += 1
 				
 			outpath = os.path.splitext(f)[0] # path
 			
@@ -71,7 +77,7 @@ class Process_Conversion(object):
 				
 				continue
 			
-			print "\n\033[1m Convert '%s'\033[0m\n" % f
+			print "\n\033[1m %s) Convert '%s'\033[0m\n" % (str(count),f)
 			
 			
 			command_dict = {
