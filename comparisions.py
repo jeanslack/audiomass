@@ -3,7 +3,7 @@
 #
 #########################################################
 # Name: comparisions.py (module)
-# Porpose:  module for output conversion on the audio formats comparision
+# Porpose:  module for output strings commands and formats comparisions
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -14,6 +14,11 @@
 
 
 def a_formats():
+	"""
+	Content all the audio supported formats . When you want add new formats
+	you might start from here and then add formats modules to the function
+	comparision
+	"""
 	
 	support = ['wav','aiff','flac','ape','mp3','ogg']
 	
@@ -33,6 +38,7 @@ def comparision(pair):
 	"""
 	returns the required values for each pair of audio formats. 
 	Accept one only string argument in this form: 'exemple > exemple'.
+	You can add or remove new formats modules from here.
 	"""
 	
 	flac_options = ("\n\033[1m"

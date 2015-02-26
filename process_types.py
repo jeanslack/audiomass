@@ -8,8 +8,8 @@ import sys
 import os
 import command_obj
 from audio_formats import Audio_Formats
-#from datastrings import usage, copying
 from datastrings import input_menu, output_menu
+from comparisions import a_formats
 
 
 
@@ -31,7 +31,7 @@ def multiple_process(path_in):
 		
 			sys.exit()
 	
-	elif input_format == None:
+	elif input_format is None:
 		
 			sys.exit("\n\033[1mEntry error in select input format!\033[0m\n")
 				
@@ -58,7 +58,7 @@ def multiple_process(path_in):
 			
 			sys.exit()
 			
-	elif output_format == None:
+	elif output_format is None:
 		sys.exit("\n\033[1mEntry error in select output format!\033[0m\n")
 		
 	if main.retcode == 'KeyError':
@@ -80,7 +80,7 @@ def single_process(input_format, path_in):
 		if input_format in support[1]:
 			input_selection = support[0]
 	
-	if input_selection == None:
+	if input_selection is None:
 		# the file-name must be supported and match with dict keys
 		sys.exit('\nSorry, not format supported "%s"\nPlease, choice one of: '
 		   '%s\n' % (input_format, supported_formats[1]))
@@ -110,7 +110,7 @@ def single_process(input_format, path_in):
 			
 			sys.exit()
 			
-	elif output_format == None:
+	elif output_format is None:
 		sys.exit("\n\033[1mEntry error in select output format!\033[0m\n")
 		
 	
@@ -144,7 +144,7 @@ def vaiBit(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
 	#print dialog
 	#print codec
 
-	if dict_bitrate == None:
+	if dict_bitrate is None:
 		
 		command_obj.Process_Conversion(path_in, command, None, batch, codec, 
 										input_format)
@@ -163,7 +163,7 @@ def vaiBit(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
 		bitrate = a.quality_level(dict_bitrate, level)
 		valid = bitrate
 		
-		if valid == False:
+		if valid is False:
 			
 			sys.exit("\n\033[1m Error\033[0m, inexistent quality level\n")
 

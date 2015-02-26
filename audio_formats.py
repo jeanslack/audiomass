@@ -12,7 +12,7 @@
 #########################################################
 
 
-from comparisions import a_formats, comparision
+from comparisions import *
 
 
 
