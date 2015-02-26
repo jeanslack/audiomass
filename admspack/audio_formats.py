@@ -57,7 +57,6 @@ class Audio_Formats(object):
         """
         case = a_formats()
         if output_selection in case[2].keys():
-
             output_format = case[2][output_selection]
             self.diction_strings(self.input_format, output_format)
         else:
