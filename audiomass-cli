@@ -3,7 +3,7 @@
 #
 #########################################################
 # Name: audiomass (main script)
-# Porpose:  main audiomass script for command line interface
+# Porpose:  launch audiomass script for command line interface
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -13,64 +13,52 @@
 
 import sys
 import os
-from datastrings import usage, copying
-from process_types import multiple_process, single_process
+from admspack.datastrings import usage, copying, version
+from admspack.getcommand import batch_, single_
 
 def main():
-	"""
-	Verify the arguments passed on the command line interface.
-	The arguments are audio files name or path name, these depends
-	of the passed option type .
-	"""
-	version =  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
+    """
+    Verify the arguments passed on the command line interface.
+    """
+    if '-b' in sys.argv or '--batch' in sys.argv: 
+        try:
+            if os.path.isdir(sys.argv[2]): 
+                path_in = sys.argv[2] # this is a dir-name (if not empty)
+            else:
+                usage()
+                sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
+        except IndexError:
+            path_in = os.getcwd() # if no dir-name use current work directory
 
-	if '-b' in sys.argv or '--batch' in sys.argv: 
-		
-		try:
-			if os.path.isdir(sys.argv[2]): 
-				path_in = sys.argv[2] # sys.argv[2] is a dir-name if not empty
-				
-			else:
-				usage()
-				sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
-				
-		except IndexError: 
-			path_in = os.getcwd() # if no dir-name use current work directory
-			
-		multiple_process(path_in)
-			
-			
-	elif '-v' in sys.argv or '--version' in sys.argv:
-		print version; sys.exit()
-		
-	elif '-h' in sys.argv or '--help' in sys.argv:
-		usage(); sys.exit()
-		
-	elif '-c' in sys.argv or '--copying' in sys.argv:
-		copying(); sys.exit()
-		
-		
-	else:
-		
-		try:
-			if os.path.isfile(sys.argv[1]):# must be file only here
-				path_in = sys.argv[1] # is a file-name
+        batch_(path_in)
 
-			else:
-				usage()
-				sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
-				
-		except IndexError:
-			
-			usage()
-			sys.exit('\033[1m Error:\033[0m must be a file\n')
-		# input_format is the extension format	of path_in
-		input_format = os.path.splitext(path_in)[1].replace(".","")
-		
-		single_process(input_format, path_in)
-	
-	return 0
+    elif '-v' in sys.argv or '--version' in sys.argv:
+        print version(); sys.exit()
+        
+    elif '-h' in sys.argv or '--help' in sys.argv:
+        usage(); sys.exit()
+        
+    elif '-c' in sys.argv or '--copying' in sys.argv:
+        copying(); sys.exit()
+
+    else:
+        try:
+            if os.path.isfile(sys.argv[1]): # must be file only here
+                path_in = sys.argv[1] # is a file-name
+            else:
+                usage()
+                sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
+        except IndexError:
+            usage()
+            sys.exit('\033[1m Error:\033[0m must be a file\n')
+
+        # input_format is the extension format of path_in
+
+        input_format = os.path.splitext(path_in)[1].replace(".","")
+        single_(input_format, path_in)
+    
+    return 0
 
 if __name__ == '__main__':
-	status = main()
-	sys.exit(status)
+    status = main()
+    sys.exit(status)

@@ -11,17 +11,23 @@
 # Rev
 #########################################################
 
+def version():
+    """
+    print version of program
+    """
+    print  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
+
+
 def input_menu():
-	"""
-	Menu for input audio selection format
-	"""
-	
-	print """\033[1m
+    """
+    Menu for input audio selection format
+    """
+    print """\033[1m
     ======================= AUDIOMASS ==================                                                             
                 A Simple Audio Converter Interface (cli)
     ==============================================================\033[0m"""
 
-	print """
+    print """
         select the files input format below:                 
 
         -----------------------------------------------
@@ -41,32 +47,31 @@ def input_menu():
         ----------------------------------------------- 
         """
 
+
 def output_menu():
-	"""
-	Menu for output audio selection format
-	"""
-	
-	graphic_a_format = [
-					"----------------------",
-					"  \033[34;1mA\033[0m ......... Wav", 
-					"  \033[34;1mB\033[0m ......... Aiff", 
-					"  \033[34;1mC\033[0m ......... Flac", 
-					"  \033[34;1mD\033[0m ......... Ape", 
-					"  \033[34;1mE\033[0m ......... Mp3", 
-					"  \033[34;1mF\033[0m ......... Ogg",  
-					"----------------------", 
-					" \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m", 
-					"----------------------"
-							]
-	return graphic_a_format
+    """
+    Menu for output audio selection format
+    """
+    graphic_a_format = [
+                    "----------------------",
+                    "  \033[34;1mA\033[0m ......... Wav", 
+                    "  \033[34;1mB\033[0m ......... Aiff", 
+                    "  \033[34;1mC\033[0m ......... Flac", 
+                    "  \033[34;1mD\033[0m ......... Ape", 
+                    "  \033[34;1mE\033[0m ......... Mp3", 
+                    "  \033[34;1mF\033[0m ......... Ogg",  
+                    "----------------------", 
+                    " \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m", 
+                    "----------------------"
+                            ]
+    return graphic_a_format
 
 
 def usage():
-	"""
-	print a shortcut help
-	"""
-	
-	print """--------------------------------------------------------------
+    """
+    print a shortcut help
+    """
+    print """--------------------------------------------------------------
 Audiomass-cli - Copyright (c) 2015/2016 by Gianluca Pernigotto
 --------------------------------------------------------------
 Simple audio conversion interface to command line for Flac, 
@@ -88,12 +93,12 @@ Exemples:
   aconvert-cli -b 
 --------------------------------------------------------------"""
 
+
 def copying():
-	"""
-	print a shortcut license
-	"""
-	
-	print """
+    """
+    print a shortcut license
+    """
+    print """
 Audiomass-cli - Simple audio conversion interface to command line for 
 Flac, Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
