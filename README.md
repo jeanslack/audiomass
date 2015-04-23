@@ -75,7 +75,7 @@ SLACKWARE:
 
 Require pysetuptools at: [slackbuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
 
-Then download the SlackBuild: [My-Repo-Slackware](https://github.com/jeanslack/My-Repo-Slackware/tree/master/slackware/multimedia/audiomass-cli)
+Then download the SlackBuild: [My-Repo-Slackware](https://github.com/jeanslack/My-Repo-Slackware/tree/master/slackware/multimedia/audiomass)
 
 
 --------------------------------------------------------------------------------
