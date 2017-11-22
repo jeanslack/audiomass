@@ -23,9 +23,9 @@ def info():################################### INFO
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
-  short_decript = u'Audio conversion interface for command line '
+  short_decript = u'Audio converter with command line interface'
   long_desript = u"""
-Audiomass-cli is a front-end audio conversion interface for Flac, Lame, 
+Audiomass-cli is a audio conversion interface and front-end for Flac, Lame, 
 Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together the tools 
 to encode and decode the most popular audio files, such as: MP3, FLAC, OGG, 
 APE, WAV and AIFF.

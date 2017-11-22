@@ -68,8 +68,7 @@ def main():
         sys.exit("\033[31;1mError:\033[0m Invalid file-name '%s'\n"
                  "Try: audiomass-cli --help" %(sys.argv[1]))
     except IndexError:
-      sys.exit("\033[31;1mError:\033[0m must be a file: '%s' is not a file\n"
-               "Try: audiomass-cli --help" %(sys.argv[2]))
+      sys.exit("Operand is missing\nTry: audiomass-cli --help")
 
     # input_format is the extension format of path_in
     input_format = os.path.splitext(path_in)[1].replace(".","")

@@ -51,7 +51,7 @@ def LINUX_SLACKWARE(id_distro, id_version):
         version = VERSION,
         description = DESCRIPTION,
         long_description = LONG_DESCRIPTION,
-        author = AUTHOR
+        author = AUTHOR,
         author_email = MAIL,
         url = URL,
         license = LICENSE,
