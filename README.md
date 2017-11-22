@@ -4,10 +4,10 @@ Audiomass-cli
 
 ## Description
 
-**Audiomass-cli** is a simple audio conversion interface to command line for
-Flac, Lame, Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together 
-the tools to encode and decode the most popular audio files, such as: MP3, 
-FLAC, OGG, APE, WAV and AIFF.
+**Audiomass-cli** is a audio conversion interface and front-end for Flac, Lame, 
+Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together the tools 
+to encode and decode the most popular audio files, such as: MP3, FLAC, OGG, 
+APE, WAV and AIFF.
 
 ## License and Copyright
 
