@@ -13,51 +13,70 @@
 
 import sys
 import os
-from admspack.datastrings import usage, copying, version
+from admspack.datastrings import info
 from admspack.getcommand import batch_, single_
 
+cr = info()
+AUTHOR = cr[0]
+MAIL = cr[1]
+COPYRIGHT = cr[2]
+VERSION = cr[3]
+RELEASE = cr[4]
+RLS_NAME = cr[5]# release name first letter is Uppercase
+PRG_NAME = cr[6]
+URL = cr[7]
+DECRIPTION = cr[8]
+LONG_DESRIPTION = cr[9]
+LONG_HELP = cr[10]
+LICENSE = cr[11]# long_license
+
+print "\033[1m%s - %s\033[0m" % (RLS_NAME, COPYRIGHT)
+
 def main():
-    """
-    Verify the arguments passed on the command line interface.
-    """
-    if '-b' in sys.argv or '--batch' in sys.argv: 
-        try:
-            if os.path.isdir(sys.argv[2]): 
-                path_in = sys.argv[2] # this is a dir-name (if not empty)
-            else:
-                usage()
-                sys.exit('\n\033[1m Error:\033[0m Invalid path-name\n')
-        except IndexError:
-            path_in = os.getcwd() # if no dir-name use current work directory
+  """
+  Verify the arguments passed on the command line interface.
+  """
+  if '-b' in sys.argv or '--batch' in sys.argv: 
+    try:
+      if os.path.isdir(sys.argv[2]): 
+        path_in = sys.argv[2] # this is a dir-name (if not empty)
+      else:
+        sys.exit("\033[31;1mError:\033[0m Invalid path-name '%s'\n"
+                 "Try: audiomass-cli --help" %(sys.argv[2]))
+    except IndexError:
+        path_in = os.getcwd() # if no dir-name use current work directory
 
-        batch_(path_in)
+    batch_(path_in)
 
-    elif '-v' in sys.argv or '--version' in sys.argv:
-        print version(); sys.exit()
-        
-    elif '-h' in sys.argv or '--help' in sys.argv:
-        usage(); sys.exit()
-        
-    elif '-c' in sys.argv or '--copying' in sys.argv:
-        copying(); sys.exit()
+  elif '-v' in sys.argv or '--version' in sys.argv:
+    print "%s - %s" % (VERSION, RELEASE) 
+    return
+      
+  elif '-h' in sys.argv or '--help' in sys.argv:
+    print LONG_HELP
+    return
+      
+  elif '-c' in sys.argv or '--copying' in sys.argv:
+    print LICENSE
+    return
 
-    else:
-        try:
-            if os.path.isfile(sys.argv[1]): # must be file only here
-                path_in = sys.argv[1] # is a file-name
-            else:
-                usage()
-                sys.exit('\n\033[1m Error:\033[0m Invalid file-name\n')
-        except IndexError:
-            usage()
-            sys.exit('\033[1m Error:\033[0m must be a file\n')
+  else:
+    try:
+      if os.path.isfile(sys.argv[1]): # must be file only here
+        path_in = sys.argv[1] # is a file-name
+      else:
+        sys.exit("\033[31;1mError:\033[0m Invalid file-name '%s'\n"
+                 "Try: audiomass-cli --help" %(sys.argv[1]))
+    except IndexError:
+      sys.exit("\033[31;1mError:\033[0m must be a file: '%s' is not a file\n"
+               "Try: audiomass-cli --help" %(sys.argv[2]))
 
-        # input_format is the extension format of path_in
-
-        input_format = os.path.splitext(path_in)[1].replace(".","")
-        single_(input_format, path_in)
+    # input_format is the extension format of path_in
+    input_format = os.path.splitext(path_in)[1].replace(".","")
     
-    return 0
+    single_(input_format, path_in)
+  
+  return 0
 
 if __name__ == '__main__':
     status = main()

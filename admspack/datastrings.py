@@ -8,17 +8,77 @@
 # Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Version: (Ver.0.6) Febbruary 2015
-# Rev
+# Rev 1 november 22 2017
 #########################################################
 
-def version():
-    """
-    print version of program
-    """
-    print  "audiomass-cli v0.6  (https://github.com/jeanslack/audiomass)"
+def info():################################### INFO
+  """
+  All general info of the audiomass-cli
+  """
+  author = u"Gianluca Pernigotto aka Jeanslack"
+  mail = u'<jeanlucperni@gmail.com>'
+  copyright = u'© 2013-2017'
+  version = u'v0.6.1'
+  release = u'Nov. 21 2017'
+  rls_name = u"Audiomass-CLI"
+  prg_name = u"audiomass-cli"
+  webpage = u"https://github.com/jeanslack/audiomass"
+  short_decript = u'Audio conversion interface for command line '
+  long_desript = u"""
+Audiomass-cli is a front-end audio conversion interface for Flac, Lame, 
+Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together the tools 
+to encode and decode the most popular audio files, such as: MP3, FLAC, OGG, 
+APE, WAV and AIFF.
+"""
 
+  usage = """--------------------------------------------------------------
+Audiomass-cli - %s by %s
+--------------------------------------------------------------
+Simple audio conversion interface to command line for Flac, 
+Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
-def input_menu():
+Usage: 
+  aconvert-cli <infile>
+  aconvert-cli [options] [indirectory]
+  
+Options:
+  -b, --batch   (run a process on multiple files in a directory)
+  -h, --help    (print this help and exit)
+  -v, --version (print version and date of the program)
+  -c, --copying (print license of the program)
+  
+Exemples:
+  aconvert-cli '/path name/My directory/audiotrack.wav'
+  aconvert-cli -b '/path name/My directory'
+  aconvert-cli -b 
+--------------------------------------------------------------
+""" % (copyright, author)
+
+  license = u"""
+Copyright %s - %s
+Author and Developer: %s
+Mail: %s
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License 3 as published by
+the Free Software Foundation; version .
+
+This package is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this package; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+""" % (copyright, author, author, mail)
+
+  short_license = u"'Gnu GPL3 (Gnu Public License)"
+
+  return (author, mail, copyright, version, release, rls_name, prg_name, webpage, 
+          short_decript, long_desript, usage, license, short_license)
+  
+def input_menu():########################################## MENU
     """
     Menu for input audio selection format
     """
@@ -65,57 +125,3 @@ def output_menu():
                     "----------------------"
                             ]
     return graphic_a_format
-
-
-def usage():
-    """
-    print a shortcut help
-    """
-    print """--------------------------------------------------------------
-Audiomass-cli - Copyright (c) 2015/2016 by Gianluca Pernigotto
---------------------------------------------------------------
-Simple audio conversion interface to command line for Flac, 
-Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
-
-Usage: 
-  aconvert-cli <infile>
-  aconvert-cli [options] [indirectory]
-  
-Options:
-  -b, --batch   (run a process on multiple files in a directory)
-  -h, --help    (print this help and exit)
-  -v, --version (print version and date of the program)
-  -c, --copying (print license of the program)
-  
-Exemples:
-  aconvert-cli '/path name/My directory/audiotrack.wav'
-  aconvert-cli -b '/path name/My directory'
-  aconvert-cli -b 
---------------------------------------------------------------"""
-
-
-def copying():
-    """
-    print a shortcut license
-    """
-    print """
-Audiomass-cli - Simple audio conversion interface to command line for 
-Flac, Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
-
-    License:
-
-    Copyright (c) 2015/2016 by Gianluca Pernigotto > jeanslack
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License 3 as published by
-    the Free Software Foundation; version .
- 
-    This package is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
- 
-    You should have received a copy of the GNU General Public License
-    along with this package; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-"""
