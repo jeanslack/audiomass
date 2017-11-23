@@ -1,13 +1,14 @@
 
 Audiomass-cli
-----
+=============
 
 ## Description
 
-**Audiomass-cli** is a audio conversion interface and front-end for Flac, Lame, 
-Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together the tools 
-to encode and decode the most popular audio files, such as: MP3, FLAC, OGG, 
-APE, WAV and AIFF.
+**Audiomass-clc** is a front-end wrapper audio converter to simplify the 
+use of Flac, Lame, vorbis-tools, Monkey's audio, Shntool and FFmpeg audio 
+libraries. It brings together all this tools/libraries for audio conversions 
+between the most popular audio formats. It has an easy command line interface 
+with different default settings at your choice.
 
 ## License and Copyright
 
@@ -43,7 +44,7 @@ There is not yet a Windows implementation
 ## Download
 
 If you want a stable release of audiomass, suitable for common use and
-packaging for Debian and Slackware distro, download here:
+packaging for Debian and Slackware distribuitions, download here:
 [Downloads](https://github.com/jeanslack/audiomass/releases)   
 
 ## Use
@@ -85,5 +86,6 @@ Is available a SlackBuild script to build a package *.tgz* for Slackware and Sla
 distributions. See here [pysplitcue.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
 
 Remember: install **pysetuptools** if not present first.
-You can search on this site: [SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
+You can search on this site: 
+[SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
 

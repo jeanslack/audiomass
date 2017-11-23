@@ -23,12 +23,13 @@ def info():################################### INFO
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
-  short_decript = u'Audio converter with command line interface'
+  short_decript = u'Audiomass-clc is a front-end wrapper audio converter'
   long_desript = u"""
-Audiomass-cli is a audio conversion interface and front-end for Flac, Lame, 
-Ogg, Mac, Shntool and FFmpeg audio libraries. it brings together the tools 
-to encode and decode the most popular audio files, such as: MP3, FLAC, OGG, 
-APE, WAV and AIFF.
+Audiomass-clc is a front-end wrapper audio converter to simplify the 
+use of Flac, Lame, vorbis-tools, Monkey's audio, Shntool and FFmpeg 
+audio libraries. It brings together all this tools/libraries for audio 
+conversions between the most popular audio formats. It has an easy command 
+line interface with different default settings at your choice.
 """
 
   usage = """--------------------------------------------------------------
@@ -77,8 +78,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
   return (author, mail, copyright, version, release, rls_name, prg_name, webpage, 
           short_decript, long_desript, usage, license, short_license)
-  
-def input_menu():########################################## MENU
+
+############################################################## MENUs
+def input_menu():
     """
     Menu for input audio selection format
     """

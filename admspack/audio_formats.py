@@ -5,7 +5,7 @@
 # Name: audio_formats.py (module)
 # Porpose: module to pair audio formats
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Version: (Ver.0.6) Febbruary 2015
 # Rev
