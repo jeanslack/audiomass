@@ -11,7 +11,7 @@
 # Rev
 #########################################################
 
-from comparisions import *
+from comparisions import * # import a_formats, comparision
 
 class Audio_Formats(object):
     """
@@ -25,7 +25,7 @@ class Audio_Formats(object):
         Pass argument with audio input extension strings without dot, if 
         you have already chosen a single file (one audio track conversion). 
 
-        Pass None if you want also select the input format for batch 
+        Pass None if you want also select the input format for directory 
         file process. 
         """
         self.input_format = input_format
@@ -35,12 +35,13 @@ class Audio_Formats(object):
     def input_selector(self, input_selection):
         """
         evaluate the audio input extension strings for combine format; 
-        return the attribute input_format for batch conversions
+        return the attribute input_format for directory file conversions
         """
         supported_formats = a_formats()
         if supported_formats[0].has_key(input_selection):
             # mi da il formato:
             self.input_format = supported_formats[0][input_selection][1] 
+
         else:
             self.input_format = None
             return self.input_format
@@ -74,7 +75,7 @@ class Audio_Formats(object):
             self.retcode = comparision
         else:
             self.retcode = comparision(pair)
-
+            
 
     def quality_level(self, dict_bitrate, level):
         """

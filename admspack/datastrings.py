@@ -54,6 +54,8 @@ Exemples:
   aconvert-cli -b 
 --------------------------------------------------------------
 """ % (copyright, author)
+  
+  try_help = u"Try: 'audiomass-cli --help' for more information."
 
   license = u"""
 Copyright %s - %s
@@ -77,7 +79,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
   short_license = u"'Gnu GPL3 (Gnu Public License)"
 
   return (author, mail, copyright, version, release, rls_name, prg_name, webpage, 
-          short_decript, long_desript, usage, license, short_license)
+          short_decript, long_desript, usage, license, short_license, try_help)
 
 ############################################################## MENUs
 def input_menu():

@@ -72,13 +72,13 @@ def comparision(pair):
               "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
 
   ffmpeg_mp3_options = ("\n\033[1m"
-              " References on quality and bit-rate for MP3:\033[0m\n\n\n"
+              " References on quality and bit-rate for MP3:\033[0m\n\n"
               "  0     >  VBR 128 kbit\n"
               "  1     >  VBR 160 kbit/s\n"
               "  2     >  VBR 192 kbit/s\n"
               "  3     >  VBR 260 kbit/s\n"
-              "  4     >  CBR 320 kbit/s\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  4     >  CBR 320 kbit/s\n"
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   ogg_options = ("\n\033[1m"
               " References on the quality and bit-rate for OGG:\033[0m\n\n\n"
@@ -187,4 +187,4 @@ def comparision(pair):
       return object_assignment[pair]
 
   except KeyError:
-      return 'KeyError' 
+      return 'KeyError'

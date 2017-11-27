@@ -1,3 +1,7 @@
  
 - There is not a control interface for error, when not exist the codecs
-  make this soon [RESOLVE]
+  make this soon [DONE]
+  
+- make a file, dir and batch separate operations
+  with batch operation  content for multiples file format
+  

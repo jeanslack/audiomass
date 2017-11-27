@@ -14,7 +14,7 @@
 import sys
 import os
 from admspack.datastrings import info
-from admspack.getcommand import batch_, single_
+from admspack.getcommand import dir_, file_, batch_
 
 cr = info()
 AUTHOR = cr[0]
@@ -29,25 +29,67 @@ DECRIPTION = cr[8]
 LONG_DESRIPTION = cr[9]
 LONG_HELP = cr[10]
 LICENSE = cr[11]# long_license
+TRY = cr[13]
 
-print "\033[1m%s - %s\033[0m" % (RLS_NAME, COPYRIGHT)
+file_access = "\033[33;1mWarning:\033[0m\033[1m Unable to access, invalid file name  >\033[0m" 
+dir_access = "\033[31;1mError:\033[0m\033[1m Unable to access, Invalid dir. name  >\033[0m"
+
+print "\n\033[1m%s\033[0m - front-end wrapper audio converter -\n" % (RLS_NAME)
 
 def main():
   """
   Verify the arguments passed on the command line interface.
   """
-  if '-b' in sys.argv or '--batch' in sys.argv: 
+  if '-d' in sys.argv or '--dir' in sys.argv:
     try:
       if os.path.isdir(sys.argv[2]): 
         path_in = sys.argv[2] # this is a dir-name (if not empty)
       else:
-        sys.exit("\033[31;1mError:\033[0m Invalid path-name '%s'\n"
-                 "Try: audiomass-cli --help" %(sys.argv[2]))
+        sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
-        path_in = os.getcwd() # if no dir-name use current work directory
+        #path_in = os.getcwd() # if no dir-name use current work directory
+        sys.exit("Missing argument\n%s" % TRY)
 
-    batch_(path_in)
+    dir_(path_in)
+    
+  elif '-b' in sys.argv or '--batch' in sys.argv:
+    list_ = []
+    notFile = []
 
+    for f in sys.argv[2:]:# itero dal 2° arg. lista
+      if os.path.isfile(f): # must be file only here
+        list_.append(f)
+      else:
+        notFile.append(f)
+        print "%s %s" % (file_access, f)
+    for i in list_:# rimuovo doppioni accidentali.
+      if list_.count(i) > 1:
+        print "\n\033[1mRemoving following duplicates: >\033[0m '%s' >" % i
+
+    list_ = list(set(list_)) # elimino i doppioni
+    batch_(list_)
+        
+    #if notFile is not None:
+      #print list_
+      #sys.exit("Warning: i seguenti Missing argument\nTry: audiomass-cli --help")
+    #print notFile
+    #print list_
+
+  elif '-f' in sys.argv or '--file' in sys.argv: 
+    try:
+      if os.path.isfile(sys.argv[2]): # must be file only here
+        path_in = sys.argv[2] # is a file-name
+      else:
+        sys.exit("%s %s" % (file_access, sys.argv[2]))
+        
+    except IndexError:
+      sys.exit("Missing argument\n%s" % TRY)
+      
+    # input_format is the extension format of path_in
+    input_format = os.path.splitext(path_in)[1].replace(".","")
+    
+    file_(input_format, path_in)
+      
   elif '-v' in sys.argv or '--version' in sys.argv:
     print "%s - %s" % (VERSION, RELEASE) 
     return
@@ -59,21 +101,9 @@ def main():
   elif '-c' in sys.argv or '--copying' in sys.argv:
     print LICENSE
     return
-
+  
   else:
-    try:
-      if os.path.isfile(sys.argv[1]): # must be file only here
-        path_in = sys.argv[1] # is a file-name
-      else:
-        sys.exit("\033[31;1mError:\033[0m Invalid file-name '%s'\n"
-                 "Try: audiomass-cli --help" %(sys.argv[1]))
-    except IndexError:
-      sys.exit("Operand is missing\nTry: audiomass-cli --help")
-
-    # input_format is the extension format of path_in
-    input_format = os.path.splitext(path_in)[1].replace(".","")
-    
-    single_(input_format, path_in)
+    sys.exit("Missing options\n%s" % TRY)
   
   return 0
 

@@ -41,7 +41,7 @@ class Process_Conversion(object):
     outpath = os.path.splitext(self.path_in)[0]# remove extension
 
     if os.path.exists('%s.%s' % (outpath, self.codec)):
-      sys.exit("\n\033[1m Warning:\033[0m '%s.%s' already exists\n" % (
+      sys.exit("\n\033[1mWarning:\033[0m '%s.%s' already exists\n" % (
                                             outpath, self.codec))
     command_dict = {
         'flac -V':"flac -V %s '%s'" % (self.bitrate, self.path_in),
@@ -60,7 +60,8 @@ class Process_Conversion(object):
         'oggdec':"oggdec '%s'" % (self.path_in),
                     
         'shntool':"shntool conv -o %s '%s'" % (self.codec,  self.path_in),
-                    }
+                 }
+    print command_dict[self.command]
     try:
       print "\n\033[1mConvert '%s'\033[0m\n" % self.path_in
       subprocess.check_call(command_dict[self.command], shell=True)
