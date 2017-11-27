@@ -41,7 +41,7 @@ class Process_Conversion(object):
     outpath = os.path.splitext(self.path_in)[0]# remove extension
 
     if os.path.exists('%s.%s' % (outpath, self.codec)):
-      sys.exit("\n\033[1mWarning:\033[0m '%s.%s' already exists\n" % (
+      sys.exit("\n\033[33;1mWarning:\033[0m '%s.%s' already exists\n" % (
                                             outpath, self.codec))
     command_dict = {
         'flac -V':"flac -V %s '%s'" % (self.bitrate, self.path_in),
@@ -66,8 +66,8 @@ class Process_Conversion(object):
       print "\n\033[1mConvert '%s'\033[0m\n" % self.path_in
       subprocess.check_call(command_dict[self.command], shell=True)
       print "\n\033[1mDone...\033[0m\n"
-    except subprocess.CalledProcessError:
-      sys.exit("\033[31;1mERROR !\033[0m")
+    except subprocess.CalledProcessError as err:
+      sys.exit("\033[31;1mERROR!\033[0m %s" % (err))
 
   def process_batch(self):
     """
@@ -83,7 +83,7 @@ class Process_Conversion(object):
         count += 1
         outpath = os.path.splitext(f)[0] # path
         if os.path.exists('%s.%s' % (outpath, self.codec)):
-          print ("\n\033[1mWarning:\033[0m '%s.%s' already exists\n"
+          print ("\n\033[33;1mWarning:\033[0m '%s.%s' already exists\n"
                                   % (outpath, self.codec))
           continue
         
@@ -110,11 +110,11 @@ class Process_Conversion(object):
         subprocess.check_call(command_dict[self.command], shell=True)
           
       if exe == 'False':
-        print ("\n\033[1m Error:\033[0m Files missing. No files '%s' "
+        print ("\033[31;1mError:\033[0m Files missing. No files '%s' "
                "in '%s' \n" % (self.input_format, self.path_in)
                 )
       else:
         print "\033[1mDone...\033[0m\n"
 
-    except subprocess.CalledProcessError:
-      sys.exit("\033[31;1mERROR:\033[0m")
+    except subprocess.CalledProcessError as err:
+      sys.exit("\033[31;1mERROR!\033[0m %s" % (err))

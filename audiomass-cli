@@ -14,7 +14,9 @@
 import sys
 import os
 from admspack.datastrings import info
-from admspack.getcommand import dir_, file_, batch_
+from admspack.get_file import file_
+from admspack.get_directory import dir_
+from admspack.get_batch import batch_
 
 cr = info()
 AUTHOR = cr[0]
