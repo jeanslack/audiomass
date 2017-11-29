@@ -36,7 +36,7 @@ TRY = cr[13]
 file_access = "\033[33;1mWarning:\033[0m\033[1m Unable to access, invalid file name  >\033[0m" 
 dir_access = "\033[31;1mError:\033[0m\033[1m Unable to access, Invalid dir. name  >\033[0m"
 
-print "\n\033[1m%s\033[0m - front-end wrapper audio converter -\n" % (RLS_NAME)
+print "\n\033[1m%s\033[0m - front-end wrapper audio converter -" % (RLS_NAME)
 
 def main():
   """

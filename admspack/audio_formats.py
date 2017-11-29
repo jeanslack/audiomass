@@ -11,7 +11,8 @@
 # Rev
 #########################################################
 
-from comparisions import * # import a_formats, comparision
+from comparisions import a_formats, comparision_f
+from comparisions_batch import comparision_b
 
 class Audio_Formats(object):
     """
@@ -48,7 +49,7 @@ class Audio_Formats(object):
         return self.input_format
 
 
-    def output_selector(self, output_selection):
+    def output_selector(self, output_selection, type_proc):
         """
         looking for a comparison between the input format and the 
         output format.
@@ -59,23 +60,31 @@ class Audio_Formats(object):
         case = a_formats()
         if output_selection in case[2].keys():
             output_format = case[2][output_selection]
-            self.diction_strings(self.input_format, output_format)
+            self.diction_strings(self.input_format, output_format, type_proc)
         else:
             output_format = None
             return output_format
         return output_format
 
 
-    def diction_strings(self, input_format, output_format):
+    def diction_strings(self, input_format, output_format, type_proc):
         """
         returns data for that pair input_format and output_format
+        type_proc è un contrassegno file/dir o batch
         """
         pair = '%s > %s' % (input_format, output_format)
-        if self.retcode == 'KeyError':
-            self.retcode = comparision
+
+        if type_proc == 'batch':
+            if self.retcode == 'KeyError':
+                self.retcode = comparision_b
+            else:
+                self.retcode = comparision_b(pair)
         else:
-            self.retcode = comparision(pair)
-            
+            if self.retcode == 'KeyError':
+                self.retcode = comparision_f
+            else:
+                self.retcode = comparision_f(pair)
+
 
     def quality_level(self, dict_bitrate, level):
         """

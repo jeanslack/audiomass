@@ -19,6 +19,9 @@ from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
 
+#lista dei formati con limiti di scelta nella conversioni
+f_limit = ['mp3','ogg','ape']
+
 
 def dir_(path_in):#================ WARNING: DIR
     """
@@ -31,7 +34,7 @@ def dir_(path_in):#================ WARNING: DIR
                                 "and hit enter... "
                                 )
     main = Audio_Formats(None) # not have a ext input = None
-    a = main.input_selector(input_selection) # let choice an input format
+    a = main.input_selector(input_selection, None) # let choice an input format
     input_format = a # return a input format string
 
     if input_selection == 'q' or input_selection == 'Q':
@@ -41,11 +44,19 @@ def dir_(path_in):#================ WARNING: DIR
 
     graphic_a_format = output_menu()
     new = graphic_a_format[:]
-    new.remove(graphic_a_format[int(input_selection)])
+    
+    if input_format in f_limit:
+
+        indx = 3,4,5,6
+        new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
+    else:
+        new.remove(graphic_a_format[int(input_selection)])
+    
+    
 
     #subprocess.call(['clear'])
-    print ('\n\n    Available output audio format for '
-              'encoding/decoding \033[32;1m%s\033[0m files' % input_format)
+    print ('\n\   Available formats for '
+              'encoding/decoding \033[32;1m%s\033[0m audio files' % input_format)
 
     for outformat in new:
         print "    %s"%(outformat)
@@ -64,13 +75,13 @@ def dir_(path_in):#================ WARNING: DIR
         sys.exit("\nSorry, this conversion is not possible")
 
     bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
-                main.retcode[3], main.retcode[4], path_in, 'on', input_format)
+                main.retcode[3], main.retcode[4], path_in, 'dir', input_format)
 
 
 
 ###### WARNING area illesa ######
 def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
-                 batch, input_format):
+                 type_proc, input_format):
     """
     Check if codec has bitrate.
  
@@ -88,7 +99,7 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
         codec = main.retcode[4]
     """
     if dict_bitrate is None:
-        process_cli.Process_Conversion(path_in, command, None, batch, codec, 
+        process_cli.Process_Conversion(path_in, command, None, type_proc, codec, 
                                         input_format)
     else:
         subprocess.call(['clear'])
@@ -104,5 +115,5 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
         if valid is False:
             sys.exit("\n\033[1m Error\033[0m, inexistent quality level\n")
 
-        process_cli.Process_Conversion(path_in, command, bitrate, batch, 
+        process_cli.Process_Conversion(path_in, command, bitrate, type_proc, 
                                         codec, input_format)

@@ -34,7 +34,7 @@ def a_formats():
   return supported_formats, support, case
 
 
-def comparision(pair):
+def comparision_f(pair):
   """
   returns the required values for each pair of audio formats. 
   Accept one only string argument in this form: 'exemple > exemple'.
@@ -42,7 +42,7 @@ def comparision(pair):
   """
   
   flac_options = ("\n\033[1m"
-              " References on quality for Flac format:\033[0m\n\n\n"
+              "References on quality for Flac format:\033[0m\n"
               "  0 = low compression > more access space > better quality\n"
               "  1\n"
               "  2\n"
@@ -51,28 +51,28 @@ def comparision(pair):
               "  5 = Is the default compression \n"
               "  6\n"
               "  7\n"
-              "  8 = maximum compression > less space > lower quality\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  8 = maximum compression > less space > lower quality\n"
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   ape_options = ("\n\033[1m"
-              " References on quality for Ape format:\033[0m\n\n\n"
+              "References on quality for Ape format:\033[0m\n"
               "  1    -c1000 = Fast (Best quality)\n"
               "  2    -c2000 = Normal\n"
               "  3    -c3000 = High\n"
               "  4    -c4000 = Extra\n"
-              "  5    -c5000 = Insane\033[0m\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  5    -c5000 = Insane\033[0m\n"
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   mp3_options = ("\n\033[1m"
-              " References on quality and bit-rate for MP3:\033[0m\n\n\n"
+              "References on quality and bit-rate for MP3:\033[0m\n"
               "  0     medium    >  VBR 92 kbit\n"
               "  1     standard  >  VBR 112 kbit/s\n"
               "  2     extreme   >  VBR 150 kbit/s\n"
               "  3     insane    >  CBR 320 kbit/s\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   ffmpeg_mp3_options = ("\n\033[1m"
-              " References on quality and bit-rate for MP3:\033[0m\n\n"
+              "References on quality and bit-rate for MP3:\033[0m\n"
               "  0     >  VBR 128 kbit\n"
               "  1     >  VBR 160 kbit/s\n"
               "  2     >  VBR 192 kbit/s\n"
@@ -81,22 +81,22 @@ def comparision(pair):
               "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   ogg_options = ("\n\033[1m"
-              " References on the quality and bit-rate for OGG:\033[0m\n\n\n"
+              "References on the quality and bit-rate for OGG:\033[0m\n"
               "  1    >   80 kbit        |     6   >   192 kbit/s\n"
               "  2    >   92 kbit/s      |     7   >   200 kbit/s\n"
               "  3    >   100 kbit/s     |     8   >   260 kbit/s\n"
               "  4    >   128 kbit/s     |     9   >   320 kbit/s\n"
-              "  5    >   134 kbit/s     |     10  >   520 kbit/s\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  5    >   134 kbit/s     |     10  >   520 kbit/s\n"
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
 
   ffmpeg_ogg_options = ("\n\033[1m"
-              " References on the quality and bit-rate for OGG:\033[0m\n\n\n"
+              "References on the quality and bit-rate for OGG:\033[0m\n"
               "  0    >  VBR 128 kbit\n"
               "  1    >  VBR 160 kbit/s\n"
               "  2    >  VBR 192 kbit/s\n"
               "  3    >  VBR 260 kbit/s\n"
-              "  4    >  CBR 320 kbit/s\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n\n")
+              "  4    >  CBR 320 kbit/s\n"
+              "  \033[41;37;1mC\033[0m ..CANCEL\n")
               
   ###################### end strings
   
