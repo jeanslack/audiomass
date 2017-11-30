@@ -1,13 +1,14 @@
  
-- There is not a control interface for error, when not exist the codecs
+- There is not a control interface for error, when not exist the codecs,
   make this soon [DONE]
   
 - make a file, dir and batch separate operations
-  with batch operation  content for multiples file format
+  with batch operation  content for multiples file format [DONE]
   
   ----------------------
-  - escludi il formato aiff nella decodifica mp3 e forse anche ogg
-  - elimina cancel o quiet dai menu dei bit rate
-  - fare una verifica mirata sull'interazione con i menu
-  - copia perfettamente i colori e i messaggi sui vari get_
-  
+  - escludi il formato aiff nella decodifica mp3 e forse anche ogg [DONE]
+  - elimina cancel o quiet dai menu dei bit rate [DONE]
+  - fare una verifica mirata sull'interazione con i menu [TESTING]
+  - copia perfettamente i colori e i messaggi sui vari get_ [TESTING]
+
+  - creare funzione per lo spostamentyo dei file in get_batch ???

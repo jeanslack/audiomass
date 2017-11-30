@@ -22,7 +22,7 @@ from comparisions import a_formats
 f_limit = ['mp3','ogg','ape']
 
 
-def dir_(path_I, path_O):#================ WARNING: DIR
+def dir_parser(path_I, path_O):
     """
     Redirect work flow on specific methods for audio files with same 
     format in a directory content for conversions
@@ -39,28 +39,31 @@ def dir_(path_I, path_O):#================ WARNING: DIR
     if input_selection == 'q' or input_selection == 'Q':
             sys.exit()
     elif input_format is None:
-            sys.exit("\n\033[1mEntry error in select input format, exit!\033[0m")
+            sys.exit("\n\033[1mEntry error in select input format, "
+                     "exit!\033[0m")
 
     graphic_a_format = output_menu()
     new = graphic_a_format[:]
     
     if input_format in f_limit:
 
-        indx = 3,4,5,6
+        indx = 2,3,4,5,6
         new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
     else:
         new.remove(graphic_a_format[int(input_selection)])
 
 
     print ('\n    Available formats for '
-              'encoding/decoding \033[32;1m%s\033[0m audio files' % input_format)
+              'encoding/decoding \033[32;1m%s\033[0m audio '
+              'files' % input_format
+            )
 
     for outformat in new:
         print "    %s"%(outformat)
 
     output_selection = raw_input(
                 '    Type a letter for your encoding and just hit enter: ')
-    b = main.output_selector(output_selection, None)
+    b = main.output_selector(output_selection)
     output_format = b
     
     if output_selection == 'q' or output_selection == 'Q':
@@ -108,10 +111,10 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
     #path_O = '/dir/dir solo output dir-name'
     
     if dict_bitrate is None:
-        print command_dict[command]
+        bitrate = ''
     else:
         print graphic_bitrate
-        level = raw_input(dialog)
+        level = raw_input('%s' % dialog)
 
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
@@ -119,53 +122,54 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
 
         if valid is False:
             print ("\naudiomass:\033[1m Warning!\033[0m, inexistent "
-                   "quality level >> skipping >>\n"
+                   "quality level '%s', ...use default\n" % level
                   )
             bitrate = ''
 
     exe = 'False'
     count = 0
+        # nome del singolo file completo
+    for path_name in glob.glob("%s/*.%s" % (path_I, input_format)): 
+        stream_I = os.path.basename(path_name)
+        file_name = os.path.splitext(stream_I)[0]
+        exe = None
+        count += 1
+        if path_O is None: # se non ce sys.argv[3]
+            path_O = os.path.dirname(path_name)
+        if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
+            print ("\naudiomass:\033[1m Warning!\033[0m Already exists > "
+                    "'%s/%s.%s' >> skipping >>" % (path_O, file_name, 
+                                                    out_format))
+            continue
 
-    try:    # nome del singolo file completo
-        for path_name in glob.glob("%s/*.%s" % (path_I, input_format)): 
-            stream_I = os.path.basename(path_name)
-            file_name = os.path.splitext(stream_I)[0]
-            exe = None
-            count += 1
-            if path_O is None: # se non ce sys.argv[3]
-                path_O = os.path.dirname(path_name)
-            if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
-                print ("\naudiomass:\033[1m Warning!\033[0m Already exists > "
-                       "'%s/%s.%s' >> skipping >>\n" % (path_O, file_name, 
-                                                        out_format))
-                continue
-        
-            
-            command_dict = {
+        command_dict = {
 'flac':"flac -V %s '%s' -o '%s/%s.%s'" % (bitrate, path_name, path_O,
-                                          file_name, out_format),
+                                        file_name, out_format),
 'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                    file_name, out_format),
+                                file_name, out_format),
+'lame --decode':"lame --nohist --decode '%s' '%s/%s.%s'" % (path_name, path_O,
+                                file_name, out_format),
 'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                           file_name, out_format),
+                                        file_name, out_format),
 'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, out_format,
-                                  bitrate),
+                                bitrate),
 'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s" ' % (path_name, bitrate, path_O,
-                                            file_name, out_format),
+                                        file_name, out_format),
 'oggdec':"oggdec '%s' -o '%s/%s.%s'" % (path_name, path_O, file_name,
-                                        out_format),
+                                    out_format),
 'shntool':"shntool conv -o %s '%s' -d '%s/%s'" % (out_format,  path_name,
-                                                  path_O, file_name,),
-                            }
-            print "\n\033[36;7m |%s| Convert '%s'\033[0m\n" % (str(count),
-                                                               path_name)
-            #print command_dict[command]
+                                                path_O, file_name,),
+                        }
+        print "\n\033[36;7m |%s| Convert '%s'\033[0m\n" % (str(count),
+                                                            path_name)
+        try:
+            #print command_dict[command] # uncomment for debug
             subprocess.check_call(command_dict[command], shell=True)
-            
-    except subprocess.CalledProcessError as err:
-        sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
-        #print "\033[31;1mERROR!\033[0m"
-    else:
-        print "\n\033[36;7mDone...\033[0m\n"
+                
+        except subprocess.CalledProcessError as err:
+            sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
+            #print "\033[31;1mERROR!\033[0m"
+
+    print "\n\033[36;7mDone...\033[0m\n"
 
 

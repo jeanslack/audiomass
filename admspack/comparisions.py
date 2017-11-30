@@ -52,7 +52,7 @@ def comparision(pair):
               "  6\n"
               "  7\n"
               "  8 = maximum compression > less space > lower quality\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
 
   ape_options = ("\n\033[1m"
               "References on quality for Ape format:\033[0m\n"
@@ -61,7 +61,7 @@ def comparision(pair):
               "  3    -c3000 = High\n"
               "  4    -c4000 = Extra\n"
               "  5    -c5000 = Insane\033[0m\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
 
   mp3_options = ("\n\033[1m"
               "References on quality and bit-rate for MP3:\033[0m\n"
@@ -69,7 +69,7 @@ def comparision(pair):
               "  1     standard  >  VBR 112 kbit/s\n"
               "  2     extreme   >  VBR 150 kbit/s\n"
               "  3     insane    >  CBR 320 kbit/s\n\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
 
   ffmpeg_mp3_options = ("\n\033[1m"
               "References on quality and bit-rate for MP3:\033[0m\n"
@@ -78,7 +78,7 @@ def comparision(pair):
               "  2     >  VBR 192 kbit/s\n"
               "  3     >  VBR 260 kbit/s\n"
               "  4     >  CBR 320 kbit/s\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
 
   ogg_options = ("\n\033[1m"
               "References on the quality and bit-rate for OGG:\033[0m\n"
@@ -87,7 +87,7 @@ def comparision(pair):
               "  3    >   100 kbit/s     |     8   >   260 kbit/s\n"
               "  4    >   128 kbit/s     |     9   >   320 kbit/s\n"
               "  5    >   134 kbit/s     |     10  >   520 kbit/s\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
 
   ffmpeg_ogg_options = ("\n\033[1m"
               "References on the quality and bit-rate for OGG:\033[0m\n"
@@ -96,7 +96,7 @@ def comparision(pair):
               "  2    >  VBR 192 kbit/s\n"
               "  3    >  VBR 260 kbit/s\n"
               "  4    >  CBR 320 kbit/s\n"
-              "  \033[41;37;1mC\033[0m ..CANCEL\n")
+              )
               
   ###################### end strings
   
@@ -156,7 +156,7 @@ def comparision(pair):
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
 
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
-      'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
+      #'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
       'wav > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
 
@@ -187,4 +187,4 @@ def comparision(pair):
       return object_assignment[pair]
 
   except KeyError:
-      return 'KeyError'
+      return 'KeyError' 

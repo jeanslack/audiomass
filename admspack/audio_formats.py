@@ -48,7 +48,7 @@ class Audio_Formats(object):
         return self.input_format
 
 
-    def output_selector(self, output_selection, type_proc):
+    def output_selector(self, output_selection):
         """
         looking for a comparison between the input format and the 
         output format.

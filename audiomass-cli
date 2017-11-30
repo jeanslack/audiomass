@@ -14,9 +14,9 @@
 import sys
 import os
 from admspack.datastrings import info
-from admspack.get_file import file_
-from admspack.get_directory import dir_
-from admspack.get_batch import batch_
+from admspack.process_file import file_parser
+from admspack.process_dir import  dir_parser
+from admspack.process_batch import batch_parser
 
 cr = info()
 AUTHOR = cr[0]
@@ -40,54 +40,16 @@ print "\n\033[1m    %s\033[0m - front-end wrapper audio converter -\n" % (RLS_NA
 
 def main():
   """
-  Verify the arguments passed on the command line interface.
+  Boot straps
   """
-  if '-d' in sys.argv or '--dir' in sys.argv:
-    try:
-      if os.path.isdir(sys.argv[2]): 
-        path_in = sys.argv[2] # this is a dir-name (if not empty)
-      else:
-        sys.exit("%s %s"%(dir_access ,sys.argv[2]))
-    except IndexError:
-        #path_in = os.getcwd() # if no dir-name use current work directory
-        #sys.exit("Missing argument\n%s" % TRY)
-        sys.exit("audiomass:\033[31;1m ERROR!\033[0m Missing argument\n%s"
-                                                                % (TRY))
-    if len(sys.argv) == 4:
-        if os.path.isdir(sys.argv[3]):
-          path_out = sys.argv[3] # this is a dir-name (if not empty)
-        else:
-          sys.exit("%s %s"%(dir_access ,sys.argv[3]))
-    else:
-        path_out = None
-    dir_(path_in, path_out)
-    
-  elif '-b' in sys.argv or '--batch' in sys.argv:
-    f_list = []
-    notFile = []
-
-    for f in sys.argv[2:]:# itero dal 2° arg. lista
-      if os.path.isfile(f): # must be file only here
-        f_list.append(f)
-      else:
-        notFile.append(f)
-        print "%s %s" % (file_access, f)
-    batch_(f_list)
-
-  elif '-f' in sys.argv or '--file' in sys.argv: 
-    try:
-      if os.path.isfile(sys.argv[2]): # must be file only here
-        path_in = sys.argv[2] # is a file-name
-      else:
-        sys.exit("%s %s" % (file_access, sys.argv[2]))
-        
-    except IndexError:
-      sys.exit("Missing argument\n%s" % TRY)
+  if '-f' in sys.argv or '--file' in sys.argv: 
+      get_file()
       
-    # input_format is the extension format of path_in
-    input_format = os.path.splitext(path_in)[1].replace(".","")
-    
-    file_(input_format, path_in)
+  elif '-d' in sys.argv or '--dir' in sys.argv:
+      get_dir()
+      
+  elif '-b' in sys.argv or '--batch' in sys.argv:
+      get_batch()
       
   elif '-v' in sys.argv or '--version' in sys.argv:
     print "%s - %s" % (VERSION, RELEASE) 
@@ -105,6 +67,74 @@ def main():
     sys.exit("Missing options\n%s" % TRY)
   
   return 0
+
+
+def get_file():
+    """
+    Get the input format, file name and output dir if
+    in argument
+    """
+    try:
+      if os.path.isfile(sys.argv[2]): # must be file only here
+        path_in = sys.argv[2] # is a file-name
+      else:
+        sys.exit("%s %s" % (file_access, sys.argv[2]))
+
+    except IndexError:
+      sys.exit("Missing argument\n%s" % TRY)
+
+    if len(sys.argv) == 4:
+        if os.path.isdir(sys.argv[3]):
+          path_out = sys.argv[3] # this is a dir-name (if not empty)
+        else:
+          sys.exit("%s %s"%(dir_access ,sys.argv[3]))
+    else:
+        path_out = None
+    # input_format is the extension format of path_in
+    input_format = os.path.splitext(path_in)[1].replace(".","")
+
+    file_parser(input_format, path_in, path_out)
+
+
+def get_dir():
+    """
+    Get input dirname and output dirname if in argument
+    """
+    try:
+      if os.path.isdir(sys.argv[2]): 
+        path_in = sys.argv[2] # this is a dir-name (if not empty)
+      else:
+        sys.exit("%s %s"%(dir_access ,sys.argv[2]))
+    except IndexError:
+        #path_in = os.getcwd() # if no dir-name use current work directory
+        #sys.exit("Missing argument\n%s" % TRY)
+        sys.exit("audiomass:\033[31;1m ERROR!\033[0m Missing argument\n%s"
+                                                                % (TRY))
+    if len(sys.argv) == 4:
+        if os.path.isdir(sys.argv[3]):
+          path_out = sys.argv[3] # this is a dir-name (if not empty)
+        else:
+          sys.exit("%s %s"%(dir_access ,sys.argv[3]))
+    else:
+        path_out = None
+    dir_parser(path_in, path_out)
+
+
+def get_batch():
+    """
+    Put a empty or existance queue of files in list 
+    """
+    f_list = []
+    notFile = []
+
+    for f in sys.argv[2:]:# itero dal 2° arg. lista
+      if os.path.isfile(f): # must be file only here
+        f_list.append(f)
+      else:
+        notFile.append(f)
+        print "%s %s" % (file_access, f)
+    batch_parser(f_list)
+
 
 if __name__ == '__main__':
     status = main()

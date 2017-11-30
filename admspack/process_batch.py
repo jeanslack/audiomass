@@ -19,7 +19,7 @@ from datastrings import input_menu, output_menu
 from comparisions import a_formats
 
 
-def batch_(f_list):#================ WARNING: BATCH
+def batch_parser(f_list):
     """
     Redirect work flow on specific methods for batch conversions
     """
@@ -91,7 +91,7 @@ def batch_(f_list):#================ WARNING: BATCH
           del new[:]#NOTE CANCEL: cancello il grafico dei formati 
           
           main = Audio_Formats(a)# Have a (Pope :-) shit!) ext input >
-          b = main.output_selector(output_selection, 'batch')
+          b = main.output_selector(output_selection)
           output_format = b
           if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
@@ -105,7 +105,7 @@ def batch_(f_list):#================ WARNING: BATCH
           if formats == {}:# se è completamente vuoto, esco
             sys.exit('...No selection for the conversion process, exit!\n')
           
-          run_process(main.retcode[0], main.retcode[1], main.retcode[2], 
+          bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
                 main.retcode[3], main.retcode[4], formats.get(a), 'batch', a)
           
           
@@ -120,10 +120,10 @@ def batch_(f_list):#================ WARNING: BATCH
           #print '8----%s' % a # formato dei file da convertire
 ####### -----------------------------------------------------------------------
                 
-def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
+def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, out_format, path_in,
                  type_proc, input_format):
     """
-    Check if codec has bitrate.
+    Check if out_format has bitrate.
  
     just to remind me notified:
 
@@ -136,13 +136,13 @@ def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
     dialogo immissione fattore di compressione:
         dialog = main.retcode[3] 
     l'estensione finale dei files convertiti:
-        codec = main.retcode[4]
+        out_format = main.retcode[4]
     """
     #print command # comando impostato per conversione
     #print dict_bitrate #  dizionario bit-rate
     #print graphic_bitrate # grafico per scelta livello bit-rate
     #print dialog # stringa usata per il contesto su level = raw_input(dialog)
-    #print codec # formato di uscita
+    #print out_format # formato di uscita
     #print path_in # lista file da convertire
     #print type_proc# inutile: è la stringa batch per il processo
     #print input_format # formato dei file da convertire
@@ -151,7 +151,6 @@ def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
     file_list = str(path_in).replace('[','').replace(']','').replace(',','  ')# vedere un codice migliore
     
     if dict_bitrate is None:
-        #cmd_str = '%s %s' % (command, file_list)
         bitrate = ''
     else:
         print graphic_bitrate
@@ -161,24 +160,23 @@ def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
         bitrate = a.quality_level(dict_bitrate, level)
         valid = bitrate
         if valid is False:
-            print ("\n\033[1mWarning!\033[0m, inexistent "
-                   "quality level --skipping\n"
+            print ("\naudiomass:\033[1m Warning!\033[0m, inexistent "
+                   "quality level '%s', ...use default\n" % level
                   )
             bitrate = ''
-        cmd_str = '%s %s %s' % (command, bitrate, file_list)
-        
+
     command_dict = {
 'flac':"flac -V %s -o %s" % (bitrate, file_list),
 'lame':"lame --nohist --nogap %s %s" % (bitrate, file_list),
-'lame --decode':"lame --nohist --nogap --decode %s %s" % (bitrate, file_list),
+'lame --decode':"lame --nohist --nogap --decode %s" % (file_list),
 'oggenc':"oggenc %s %s" % (bitrate, file_list),
 'oggdec':"oggdec %s" % (file_list),
-'shntool':"shntool conv -o %s %s" % (codec, file_list),
+'shntool':"shntool conv -o %s %s" % (out_format, file_list),
                     }
     try:
-        print "\n\033[1mConvert '%s' to '%s'\033[0m\n" % (input_format, codec)
-        print command_dict[command]# uncomment for debug
-        #subprocess.check_call(command_dict[command], shell=True)
+        print "\n\033[1mConvert '%s' to '%s'\033[0m\n" % (input_format, out_format)
+        #print command_dict[command]# uncomment for debug
+        subprocess.check_call(command_dict[command], shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("\033[31;1mERROR!\033[0m %s" % (err))
     else:
