@@ -34,7 +34,7 @@ def a_formats():
   return supported_formats, support, case
 
 
-def comparision_f(pair):
+def comparision(pair):
   """
   returns the required values for each pair of audio formats. 
   Accept one only string argument in this form: 'exemple > exemple'.
@@ -156,7 +156,7 @@ def comparision_f(pair):
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
 
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
-
+      'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
       'wav > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
 

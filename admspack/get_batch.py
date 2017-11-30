@@ -149,10 +149,10 @@ def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
         
     #file_list = ("'  '".join(path_in))
     file_list = str(path_in).replace('[','').replace(']','').replace(',','  ')# vedere un codice migliore
-    #print path_in
     
     if dict_bitrate is None:
-        cmd_str = '%s %s' % (command, file_list)
+        #cmd_str = '%s %s' % (command, file_list)
+        bitrate = ''
     else:
         print graphic_bitrate
         level = raw_input(dialog)
@@ -166,11 +166,19 @@ def run_process(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
                   )
             bitrate = ''
         cmd_str = '%s %s %s' % (command, bitrate, file_list)
-        #print cmd_str
         
+    command_dict = {
+'flac':"flac -V %s -o %s" % (bitrate, file_list),
+'lame':"lame --nohist --nogap %s %s" % (bitrate, file_list),
+'lame --decode':"lame --nohist --nogap --decode %s %s" % (bitrate, file_list),
+'oggenc':"oggenc %s %s" % (bitrate, file_list),
+'oggdec':"oggdec %s" % (file_list),
+'shntool':"shntool conv -o %s %s" % (codec, file_list),
+                    }
     try:
         print "\n\033[1mConvert '%s' to '%s'\033[0m\n" % (input_format, codec)
-        subprocess.check_call(cmd_str, shell=True)
+        print command_dict[command]# uncomment for debug
+        #subprocess.check_call(command_dict[command], shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("\033[31;1mERROR!\033[0m %s" % (err))
     else:

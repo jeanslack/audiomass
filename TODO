@@ -5,3 +5,9 @@
 - make a file, dir and batch separate operations
   with batch operation  content for multiples file format
   
+  ----------------------
+  - escludi il formato aiff nella decodifica mp3 e forse anche ogg
+  - elimina cancel o quiet dai menu dei bit rate
+  - fare una verifica mirata sull'interazione con i menu
+  - copia perfettamente i colori e i messaggi sui vari get_
+  
