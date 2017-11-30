@@ -18,8 +18,8 @@ def info():################################### INFO
   author = u"Gianluca Pernigotto aka Jeanslack"
   mail = u'<jeanlucperni@gmail.com>'
   copyright = u'© 2013-2017'
-  version = u'v0.6.1'
-  release = u'Nov. 21 2017'
+  version = u'v0.7.0'
+  release = u'Dec. 1 2017'
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
@@ -35,23 +35,26 @@ line interface with different default settings at your choice.
   usage = """--------------------------------------------------------------
 Audiomass-cli - %s by %s
 --------------------------------------------------------------
-Simple audio conversion interface to command line for Flac, 
+Front-end wrapper audio converter interface for Flac, 
 Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
 Usage: 
-  aconvert-cli <infile>
-  aconvert-cli [options] [indirectory]
+  audiomass-cli [options] <infile>
+  audiomass-cli [options] <infile> [-o] <outdir>
   
 Options:
-  -b, --batch   (run a process on multiple files in a directory)
+  -f  --file    (run process for single file-stream)
+  -d, --dir     (run a process to multiple files in dir with single format)
+  -b, --batch   (run a process for multiple files queue)
+  -o, --output  (write the output streams into specified directory)
   -h, --help    (print this help and exit)
   -v, --version (print version and date of the program)
   -c, --copying (print license of the program)
   
 Exemples:
-  aconvert-cli '/path name/My directory/audiotrack.wav'
-  aconvert-cli -b '/path name/My directory'
-  aconvert-cli -b 
+  audiomass-cli -f '/path name/My directory/audiotrack.wav'
+  audiomass-cli -d '/path name/My directory' -o '/path/otherDir'
+  audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' etc
 --------------------------------------------------------------
 """ % (copyright, author)
   

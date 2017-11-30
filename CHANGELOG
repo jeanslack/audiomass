@@ -1,10 +1,30 @@
 +--------------------------+
+November 30 2017 Version 0.7.0
++--------------------------+
+
+NOTE: In this release are be changed many thing 
+
+- I continued with the improvements in errors management
+
+- Add new batch process option for files conversion with
+  different formats :-)
+  This has some limits on output formats choice, but work.
+  
+- New process management for single file, files in dir and batch
+  conversions.
+  
+- Add new implementations for saving in different folder for all
+  the process
+  
+- some small cosmetic makeup
+
++--------------------------+
 November 22 2017 Version 0.6.1
 +--------------------------+
 
 - some cosmetic touch to the exit code
 
-- Improved error handling, but there is still work
+- Improved errors handling, but there is still work
 
 +--------------------------+
 febbruary 24 2015 Version 0.6
