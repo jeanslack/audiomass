@@ -53,10 +53,10 @@ def dir_parser(path_I, path_O):
         new.remove(graphic_a_format[int(input_selection)])
 
 
-    print ('\n    Available formats for '
-              'encoding/decoding \033[32;1m%s\033[0m audio '
-              'files' % input_format
-            )
+    print ("\n    Available formats for "
+              "encoding/decoding '\033[32;1m%s\033[0m' audio " 
+              "stream" % input_format
+              )
 
     for outformat in new:
         print "    %s"%(outformat)
@@ -77,7 +77,6 @@ def dir_parser(path_I, path_O):
     bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2],
                 main.retcode[3], main.retcode[4], path_I, path_O, 
                 input_format)
-
 
 
 def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, 
@@ -160,11 +159,11 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
 'shntool':"shntool conv -o %s '%s' -d '%s/%s'" % (out_format,  path_name,
                                                 path_O, file_name,),
                         }
-        print "\n\033[36;7m |%s| Convert '%s'\033[0m\n" % (str(count),
-                                                            path_name)
+        print "\n\033[36;7m |%s| Stream in Dir: >> '%s'\033[0m\n" % (str(
+                                                        count),path_name)
         try:
-            #print command_dict[command] # uncomment for debug
-            subprocess.check_call(command_dict[command], shell=True)
+            print command_dict[command] # uncomment for debug
+            #subprocess.check_call(command_dict[command], shell=True)
                 
         except subprocess.CalledProcessError as err:
             sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))

@@ -49,9 +49,9 @@ def file_parser(input_format, path_name, path_O):
     else:
         new.remove(graphic_a_format[input_selection])
     #subprocess.call(['clear'])
-    print ('\n    Available formats for '
-              'encoding/decoding \033[32;1m%s\033[0m audio ' 
-              'files' % input_format
+    print ("\n    Available formats for "
+              "encoding/decoding '\033[32;1m%s\033[0m' audio " 
+              "stream" % input_format
             )
     for outformat in new:
         print "    %s"%(outformat)
@@ -66,6 +66,8 @@ def file_parser(input_format, path_name, path_O):
             sys.exit()
     elif output_format is None:
         sys.exit("\n\033[1mEntry error in select output format!\033[0m\n")
+    if main.retcode == 'KeyError':
+        sys.exit("\nSorry, this conversion is not possible")
     
     bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
                  main.retcode[3], main.retcode[4], path_name, path_O, 
@@ -135,10 +137,9 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                                                   path_O, file_name),
                             }
     try:
-        print "\n\033[1mConvert '%s' to '%s'\033[0m\n" % (input_format, 
-                                                          out_format)
-        #print command_dict[command]# uncomment for debug
-        subprocess.check_call(command_dict[command], shell=True)
+        print "\n\033[36;7m Stream: >> '%s'\033[0m\n" % (path_name)
+        print command_dict[command]# uncomment for debug
+        #subprocess.check_call(command_dict[command], shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
     else:

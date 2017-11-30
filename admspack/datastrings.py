@@ -45,7 +45,7 @@ Usage:
 Options:
   -f  --file    (run process for single file-stream)
   -d, --dir     (run a process to multiple files in dir with single format)
-  -b, --batch   (run a process for multiple files queue)
+  -b, --batch   (run a process for multiple files queued)
   -o, --output  (write the output streams into specified directory)
   -h, --help    (print this help and exit)
   -v, --version (print version and date of the program)
@@ -58,7 +58,7 @@ Exemples:
 --------------------------------------------------------------
 """ % (copyright, author)
   
-  try_help = u"Try: 'audiomass-cli --help' for more information."
+  try_help = u"Try: 'audiomass-cli --help' or 'man audiomass-cli'."
 
   license = u"""
 Copyright %s - %s
@@ -98,7 +98,7 @@ def input_menu():
     \033[1m 5 \033[0m .. MP3   (MPEG-1 Audio Layer 3)
     \033[1m 6 \033[0m .. OGG   (ogg-vorbis lossy format)
     -----------------------------------------------
-    \033[41;37;1m Q\033[0m \033[1m..EXIT\033[0m
+    \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m
     ----------------------------------------------- """
 
 
