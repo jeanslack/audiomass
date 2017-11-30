@@ -33,10 +33,10 @@ LONG_HELP = cr[10]
 LICENSE = cr[11]# long_license
 TRY = cr[13]
 
-file_access = "\033[33;1mWarning:\033[0m\033[1m Unable to access, invalid file name  >\033[0m" 
-dir_access = "\033[31;1mError:\033[0m\033[1m Unable to access, Invalid dir. name  >\033[0m"
+file_access = "\033[1mWarning:\033[0m\033[1m Unable to access, invalid file-name  >\033[0m" 
+dir_access = "\033[31;1mError:\033[0m\033[1m Unable to access, Invalid dir-name  >\033[0m"
 
-print "\n\033[1m%s\033[0m - front-end wrapper audio converter -" % (RLS_NAME)
+print "\n\033[1m    %s\033[0m - front-end wrapper audio converter -\n" % (RLS_NAME)
 
 def main():
   """
@@ -50,32 +50,29 @@ def main():
         sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
         #path_in = os.getcwd() # if no dir-name use current work directory
-        sys.exit("Missing argument\n%s" % TRY)
-
-    dir_(path_in)
+        #sys.exit("Missing argument\n%s" % TRY)
+        sys.exit("audiomass:\033[31;1m ERROR!\033[0m Missing argument\n%s"
+                                                                % (TRY))
+    if len(sys.argv) == 4:
+        if os.path.isdir(sys.argv[3]):
+          path_out = sys.argv[3] # this is a dir-name (if not empty)
+        else:
+          sys.exit("%s %s"%(dir_access ,sys.argv[3]))
+    else:
+        path_out = None
+    dir_(path_in, path_out)
     
   elif '-b' in sys.argv or '--batch' in sys.argv:
-    list_ = []
+    f_list = []
     notFile = []
 
     for f in sys.argv[2:]:# itero dal 2° arg. lista
       if os.path.isfile(f): # must be file only here
-        list_.append(f)
+        f_list.append(f)
       else:
         notFile.append(f)
         print "%s %s" % (file_access, f)
-    for i in list_:# rimuovo doppioni accidentali.
-      if list_.count(i) > 1:
-        print "\n\033[1mRemoving following duplicates: >\033[0m '%s' >" % i
-
-    list_ = list(set(list_)) # elimino i doppioni
-    batch_(list_)
-        
-    #if notFile is not None:
-      #print list_
-      #sys.exit("Warning: i seguenti Missing argument\nTry: audiomass-cli --help")
-    #print notFile
-    #print list_
+    batch_(f_list)
 
   elif '-f' in sys.argv or '--file' in sys.argv: 
     try:

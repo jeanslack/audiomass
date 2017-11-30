@@ -141,11 +141,11 @@ def comparision_f(pair):
       'ape > aiff' : ('shntool', None, None, None, 'aiff'),
       'ape > flac' : ('shntool', None, None, None, 'flac'),
 
-      'wav > flac' : ('flac -V', flac_diz, flac_options, 'Enter the '
+      'wav > flac' : ('flac', flac_diz, flac_options, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'), 
 
-      'aiff > flac' : ('flac -V', flac_diz, flac_options, 'Enter the '
+      'aiff > flac' : ('flac', flac_diz, flac_options, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'),
 
@@ -171,15 +171,15 @@ def comparision_f(pair):
       'wav > ape' : ('mac', ape_diz, ape_options, 'Enter the compression '
                       'level in digits 1 to 5, and press enter key > ', 'ape'),
 
-      'flac > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'flac > mp3' : ('ffmpeg -i', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
 
-      'ape > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'ape > mp3' : ('ffmpeg -i', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
 
-      'ape > ogg' : ('ffmpeg', ffmpeg_ogg_diz, ffmpeg_ogg_options,
+      'ape > ogg' : ('ffmpeg -i', ffmpeg_ogg_diz, ffmpeg_ogg_options,
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
                           }

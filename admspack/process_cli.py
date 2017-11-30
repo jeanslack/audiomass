@@ -42,33 +42,38 @@ class Process_Conversion(object):
             print
 
     def file_process(self):
+        
+        # QUESTO SONO LE VARIABILI NECESSARIE PER PROCESSO FILE E DIRECTORY
+        path_in = 'percorso di input dello stream, es: /home/Musica'
+        stream = 'Nome dello stream senza nessuna estensione, es: nome_canzone'
+        stream_in = 'Nome dello stream di input, es: nome-canzone.wav'
+        stream_out = 'Nome dello stream di output, es: nome-canzone.flac'
+        path_out = 'percorso di output dello stream, es: /home/name/Documenti'
         """
         process gor a single audio file name
         """
         # TODO make a process for different audio extension
         
-        outpath = os.path.splitext(self.path_in)[0]# remove extension
+        path_out = os.path.splitext(self.path_in)[0]# remove extension
 
-        if os.path.exists('%s.%s' % (outpath, self.codec)):
+        if os.path.exists('%s.%s' % (path_out, self.codec)):
             sys.exit("\n\033[33;1mWarning:\033[0m '%s.%s' already exists\n" % (
-                                                outpath, self.codec))
+                                                path_out, self.codec))
         command_dict = {
-            'flac -V':"flac -V %s '%s'" % (self.bitrate, self.path_in),
+            'flac -V':"flac -V %s '%s' -o '%s.%s'" % (self.bitrate, self.path_in, path_out, codec),
         
-            'lame':'lame %s "%s" "%s.mp3"' % (self.bitrate, self.path_in, 
-                                    outpath),
+            'lame':'lame %s "%s" "%s.%s"' % (self.bitrate, self.path_in, path_out, codec),
             
-            'oggenc':'oggenc %s "%s"' % (self.bitrate, self.path_in),
+            'oggenc':'oggenc %s "%s" -o "%s.%s"' % (self.bitrate, self.path_in, path_out, codec),
                         
-            'mac':'mac "%s" "%s.ape" %s' % (self.path_in, outpath, 
-                                self.bitrate),
+            'mac':'mac "%s" "%s.%s" %s' % (self.path_in, path_out, codec, self.bitrate),
                         
             'ffmpeg':'ffmpeg -i "%s" %s "%s.%s" ' % (self.path_in, 
-                                    self.bitrate, outpath, self.codec),
+                                    self.bitrate, path_out, self.codec),
                         
-            'oggdec':"oggdec '%s'" % (self.path_in),
+            'oggdec':"oggdec '%s' -o %s.%s" % (self.path_in, path_out, cedec),
                         
-            'shntool':"shntool conv -o %s '%s'" % (self.codec,  self.path_in),
+            'shntool':"shntool conv -o %s '%s' -d '%s'" % (self.codec,  self.path_in, path_out),
                     }
         print command_dict[self.command]
         try:
@@ -90,10 +95,10 @@ class Process_Conversion(object):
             for f in glob.glob("%s/*.%s" % (self.path_in, self.input_format)) :
                 exe = None
                 count += 1
-                outpath = os.path.splitext(f)[0] # path
-                if os.path.exists('%s.%s' % (outpath, self.codec)):
+                path_out = os.path.splitext(f)[0] # path
+                if os.path.exists('%s.%s' % (path_out, self.codec)):
                     print ("\n\033[33;1mWarning:\033[0m '%s.%s' already exists\n"
-                                    % (outpath, self.codec))
+                                    % (path_out, self.codec))
                     continue
             
                 print "\n\033[1m %s) Convert '%s'\033[0m\n" % (str(count),f)
@@ -102,14 +107,14 @@ class Process_Conversion(object):
                 
                 'flac -V':"flac -V %s '%s'" % (self.bitrate, f),
         
-                'lame':'lame %s "%s" "%s.mp3"' % (self.bitrate, f, outpath),
+                'lame':'lame %s "%s" "%s.mp3"' % (self.bitrate, f, path_out),
                         
                 'oggenc':'oggenc %s "%s"' % (self.bitrate,f),
                         
-                'mac':'mac "%s" "%s.ape" %s' % (f, outpath, self.bitrate),
+                'mac':'mac "%s" "%s.ape" %s' % (f, path_out, self.bitrate),
                         
                 'ffmpeg':'ffmpeg -i "%s" %s "%s.%s" ' % (f, self.bitrate, 
-                                            outpath, self.codec),
+                                            path_out, self.codec),
                         
                 'oggdec':"oggdec '%s'" % (f),
                         

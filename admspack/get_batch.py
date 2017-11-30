@@ -14,13 +14,12 @@
 import subprocess
 import sys
 import os
-import process_cli
 from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
 
 
-def batch_(list_):#================ WARNING: BATCH
+def batch_(f_list):#================ WARNING: BATCH
     """
     Redirect work flow on specific methods for batch conversions
     """
@@ -33,10 +32,15 @@ def batch_(list_):#================ WARNING: BATCH
     #range che esclude indici in lista in datastrings.py graphic_a_format
     # per i formati in f_limit
     indx = 3,4,5,6 
+    
+    for i in f_list:
+      if f_list.count(i) > 1: # controllo se ci sono doppioni accidentali.
+        print "\033[1mRemoving following duplicates: >\033[0m '%s' >" % i
+    f_list = list(set(f_list)) # elimino eventuali doppioni
 
     # NOTE: BLOCCO DI ORDINAZIONE SEPARATA IN LISTE PER CIASCUN FILE EXTENSION
     #Creazione chiavi da aggiungere nel diz. formats:
-    for i in list_: #Append separated file format
+    for i in f_list: #Append separated file format
       name, ext = os.path.splitext(i)
       new = ext.replace(".","")#Tolgo il punto all'estensione
       if new in supported_formats[1]:#Se estensione input è supportata
@@ -50,7 +54,6 @@ def batch_(list_):#================ WARNING: BATCH
 
     if new_list == []: # se i file importati sono tutti incompatibili
       sys.exit('...No audio files to process, exit!')
-    
     # Aggiungo i records(valori) nel diz. formats
     for i in new_list:
       name, ext = os.path.splitext(i)

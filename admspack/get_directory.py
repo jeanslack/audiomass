@@ -4,17 +4,16 @@
 #
 #########################################################
 # Name: getcommand.py (module)
-# Porpose: parsing data directory and evaluate possible conditions.
+# Porpose: parsing data directory content.
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Version: (Ver.0.7) Nov. 2017
 #########################################################
-
-
+import subprocess
+import glob
 import sys
 import os
-import process_cli
 from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
@@ -23,7 +22,7 @@ from comparisions import a_formats
 f_limit = ['mp3','ogg','ape']
 
 
-def dir_(path_in):#================ WARNING: DIR
+def dir_(path_I, path_O):#================ WARNING: DIR
     """
     Redirect work flow on specific methods for audio files with same 
     format in a directory content for conversions
@@ -34,7 +33,7 @@ def dir_(path_in):#================ WARNING: DIR
                                 "and hit enter... "
                                 )
     main = Audio_Formats(None) # not have a ext input = None
-    a = main.input_selector(input_selection, None) # let choice an input format
+    a = main.input_selector(input_selection) # let choice an input format
     input_format = a # return a input format string
 
     if input_selection == 'q' or input_selection == 'Q':
@@ -51,11 +50,9 @@ def dir_(path_in):#================ WARNING: DIR
         new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
     else:
         new.remove(graphic_a_format[int(input_selection)])
-    
-    
 
-    #subprocess.call(['clear'])
-    print ('\n\   Available formats for '
+
+    print ('\n    Available formats for '
               'encoding/decoding \033[32;1m%s\033[0m audio files' % input_format)
 
     for outformat in new:
@@ -63,7 +60,7 @@ def dir_(path_in):#================ WARNING: DIR
 
     output_selection = raw_input(
                 '    Type a letter for your encoding and just hit enter: ')
-    b = main.output_selector(output_selection)
+    b = main.output_selector(output_selection, None)
     output_format = b
     
     if output_selection == 'q' or output_selection == 'Q':
@@ -74,16 +71,16 @@ def dir_(path_in):#================ WARNING: DIR
     if main.retcode == 'KeyError':
         sys.exit("\nSorry, this conversion is not possible")
 
-    bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
-                main.retcode[3], main.retcode[4], path_in, 'dir', input_format)
+    bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2],
+                main.retcode[3], main.retcode[4], path_I, path_O, 
+                input_format)
 
 
 
-###### WARNING area illesa ######
-def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
-                 type_proc, input_format):
+def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, 
+                 out_format, path_I, path_O, input_format):
     """
-    Check if codec has bitrate.
+    Check if out_format has bitrate.
  
     just to remind me notified:
 
@@ -96,24 +93,79 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, codec, path_in,
     dialogo immissione fattore di compressione:
         dialog = main.retcode[3] 
     l'estensione finale dei files convertiti:
-        codec = main.retcode[4]
+        out_format = main.retcode[4]
     """
+    #print out_format # mp3
+    #print path_I # solo dir-path
+    #print input_format # wav il formato input
+    
+    # WARNING : path_I e path_O devono rappresentare solo il nome dei percorsi
+    #file_name = 'only stream with no ext, es: nome_canzone'
+    #path_name = 'complete path input: /dir/dir/filename.ext'
+    #stream_I = 'Nome dello stream di input, es: nome-canzone.wav'
+    #stream_O = 'Nome dello stream di output, es: nome-canzone.flac'
+    #path_I = '/home/Musica solo input dir-name'
+    #path_O = '/dir/dir solo output dir-name'
+    
     if dict_bitrate is None:
-        process_cli.Process_Conversion(path_in, command, None, type_proc, codec, 
-                                        input_format)
+        print command_dict[command]
     else:
-        subprocess.call(['clear'])
         print graphic_bitrate
         level = raw_input(dialog)
-        
-        if level == 'c' or level == 'C':
-                sys.exit()
+
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
         valid = bitrate
-        
-        if valid is False:
-            sys.exit("\n\033[1m Error\033[0m, inexistent quality level\n")
 
-        process_cli.Process_Conversion(path_in, command, bitrate, type_proc, 
-                                        codec, input_format)
+        if valid is False:
+            print ("\naudiomass:\033[1m Warning!\033[0m, inexistent "
+                   "quality level >> skipping >>\n"
+                  )
+            bitrate = ''
+
+    exe = 'False'
+    count = 0
+
+    try:    # nome del singolo file completo
+        for path_name in glob.glob("%s/*.%s" % (path_I, input_format)): 
+            stream_I = os.path.basename(path_name)
+            file_name = os.path.splitext(stream_I)[0]
+            exe = None
+            count += 1
+            if path_O is None: # se non ce sys.argv[3]
+                path_O = os.path.dirname(path_name)
+            if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
+                print ("\naudiomass:\033[1m Warning!\033[0m Already exists > "
+                       "'%s/%s.%s' >> skipping >>\n" % (path_O, file_name, 
+                                                        out_format))
+                continue
+        
+            
+            command_dict = {
+'flac':"flac -V %s '%s' -o '%s/%s.%s'" % (bitrate, path_name, path_O,
+                                          file_name, out_format),
+'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                    file_name, out_format),
+'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                           file_name, out_format),
+'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, out_format,
+                                  bitrate),
+'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s" ' % (path_name, bitrate, path_O,
+                                            file_name, out_format),
+'oggdec':"oggdec '%s' -o '%s/%s.%s'" % (path_name, path_O, file_name,
+                                        out_format),
+'shntool':"shntool conv -o %s '%s' -d '%s/%s'" % (out_format,  path_name,
+                                                  path_O, file_name,),
+                            }
+            print "\n\033[36;7m |%s| Convert '%s'\033[0m\n" % (str(count),
+                                                               path_name)
+            #print command_dict[command]
+            subprocess.check_call(command_dict[command], shell=True)
+            
+    except subprocess.CalledProcessError as err:
+        sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
+        #print "\033[31;1mERROR!\033[0m"
+    else:
+        print "\n\033[36;7mDone...\033[0m\n"
+
+
