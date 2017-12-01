@@ -136,7 +136,7 @@ def get_dir():
 
 def get_batch():
     """
-    Put a empty or existance queue of files in list 
+    Put a queue stream in list
     """
     f_list = []
     notFile = []
