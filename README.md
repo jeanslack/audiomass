@@ -50,17 +50,36 @@ packaging for Debian and Slackware distribuitions, download here:
 
 Have you installed all needed dependencies? Well!
 
+
+Usage:
+  `audiomass-cli option <infile>`
+  `audiomass-cli option <infile> [-o] [<outdir>]`
+
+Options:
+ * -f  --file    (run process for single file-stream)
+ * -d, --dir     (run a process to multiple files in dir with single format)
+ * -b, --batch   (run a process for multiple files queued)
+ * -o, --output  (write the output streams into specified directory)
+ * -h, --help    (print this help and exit)
+ * -v, --version (print version and date of the program)
+ * -c, --copying (print license of the program)
+
 **Examples:** 
 
 Unzip the sources tarball of audiomass-cli, open a terminal 
-window on its path-name and proceeded to convert a single audio file: 
-`~$ ./audiomass-cli '/home/Name/my Music/audiofile.wav'`. 
+window on its path-name them and add the *-f* option (f=file) 
+and proceeded to convert a single audio file: 
+`~$ ./audiomass-cli -f '/home/Name/my Music/audiofile.wav'`. 
 
 Do you have many files with the same format to convert? then loads the 
-folder that contains them and add the *-b* option (b = batch):
-`~$ ./audiomass-cli -b '/home/Name/MyFolder/flac_files'`
+folder that contains them and add the *-d* option, (d=dir):
+`~$ ./audiomass-cli -d '/home/Name/MyFolder/flac_files'`
 
-For a shortcut help, type `audiomass-cli --help` or read the audiomass man page.
+Load audio streams queue with differents formats also on differents locations on
+the user-space. The *-b* option (b=batch), the *-o* option indicates the output directory for saving. If  more  than one stream is specified, they must either be quoted and separated to one or more white-space.
+`~$ ./audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' -o /output/dir`
+
+For a shortcut help, type `audiomass-cli --help` or read the best audiomass man page.
 
 ## Installation
 
