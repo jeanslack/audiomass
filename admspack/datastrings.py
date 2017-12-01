@@ -23,13 +23,11 @@ def info():################################### INFO
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
-  short_decript = u'Audiomass-clc is a front-end wrapper audio converter'
+  short_decript = u'Audiomass-clc is a wrapper audio conversions interface'
   long_desript = u"""
-Audiomass-clc is a front-end wrapper audio converter to simplify the 
-use of Flac, Lame, vorbis-tools, Monkey's audio, Shntool and FFmpeg 
-audio libraries. It brings together all this tools/libraries for audio 
-conversions between the most popular audio formats. It has an easy command 
-line interface with different default settings at your choice.
+**Audiomass-clc** is a command line wrapper that interfaces on differents 
+audio codecs for multiple input data streams conversions. It can be easily implemented with other audio library codecs and currently supports: Flac, 
+Lame, Vorbis-tools, Monkey's Audio, Shntool FFmpeg, etc.
 """
 
   usage = """--------------------------------------------------------------
@@ -39,8 +37,8 @@ Front-end wrapper audio converter interface for Flac,
 Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
 
 Usage: 
-  audiomass-cli [options] <infile>
-  audiomass-cli [options] <infile> [-o] <outdir>
+  audiomass-cli option <infile>
+  audiomass-cli option <infile> [-o] [<outdir>]
   
 Options:
   -f  --file    (run process for single file-stream)
@@ -54,7 +52,7 @@ Options:
 Exemples:
   audiomass-cli -f '/path name/My directory/audiotrack.wav'
   audiomass-cli -d '/path name/My directory' -o '/path/otherDir'
-  audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' etc
+  audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' -o /output/dir
 --------------------------------------------------------------
 """ % (copyright, author)
   

@@ -21,7 +21,7 @@ from comparisions import a_formats
 warnings = 'audiomass:\033[1m Warning!\033[0m'
 errors = 'audiomass:\033[31;1m Error!\033[0m'
 
-def batch_parser(f_list):
+def batch_parser(f_list, path_O):
     """
     Redirect work flow on specific methods for batch conversions
     """
@@ -113,7 +113,7 @@ def batch_parser(f_list):
             sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
           bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
-                main.retcode[3], main.retcode[4], formats.get(a), 'batch', a)
+                main.retcode[3], main.retcode[4], formats.get(a), path_O, a)
           
           
 ####### -----------------------------------------------------------------------
@@ -123,7 +123,7 @@ def batch_parser(f_list):
           #print '4----%s' % main.retcode[3]#stringa contestuale bit-rate di object_assignment diz. 
           #print '5----%s' % main.retcode[4]# nome del formato in uscita
           #print '6----%s' % formats.get(a)# percorso o filename (dai la lista)
-          #print '7----%s' % 'batch' # batch mode disabilitato
+          #print '7----%s' % path_O # percorso salvataggio output stream
           #print '8----%s' % a # formato dei file da convertire
 ####### -----------------------------------------------------------------------
                 
@@ -151,7 +151,7 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
     #print dialog # stringa usata per il contesto su level = raw_input(dialog)
     #print out_format # formato di uscita
     #print path_in # lista file da convertire
-    #print type_proc# inutile: è la stringa batch per il processo
+    #print path_O # percorso salvataggio output stream
     #print input_format # formato dei file da convertire
         
     #file_list = ("'  '".join(path_in))

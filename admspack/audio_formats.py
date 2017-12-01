@@ -85,13 +85,11 @@ class Audio_Formats(object):
         If audio codec support audio quality or bitrate, this method 
         return a level of bitrate.
         """
-        print 'dict_bitrate  %s' % dict_bitrate
-        print 'level  %s' % level
         if level in dict_bitrate:
-            print 'SONO SU IF LEVEL'
             valid = True
             return dict_bitrate[level]
         else:
-            print 'SONO SU ELSE LEVEL'
             valid = False
             return valid
+
+

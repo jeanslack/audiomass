@@ -4,11 +4,9 @@ Audiomass-cli
 
 ## Description
 
-**Audiomass-clc** is a front-end wrapper audio converter to simplify the 
-use of Flac, Lame, vorbis-tools, Monkey's audio, Shntool and FFmpeg audio 
-libraries. It brings together all this tools/libraries for audio conversions 
-between the most popular audio formats. It has an easy command line interface 
-with different default settings at your choice.
+**Audiomass-clc** is a command line wrapper that interfaces on differents 
+audio codecs for multiple input data streams conversions. It can be easily implemented with other audio library codecs and currently supports: Flac, 
+Lame, Vorbis-tools, Monkey's Audio, Shntool FFmpeg, etc.
 
 ## License and Copyright
 
@@ -35,6 +33,7 @@ There is not yet a Windows implementation
 - flac
 - lame
 - sox
+- wavpack
 - vorbis-tools [oggenc, oggdec]
 - shntool
 - ffmpeg

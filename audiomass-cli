@@ -33,44 +33,44 @@ LONG_HELP = cr[10]
 LICENSE = cr[11]# long_license
 TRY = cr[13]
 
-Warnings = 'audiomass:\033[1m Warning!\033[0m'
+warnings = 'audiomass:\033[1m Warning!\033[0m'
 errors = 'audiomass:\033[31;1m Error!\033[0m'
-file_access = "%s Unable to access, invalid file-name  >\033[0m" % Warnings
+file_access = "%s Unable to access, invalid file-name  >\033[0m" % warnings
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
 
 
-print ("\n\033[1m    %s\033[0m - front-end wrapper audio "
-                            "converter -\n" % (RLS_NAME))
+print ("\n\033[1m    %s\033[0m - wrapper audio conversions interface -"
+                            "\n" % (RLS_NAME))
 
 def main():
-  """
-  Boot straps
-  """
-  if '-f' in sys.argv or '--file' in sys.argv: 
-      get_file()
-      
-  elif '-d' in sys.argv or '--dir' in sys.argv:
-      get_dir()
-      
-  elif '-b' in sys.argv or '--batch' in sys.argv:
-      get_batch()
-      
-  elif '-v' in sys.argv or '--version' in sys.argv:
-    print "%s - %s" % (VERSION, RELEASE) 
-    return
-      
-  elif '-h' in sys.argv or '--help' in sys.argv:
-    print LONG_HELP
-    return
-      
-  elif '-c' in sys.argv or '--copying' in sys.argv:
-    print LICENSE
-    return
-  
-  else:
-    sys.exit("%s Missing options\n%s" % (errors, TRY))
-  
-  return 0
+    """
+    Boot straps
+    """
+    if '-f' in sys.argv or '--file' in sys.argv: 
+        get_file()
+        
+    elif '-d' in sys.argv or '--dir' in sys.argv:
+        get_dir()
+        
+    elif '-b' in sys.argv or '--batch' in sys.argv:
+        get_batch()
+        
+    elif '-v' in sys.argv or '--version' in sys.argv:
+        print "%s - %s" % (VERSION, RELEASE) 
+        return
+        
+    elif '-h' in sys.argv or '--help' in sys.argv:
+        print LONG_HELP
+        return
+        
+    elif '-c' in sys.argv or '--copying' in sys.argv:
+        print LICENSE
+        return
+
+    else:
+        sys.exit("%s Missing options\n%s" % (errors, TRY))
+
+    return 0
 
 
 def get_file():
@@ -136,18 +136,36 @@ def get_dir():
 
 def get_batch():
     """
-    Put a queue stream in list
+    Put a queue stream in list and pass with the output dir if
+    in argument
     """
-    f_list = []
-    notFile = []
+    queue = []
+    if '-o' in sys.argv:
+        opt = sys.argv.index('-o')
+        try:
+            if sys.argv[opt +1]: # se trovo percorso dopo l'opzione -o
+                path_O = sys.argv[opt +1]
+        except IndexError:
+            sys.exit( "%s missing argument after '-o' option, exit\n%s" % (
+                                                             errors, TRY))
+        else:
+            if os.path.isdir(path_O):#trovo opzione e percorso output corretti
+                arg = sys.argv[2:] # lista di passaggio per codice successivo
+                arg.remove('-o')
+                arg.remove(path_O)
+            else:
+                sys.exit("%s %s"%(dir_access ,path_O))
+    else:
+        path_O = None
+        arg = sys.argv[2:] # dal 2° arg. lista
 
-    for f in sys.argv[2:]:# itero dal 2° arg. lista
+    for f in arg:
       if os.path.isfile(f): # must be file only here
-        f_list.append(f)
+        queue.append(f) 
       else:
-        notFile.append(f)
         print "%s %s" % (file_access, f)
-    batch_parser(f_list)
+
+    batch_parser(queue, path_O)
 
 
 if __name__ == '__main__':
