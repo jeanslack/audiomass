@@ -138,8 +138,8 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                             }
     try:
         print "\n\033[36;7m Stream: >> '%s'\033[0m\n" % (path_name)
-        print command_dict[command]# uncomment for debug
-        #subprocess.check_call(command_dict[command], shell=True)
+        #print command_dict[command]# uncomment for debug
+        subprocess.check_call(command_dict[command], shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
     else:

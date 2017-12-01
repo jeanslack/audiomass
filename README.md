@@ -63,12 +63,13 @@ packaging for Debian and Slackware distribuitions, download here:
 
 **Examples:** 
 
-Unzip the sources tarball of audiomass-cli, open a terminal window on its path-name 
-them and add the *-f* option (f=file) and proceeded to convert a single audio file:   
+Unzip the sources tarball of audiomass-cli, open a terminal window on its 
+path-name them and add the *-f* option (f=file) and proceeded to convert a 
+single audio file:   
 `~$ ./audiomass-cli -f '/home/Name/my Music/audiofile.wav'`. 
 
-Do you have many files with the same format to convert? then loads the folder that 
-contains them and add the *-d* option, (d=dir):   
+Do you have many files with the same format to convert? then loads the folder 
+that contains them and add the *-d* option, (d=dir):   
 `~$ ./audiomass-cli -d '/home/Name/MyFolder/flac_files'`
 
 Load audio streams queue with differents formats also on differents locations on
