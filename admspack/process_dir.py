@@ -18,9 +18,11 @@ from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
 
+warnings = 'audiomass:\033[1m Warning!\033[0m'
+errors = 'audiomass:\033[31;1m Error!\033[0m'
+
 #lista dei formati con limiti di scelta nella conversioni
 f_limit = ['mp3','ogg','ape']
-
 
 def dir_parser(path_I, path_O):
     """
@@ -39,8 +41,7 @@ def dir_parser(path_I, path_O):
     if input_selection == 'q' or input_selection == 'Q':
             sys.exit()
     elif input_format is None:
-            sys.exit("\n\033[1mEntry error in select input format, "
-                     "exit!\033[0m")
+            sys.exit("\n%s Entry error in select input format, exit!" % errors)
 
     graphic_a_format = output_menu()
     new = graphic_a_format[:]
@@ -53,26 +54,25 @@ def dir_parser(path_I, path_O):
         new.remove(graphic_a_format[int(input_selection)])
 
 
-    print ("\n    Available formats for "
-              "encoding/decoding '\033[32;1m%s\033[0m' audio " 
-              "stream" % input_format
-              )
+    print ("\n    Available formats for encoding/decoding "
+            "'\033[32;1m%s\033[0m' audio stream" % input_format)
 
     for outformat in new:
         print "    %s"%(outformat)
 
-    output_selection = raw_input(
-                '    Type a letter for your encoding and just hit enter: ')
+    output_selection = raw_input('    Type a letter for your encoding '
+                                    'and just hit enter: '
+                                    )
     b = main.output_selector(output_selection)
     output_format = b
     
     if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
     elif output_format is None:
-        sys.exit("\n\033[1mEntry error in select output format, exit!\033[0m")
+        sys.exit("\n%s Entry error in select output format, exit!" % errors)
         
     if main.retcode == 'KeyError':
-        sys.exit("\nSorry, this conversion is not possible")
+        sys.exit("\n%s Incompatible conversion" % errors)
 
     bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2],
                 main.retcode[3], main.retcode[4], path_I, path_O, 
@@ -120,9 +120,9 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
         valid = bitrate
 
         if valid is False:
-            print ("\naudiomass:\033[1m Warning!\033[0m, inexistent "
-                   "quality level '%s', ...use default\n" % level
-                  )
+            print ("\n%s inexistent quality level '%s', "
+                   "...use default\n" % (warnings, level)
+                   )
             bitrate = ''
 
     exe = 'False'
@@ -136,9 +136,9 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
         if path_O is None: # se non ce sys.argv[3]
             path_O = os.path.dirname(path_name)
         if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
-            print ("\naudiomass:\033[1m Warning!\033[0m Already exists > "
-                    "'%s/%s.%s' >> skipping >>" % (path_O, file_name, 
-                                                    out_format))
+            print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
+                    warnings, path_O, file_name, out_format)
+                    )
             continue
 
         command_dict = {
@@ -156,11 +156,10 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                                         file_name, out_format),
 'oggdec':"oggdec '%s' -o '%s/%s.%s'" % (path_name, path_O, file_name,
                                     out_format),
-'shntool':"shntool conv -o %s '%s' -d '%s/%s'" % (out_format,  path_name,
-                                                path_O, file_name,),
+'shntool':"shntool conv -o %s '%s' -d '%s'" % (out_format, path_name, path_O),
                         }
-        print "\n\033[36;7m |%s| Stream in Dir: >> '%s'\033[0m\n" % (str(
-                                                        count),path_name)
+        print ("\n\033[36;7m |%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
+                % (str(count),out_format, path_O, file_name, out_format))
         try:
             #print command_dict[command] # uncomment for debug
             subprocess.check_call(command_dict[command], shell=True)
@@ -168,6 +167,6 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
         except subprocess.CalledProcessError as err:
             sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
 
-    print "\n\033[36;7mDone...\033[0m\n"
+    print "\n\033[37;7mDone...\033[0m\n"
 
 

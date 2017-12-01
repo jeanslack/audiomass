@@ -171,15 +171,15 @@ def comparision(pair):
       'wav > ape' : ('mac', ape_diz, ape_options, 'Enter the compression '
                       'level in digits 1 to 5, and press enter key > ', 'ape'),
 
-      'flac > mp3' : ('ffmpeg -i', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'flac > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
 
-      'ape > mp3' : ('ffmpeg -i', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'ape > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
 
-      'ape > ogg' : ('ffmpeg -i', ffmpeg_ogg_diz, ffmpeg_ogg_options,
+      'ape > ogg' : ('ffmpeg', ffmpeg_ogg_diz, ffmpeg_ogg_options,
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
                           }

@@ -1,4 +1,15 @@
 +--------------------------+
+Dec. 01 2017 Version 0.7.0
++--------------------------+
+
+ - New batch process implementation for convert multiple audio stream.
+   The limits of the previous version are now outdated
+   
+ 
+
+
+
++--------------------------+
 November 30 2017 Version 0.7.0
 +--------------------------+
 

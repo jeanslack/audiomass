@@ -14,6 +14,7 @@
 import subprocess
 import sys
 import os
+from collections import Counter
 from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
@@ -34,10 +35,11 @@ def batch_parser(f_list, path_O):
     #range che esclude indici in lista in datastrings.py graphic_a_format
     # per i formati in f_limit
     indx = 2,3,4,5,6 
-    
-    for i in f_list:
-      if f_list.count(i) > 1: # controllo se ci sono doppioni accidentali.
-        print "%s Removing following duplicates: > '%s' >" % (warnings, i)
+
+    for k,v in Counter(f_list).items():# controllo se ci sono doppioni accidentali.
+        if v>1:
+            print "%s Removing following duplicates: > '%s' >" % (warnings, k)
+
     f_list = list(set(f_list)) # elimino eventuali doppioni
 
     # NOTE: BLOCCO DI ORDINAZIONE SEPARATA IN LISTE PER CIASCUN FILE EXTENSION
@@ -105,7 +107,7 @@ def batch_parser(f_list, path_O):
             #conversione.
             continue # meglio partire da capo 
           if main.retcode == 'KeyError':
-            print ("\n%s Incompatible conversion >> skipping >>"% warnings)
+            print ("\n%s Incompatible conversion >> skipping >>" % warnings)
             formats.pop(a, None)
             continue # troppi errori, meglio contimuare da capo
 
@@ -155,8 +157,9 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
     #print input_format # formato dei file da convertire
         
     #file_list = ("'  '".join(path_in))
-    file_list = str(path_in).replace('[','').replace(']','').replace(',','  ')# vedere un codice migliore
-    
+    file_list = str(path_in).replace('[','').replace(']',''
+                        ).replace(',','  ')# vedere un codice migliore
+
     if dict_bitrate is None:
         bitrate = ''
     else:
@@ -167,29 +170,53 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
         bitrate = a.quality_level(dict_bitrate, level)
         valid = bitrate
         if valid is False:
-            print ("\naudiomass:\033[1m Warning!\033[0m, inexistent "
-                   "quality level '%s', ...use default\n" % level
-                  )
+            print ("\n%s inexistent quality level '%s', ...use default\n" % (
+                warnings, level)
+                    )
             bitrate = ''
-
-    command_dict = {
-'flac':"flac -V %s -o %s" % (bitrate, file_list),
-'lame':"lame --nohist --nogap %s %s" % (bitrate, file_list),
-'lame --decode':"lame --nohist --nogap --decode %s" % (file_list),
-'oggenc':"oggenc %s %s" % (bitrate, file_list),
-'oggdec':"oggdec %s" % (file_list),
-'shntool':"shntool conv -o %s %s" % (out_format, file_list),
-                    }
-    try:
-        print "\n\033[36;7mQueue Streams: >> %s\033[0m\n" % (path_in)
-        #print command_dict[command]# uncomment for debug
-        subprocess.check_call(command_dict[command], shell=True)
-    except subprocess.CalledProcessError as err:
-        sys.exit("\033[31;1mERROR!\033[0m %s" % (err))
-    except KeyError as err:
-        print ("%s Sorry, this codec is not usable: %s "
-               ">> skipping >>" %(warnings, err))
-    else:
-        print "\n\033[1mDone...\033[0m\n"
+            
+    exe = 'False'
+    count = 0
+    for path_name in path_in:
+        stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'
+        file_name = os.path.splitext(stream_I)[0]#only stream with no ext
+        exe = None
+        count += 1
+        if path_O is None: # se non ce sys.argv[3]
+            path_O = os.path.dirname(path_name)
+        if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
+            print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
+                    warnings, path_O, file_name, out_format)
+                    )
+            continue
+        
+        command_dict = {
+'flac':"flac -V %s '%s' -o '%s/%s.%s'" % (bitrate, path_name, path_O,
+                                        file_name, out_format),
+'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                file_name, out_format),
+'lame --decode':"lame --nohist --decode '%s' '%s/%s.%s'" % (path_name, path_O,
+                                file_name, out_format),
+'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                        file_name, out_format),
+'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, out_format,
+                                bitrate),
+'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s" ' % (path_name, bitrate, path_O,
+                                        file_name, out_format),
+'oggdec':"oggdec '%s' -o '%s/%s.%s'" % (path_name, path_O, file_name,
+                                    out_format),
+'shntool':"shntool conv -o %s '%s' -d '%s'" % (out_format, path_name, path_O),
+                        }
+        print ("\n\033[36;7m |%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
+                    % (str(count),out_format, path_O, file_name, out_format))
+        try:
+            #print "\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in)
+            #print command_dict[command]# uncomment for debug
+            subprocess.check_call(command_dict[command], shell=True)
+        except subprocess.CalledProcessError as err:
+            sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
+            
+    print "\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in)
+    print "\n\033[37;7mDone...\033[0m\n"
 
 
