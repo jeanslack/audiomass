@@ -167,7 +167,6 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                 
         except subprocess.CalledProcessError as err:
             sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
-            #print "\033[31;1mERROR!\033[0m"
 
     print "\n\033[36;7mDone...\033[0m\n"
 

@@ -18,7 +18,7 @@ from audio_formats import Audio_Formats
 from datastrings import input_menu, output_menu
 from comparisions import a_formats
 
-Warnings = 'audiomass:\033[1m Warning!\033[0m'
+warnings = 'audiomass:\033[1m Warning!\033[0m'
 errors = 'audiomass:\033[31;1m Error!\033[0m'
 
 def batch_parser(f_list):
@@ -88,8 +88,8 @@ def batch_parser(f_list):
               new.remove(graphic_a_format[v[0]])#NOTE SET
           for outformat in new:# realizzazione menu di output
             print "    %s"%(outformat)
-          output_selection = raw_input(
-                  '    Choice a format by a letter and just hit enter: ')
+          output_selection = raw_input('    Choice a format by a letter '
+                                        'and just hit enter: ')
           del new[:]#NOTE CANCEL: cancello il grafico dei formati 
           
           main = Audio_Formats(a)# Have a (Pope :-) shit!) ext input >
@@ -103,12 +103,14 @@ def batch_parser(f_list):
             formats.pop(a, None)#Se nessuna selezione e premi enter rimuovo 
             #chiave e valore dal dizionario, cioè escludo quei files dalla
             #conversione.
+            continue # meglio partire da capo 
           if main.retcode == 'KeyError':
-            print ("\n%s Sorry, this conversion is not possible"% warnings)
+            print ("\n%s Incompatible conversion >> skipping >>"% warnings)
             formats.pop(a, None)
+            continue # troppi errori, meglio contimuare da capo
+
           if formats == {}:# se è completamente vuoto, esco
-            sys.exit('\n%s...No selection for the conversion process, '
-                     'exit!\n'% warnings)
+            sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
           bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
                 main.retcode[3], main.retcode[4], formats.get(a), 'batch', a)
@@ -125,8 +127,8 @@ def batch_parser(f_list):
           #print '8----%s' % a # formato dei file da convertire
 ####### -----------------------------------------------------------------------
                 
-def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, out_format, path_in,
-                 type_proc, input_format):
+def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, 
+                 out_format, path_in, path_O, input_format):
     """
     Check if out_format has bitrate.
  
@@ -179,11 +181,14 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, out_format, pat
 'shntool':"shntool conv -o %s %s" % (out_format, file_list),
                     }
     try:
-        print "\n\033[36;7m Queue Streams: >> %s\033[0m\n" % (path_in)
+        print "\n\033[36;7mQueue Streams: >> %s\033[0m\n" % (path_in)
         print command_dict[command]# uncomment for debug
         #subprocess.check_call(command_dict[command], shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("\033[31;1mERROR!\033[0m %s" % (err))
+    except KeyError as err:
+        print ("%s Sorry, this codec is not usable: %s "
+               ">> skipping >>" %(warnings, err))
     else:
         print "\n\033[1mDone...\033[0m\n"
 
