@@ -142,21 +142,21 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
             continue
 
         command_dict = {
-'flac':"flac -V %s '%s' -o '%s/%s.%s'" % (bitrate, path_name, path_O,
+'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
                                         file_name, out_format),
 'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
                                 file_name, out_format),
-'lame --decode':"lame --nohist --decode '%s' '%s/%s.%s'" % (path_name, path_O,
+'lame --decode':'lame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
                                 file_name, out_format),
 'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
                                         file_name, out_format),
 'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, out_format,
                                 bitrate),
-'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s" ' % (path_name, bitrate, path_O,
+'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
                                         file_name, out_format),
-'oggdec':"oggdec '%s' -o '%s/%s.%s'" % (path_name, path_O, file_name,
+'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
                                     out_format),
-'shntool':"shntool conv -o %s '%s' -d '%s'" % (out_format, path_name, path_O),
+'shntool':'shntool conv -o %s "%s" -d "%s"' % (out_format, path_name, path_O),
                         }
         print ("\n\033[36;7m |%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (str(count),out_format, path_O, file_name, out_format))

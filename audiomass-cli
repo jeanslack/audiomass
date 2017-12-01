@@ -38,40 +38,30 @@ errors = 'audiomass:\033[31;1m Error!\033[0m'
 file_access = "%s Unable to access, invalid file-name  >\033[0m" % warnings
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
 
-
 print ("\n\033[1m    %s\033[0m - wrapper audio conversions interface -"
                             "\n" % (RLS_NAME))
-
 def main():
     """
     Boot straps
     """
     if '-f' in sys.argv or '--file' in sys.argv: 
         get_file()
-        
     elif '-d' in sys.argv or '--dir' in sys.argv:
         get_dir()
-        
     elif '-b' in sys.argv or '--batch' in sys.argv:
         get_batch()
-        
     elif '-v' in sys.argv or '--version' in sys.argv:
         print "%s - %s" % (VERSION, RELEASE) 
         return
-        
     elif '-h' in sys.argv or '--help' in sys.argv:
         print LONG_HELP
         return
-        
     elif '-c' in sys.argv or '--copying' in sys.argv:
         print LICENSE
         return
-
     else:
         sys.exit("%s Missing options\n%s" % (errors, TRY))
-
     return 0
-
 
 def get_file():
     """
@@ -85,7 +75,6 @@ def get_file():
         sys.exit("%s %s" % (file_access, sys.argv[2]))
     except IndexError:
       sys.exit("%s Missing argument\n%s" % (errors,TRY))
-
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         if sys.argv[3] != '-o':
             sys.exit("%s Invalid option: '%s' \n%s"% (errors,
@@ -104,7 +93,6 @@ def get_file():
     input_format = os.path.splitext(path_in)[1].replace(".","")
     file_parser(input_format, path_in, path_out)
 
-
 def get_dir():
     """
     Get input dirname and output dirname if in argument
@@ -116,7 +104,6 @@ def get_dir():
         sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
         sys.exit("%s Missing argument\n%s" % (errors,TRY))
-        
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         if sys.argv[3] != '-o':
             sys.exit("%s Invalid option: '%s' \n%s"% (errors,
@@ -132,7 +119,6 @@ def get_dir():
     else:
         path_out = None
     dir_parser(path_in, path_out)
-
 
 def get_batch():
     """
@@ -166,7 +152,6 @@ def get_batch():
         print "%s %s" % (file_access, f)
 
     batch_parser(queue, path_O)
-
 
 if __name__ == '__main__':
     status = main()
