@@ -15,11 +15,10 @@ import glob
 import sys
 import os
 from audio_formats import Audio_Formats
-from datastrings import input_menu, output_menu
-from comparisions import a_formats
+from comparisions import a_formats, input_menu, output_menu
 
-warnings = 'audiomass:\033[1m Warning!\033[0m'
-errors = 'audiomass:\033[31;1m Error!\033[0m'
+warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
+errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
 #lista dei formati con limiti di scelta nella conversioni
 f_limit = ['mp3','ogg','ape']
@@ -97,18 +96,6 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
     l'estensione finale dei files convertiti:
         out_format = main.retcode[4]
     """
-    #print out_format # mp3
-    #print path_I # solo dir-path
-    #print input_format # wav il formato input
-    
-    # WARNING : path_I e path_O devono rappresentare solo il nome dei percorsi
-    #file_name = 'only stream with no ext, es: nome_canzone'
-    #path_name = 'complete path input: /dir/dir/filename.ext'
-    #stream_I = 'Nome dello stream di input, es: nome-canzone.wav'
-    #stream_O = 'Nome dello stream di output, es: nome-canzone.flac'
-    #path_I = '/home/Musica solo input dir-name'
-    #path_O = '/dir/dir solo output dir-name'
-    
     if dict_bitrate is None:
         bitrate = ''
     else:
@@ -124,7 +111,34 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                    "...use default\n" % (warnings, level)
                    )
             bitrate = ''
-
+            
+    command_builder(command, bitrate, out_format, path_I, path_O, 
+                    input_format)
+        
+#print command # comando impostato per conversione
+#print dict_bitrate #  dizionario bit-rate
+#print graphic_bitrate # grafico per scelta livello bit-rate
+#print dialog # stringa usata per il contesto su level = raw_input(dialog)
+#print out_format # formato di uscita
+#print path_name # lista file da convertire
+#print path_O # percorso salvataggio output stream
+#print input_format # formato dei file da convertire (variabile non usata)
+            
+def command_builder(command, bitrate, out_format, path_I, path_O, 
+                    input_format):
+    """
+    command_builder is based on construction of the paths and formats
+    strings (out_format, path_in, path_O) and the 'command' variable, that 
+    contains the key (codec) for an corresponding values used for process.
+    
+    WARNING : path_I e path_O devono rappresentare solo il nome dei percorsi
+    file_name = 'only stream with no ext, es: nome_canzone'
+    path_name = 'complete path input: /dir/dir/filename.ext'
+    stream_I = 'Nome dello stream di input, es: nome-canzone.wav'
+    stream_O = 'Nome dello stream di output, es: nome-canzone.flac'
+    path_I = '/home/Musica solo input dir-name'
+    path_O = '/dir/dir solo output dir-name'
+    """
     exe = 'False'
     count = 0
         # nome del singolo file completo
@@ -158,7 +172,7 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                                     out_format),
 'shntool':'shntool conv -o %s "%s" -d "%s"' % (out_format, path_name, path_O),
                         }
-        print ("\n\033[36;7m |%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
+        print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (str(count),out_format, path_O, file_name, out_format))
         try:
             #print command_dict[command] # uncomment for debug

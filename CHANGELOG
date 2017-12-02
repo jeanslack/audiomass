@@ -1,25 +1,39 @@
 +--------------------------+
-Dec. 01 2017 Version 0.7.0
+Dec. 01 2017 Version 0.7.1
 +--------------------------+
 
+NOTE: this is a definitive release.
+
  - New batch process implementation for convert multiple audio stream.
-   The limits of the previous version are now outdated
+   The limits of the previous version are now outdated and work.
+
+ - I continued with the improvements in errors management
+
+ - Add new batch process option for files conversion with
+   different formats :-)
+  
+ - New process management for single file, files in dir and batch
+   conversions.
+  
+ - Add new implementations for saving in different folder for all
+   the available process: single file conversion, file group conversion
+   on directory and batch conversions.
+  
+ - Now markeup cosmetic are more beautiful
    
- 
-
-
-
 +--------------------------+
 November 30 2017 Version 0.7.0
 +--------------------------+
 
-NOTE: In this release are be changed many thing 
+NOTE: this release is just a passing version to experiment with some 
+      variations. Although it is usable it may have some bugs
+      and generally it does not work very well.
 
 - I continued with the improvements in errors management
 
 - Add new batch process option for files conversion with
   different formats :-)
-  This has some limits on output formats choice, but work.
+  This has some limits on output formats choice with -b option.
   
 - New process management for single file, files in dir and batch
   conversions.

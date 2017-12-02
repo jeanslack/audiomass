@@ -17,11 +17,10 @@ import glob
 import sys
 import os
 from audio_formats import Audio_Formats
-from datastrings import input_menu, output_menu
-from comparisions import a_formats
+from comparisions import a_formats, output_menu
 
-warnings = 'audiomass:\033[1m Warning!\033[0m'
-errors = 'audiomass:\033[31;1m Error!\033[0m'
+warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
+errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
 #lista dei formati con limiti di scelta nella conversioni
 f_limit = ['mp3','ogg','ape']
@@ -112,6 +111,25 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                    "...use default\n" % (warnings, level)
                    )
             bitrate = ''
+            
+    command_builder(command, bitrate, out_format, path_name, path_O, 
+                    input_format)
+#print command # comando impostato per conversione
+#print dict_bitrate #  dizionario bit-rate
+#print graphic_bitrate # grafico per scelta livello bit-rate
+#print dialog # stringa usata per il contesto su level = raw_input(dialog)
+#print out_format # formato di uscita
+#print path_name # lista file da convertire
+#print path_O # percorso salvataggio output stream
+#print input_format # formato dei file da convertire (variabile non usata)
+            
+def command_builder(command, bitrate, out_format, path_name, path_O, 
+                    input_format):
+    """
+    command_builder is based on construction of the paths and formats
+    strings (out_format, path_name, path_O) and the 'command' variable, that 
+    contains the key (codec) for an corresponding values used for process.
+    """
 
     stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'
     file_name = os.path.splitext(stream_I)[0]#only stream with no ext

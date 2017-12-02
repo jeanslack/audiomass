@@ -10,7 +10,42 @@
 # Version: (Ver.0.6) Febbruary 2015
 # Rev
 #########################################################
+############################################################## MENUs
+def input_menu():
+    """
+    Menu for input audio selection format used from process_dir
+    only
+    """
+    print """    Select the files input format below:
+    -----------------------------------------------
+    \033[1m 1 \033[0m .. WAV   (WAVEform audio format, PCM uncompresed)
+    \033[1m 2 \033[0m .. AIF   (Apple Interchange File Format)
+    \033[1m 3 \033[0m .. FLAC  (Free Lossless Audio Codecs)
+    \033[1m 4 \033[0m .. APE   (Monkey's audio)
+    \033[1m 5 \033[0m .. MP3   (MPEG-1 Audio Layer 3)
+    \033[1m 6 \033[0m .. OGG   (ogg-vorbis lossy format)
+    -----------------------------------------------
+    \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m
+    ----------------------------------------------- """
 
+
+def output_menu():
+    """
+    Menu for output audio selection format used from all process(f,d,b)
+    """
+    graphic_a_format = [
+                    "----------------------",
+                    "  \033[34;1mA\033[0m ......... Wav", 
+                    "  \033[34;1mB\033[0m ......... Aiff", 
+                    "  \033[34;1mC\033[0m ......... Flac", 
+                    "  \033[34;1mD\033[0m ......... Ape", 
+                    "  \033[34;1mE\033[0m ......... Mp3", 
+                    "  \033[34;1mF\033[0m ......... Ogg",  
+                    "----------------------", 
+                    " \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m", 
+                    "----------------------"
+                            ]
+    return graphic_a_format
 
 
 def a_formats():
@@ -98,7 +133,7 @@ def comparision(pair):
               "  4    >  CBR 320 kbit/s\n"
               )
               
-  ###################### end strings
+  ###################### end list strings
   
   flac_diz = {"0":"-0", "1":"-1", "2":"-2", "3":"-3",
               "4":"-4", "5":"-5", "6":"-6", "7":"-7",

@@ -11,4 +11,5 @@
   - fare una verifica mirata sull'interazione con i menu [TESTING]
   - copia perfettamente i colori e i messaggi sui vari get_ [TESTING]
 
-  - creare funzione per lo spostamentyo dei file in get_batch ???
+  - creare funzione per lo spostamentyo dei file in get_batch [DONE]
+  - Testare tutte le varianti di conversione [TESTING]

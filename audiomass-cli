@@ -33,8 +33,8 @@ LONG_HELP = cr[10]
 LICENSE = cr[11]# long_license
 TRY = cr[13]
 
-warnings = 'audiomass:\033[1m Warning!\033[0m'
-errors = 'audiomass:\033[31;1m Error!\033[0m'
+warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
+errors = 'audiomass: \033[31;7;3mError!\033[0m'
 file_access = "%s Unable to access, invalid file-name  >\033[0m" % warnings
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
 
