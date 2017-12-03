@@ -35,7 +35,7 @@ TRY = cr[13]
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
-file_access = "%s Unable to access, invalid file-name  >\033[0m" % warnings
+file_access = "%s Unable to access, invalid file-name  >\033[0m" % errors
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
 
 print ("\n\033[1m    %s\033[0m - wrapper audio conversions interface -"
@@ -60,23 +60,26 @@ def main():
         print LICENSE
         return
     else:
-        sys.exit("%s Missing options\n%s" % (errors, TRY))
+        sys.exit("%s Invalid options: '%s' \n%s" % (errors,
+                                            sys.argv[1:][0], TRY))
     return 0
 
 def get_file():
     """
-    Get the input format, file name and output dir if
-    in argument
+    Get the filename and output dirname if output dirname in argument
     """
+    opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
       if os.path.isfile(sys.argv[2]): # must be file only here
         path_in = sys.argv[2] # is a file-name
       else:
         sys.exit("%s %s" % (file_access, sys.argv[2]))
     except IndexError:
-      sys.exit("%s Missing argument\n%s" % (errors,TRY))
+      sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
+                                                    sys.argv[1],TRY))
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
-        if sys.argv[3] != '-o':
+        #if sys.argv[3] != '-o':
+        if sys.argv[3] not in opts:
             sys.exit("%s Invalid option: '%s' \n%s"% (errors,
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
@@ -85,8 +88,8 @@ def get_file():
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
-            sys.exit("%s Missing output path name after '-o' option..\n%s" % (
-                                                                errors,TRY))
+            sys.exit("%s Missing output dir-name after '%s' option.\n%s" % (
+                                                        errors, opts[0],TRY))
     else:
         path_out = None
     # input_format is the extension format of path_in
@@ -95,8 +98,9 @@ def get_file():
 
 def get_dir():
     """
-    Get input dirname and output dirname if in argument
+    Get input dirname and output dirname if output dirname in argument
     """
+    opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
       if os.path.isdir(sys.argv[2]): 
         path_in = sys.argv[2] # this is a dir-name (if not empty)
@@ -105,7 +109,7 @@ def get_dir():
     except IndexError:
         sys.exit("%s Missing argument\n%s" % (errors,TRY))
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
-        if sys.argv[3] != '-o':
+        if sys.argv[3] not in opts:
             sys.exit("%s Invalid option: '%s' \n%s"% (errors,
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
@@ -114,8 +118,8 @@ def get_dir():
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
-            sys.exit("%s Missing output path name after '-o' option.\n%s" % (
-                                                                errors,TRY))
+            sys.exit("%s Missing output dir-name after '%s' option.\n%s" % (
+                                                        errors, opts[0],TRY))
     else:
         path_out = None
     dir_parser(path_in, path_out)
@@ -133,7 +137,7 @@ def get_batch():
             if sys.argv[opt +1]: # se trovo percorso dopo l'opzione -o --output
                 path_O = sys.argv[opt +1]
         except IndexError:
-            sys.exit( "%s missing argument after '%s' option, exit\n%s" % (
+            sys.exit( "%s Missing argument after '%s' option.\n%s" % (
                                                         errors, opts[0], TRY))
         else:
             if os.path.isdir(path_O):#trovo opzione e percorso output corretti
