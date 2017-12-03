@@ -45,7 +45,7 @@ Options:
   -f  --file    (run process for single file-stream)
   -d, --dir     (run a process to multiple files in dir with single format)
   -b, --batch   (run a process for multiple files queued)
-  -o, --output  (write the output streams into specified directory)
+  -o dirname, --output  (write the output streams into specified folder)
   -h, --help    (print this help and exit)
   -v, --version (print version and date of the program)
   -c, --copying (print license of the program)

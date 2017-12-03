@@ -51,7 +51,7 @@ def main():
     elif '-b' in sys.argv or '--batch' in sys.argv:
         get_batch()
     elif '-v' in sys.argv or '--version' in sys.argv:
-        print "%s - %s" % (VERSION, RELEASE) 
+        print "%s - %s - Released %s" % (RLS_NAME, VERSION, RELEASE) 
         return
     elif '-h' in sys.argv or '--help' in sys.argv:
         print LONG_HELP

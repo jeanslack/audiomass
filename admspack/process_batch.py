@@ -118,7 +118,6 @@ def batch_parser(f_list, path_O):
           main = Audio_Formats(input_format)# Have a ext input >
           b = main.output_selector(output_selection)
           output_format = b
-          print output_selection
           if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
           elif output_format is None:

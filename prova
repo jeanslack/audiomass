@@ -1,0 +1,38 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+#
+#from subprocess import *
+from admspack.audio_formats import Audio_Formats
+from admspack.comparisions import a_formats, output_menu
+
+#lista = ['Somewhere In Time.flac', '02 - Wasted Years.flac', '02-A P H.P.mp3', '06-Perfect Mistery.mp3', 'Katahdin - Steve Smith.wav', 'Peter Erskine.wav', 'without drum.wav']
+
+#li = supported_formats.values()
+
+#tupla = li[1]#oppure lista [1] ,[2] etc,etc (vedi MODULE_pyfirewall.py riga 697)
+#print tupla[0]
+
+
+#for a in lista:
+  #print supported_formats.keys()
+  
+#supported_formats = {'wav': ['percorso wav 1', 'percorso wav 2', 'percorso wav 3'], 'mp3': ['perc aiff 1', 'perc aiff 2'], 'ogg': ['perc ogg 1', 'perc ogg 2', 'perc ogg 3', 'perc ogg 4','perc ogg 5']}
+
+##d = supported_formats.values()
+##print d[0]
+#print supported_formats.iteritems()
+#print supported_formats.viewitems()
+#print supported_formats.items()
+#o = supported_formats.values()
+##print o[0]
+
+input_format = 'mp3'
+output_selection = 'b'
+
+#main = Audio_Formats(input_format)# Have a ext input >
+#b = main.output_selector(output_selection)
+#output_format = b
+
+
+#print output_format
+

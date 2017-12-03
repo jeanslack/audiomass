@@ -68,6 +68,8 @@ class Audio_Formats(object):
             output_format = None
             return output_format
         return output_format
+        print output_selection
+        print output_format
 
 
     def diction_strings(self, input_format, output_format):

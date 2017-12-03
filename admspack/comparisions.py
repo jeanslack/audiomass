@@ -179,25 +179,21 @@ def comparision(pair):
       'wav > flac' : ('flac', flac_diz, flac_options, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'), 
-
       'aiff > flac' : ('flac', flac_diz, flac_options, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'),
 
       'wav > mp3' : ('lame', mp3_diz, mp3_options, 'Enter the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
-
       'aiff > mp3' : ('lame', mp3_diz, mp3_options, 'Enter the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
-
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
       #'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
+      
       'wav > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-
       'aiff > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-
       'flac > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
 
@@ -209,11 +205,9 @@ def comparision(pair):
       'flac > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
-
       'ape > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
-
       'ape > ogg' : ('ffmpeg', ffmpeg_ogg_diz, ffmpeg_ogg_options,
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
