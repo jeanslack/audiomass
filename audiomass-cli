@@ -126,18 +126,19 @@ def get_batch():
     in argument
     """
     queue = []
-    if '-o' in sys.argv:
-        opt = sys.argv.index('-o')
+    opts = [x for x in ['-o','--output'] if x in sys.argv]
+    if opts:
+        opt = sys.argv.index(opts[0])
         try:
-            if sys.argv[opt +1]: # se trovo percorso dopo l'opzione -o
+            if sys.argv[opt +1]: # se trovo percorso dopo l'opzione -o --output
                 path_O = sys.argv[opt +1]
         except IndexError:
-            sys.exit( "%s missing argument after '-o' option, exit\n%s" % (
-                                                             errors, TRY))
+            sys.exit( "%s missing argument after '%s' option, exit\n%s" % (
+                                                        errors, opts[0], TRY))
         else:
             if os.path.isdir(path_O):#trovo opzione e percorso output corretti
                 arg = sys.argv[2:] # lista di passaggio per codice successivo
-                arg.remove('-o')
+                arg.remove(opts[0])
                 arg.remove(path_O)
             else:
                 sys.exit("%s %s"%(dir_access ,path_O))
@@ -150,7 +151,7 @@ def get_batch():
         queue.append(f) 
       else:
         print "%s %s" % (file_access, f)
-
+        
     batch_parser(queue, path_O)
 
 if __name__ == '__main__':
