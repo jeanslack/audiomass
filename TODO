@@ -10,6 +10,9 @@
   - elimina cancel o quiet dai menu dei bit rate [DONE]
   - fare una verifica mirata sull'interazione con i menu [TESTING]
   - copia perfettamente i colori e i messaggi sui vari get_ [TESTING]
-
   - creare funzione per lo spostamentyo dei file in get_batch [DONE]
   - Testare tutte le varianti di conversione [TESTING]
+  
+  - se importi un file senza estensione, procede. Questo è inamissibile!
+    ma c'è una attenuante: poi viene identificato e l'uscita è: Incompatible 
+    conversion

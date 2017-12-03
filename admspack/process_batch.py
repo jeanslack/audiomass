@@ -28,14 +28,14 @@ def batch_parser(f_list, path_O):
     3- Creation input menu
     4- Creation output menu
     """
-    ##########################RIMOZIONE DUPLICATI#########################
+    ##########################RIMOZIONE DUPLICATI ########################
     # Clean-up list contaminated by duplicate files.
     for k,v in Counter(f_list).items():# controllo doppioni accidentali.
         if v>1:
             print "%s Removing following duplicates: > '%s' >" % (warnings, k)
     f_list = list(set(f_list)) # elimino eventuali doppioni
     """
-    ##########################CREAZIONE DIZ###############################
+    ##########################CREAZIONE DIZ ##############################
     The following block of code is for sorting input formats into 
     separate lists
     ORDINAZIONE SEPARATA IN LISTE PER CIASCUN FILE FORMAT.
@@ -65,11 +65,12 @@ def batch_parser(f_list, path_O):
       
     #####################CREAZIONE INPUT MENU ############################
     input_selection = []#Contiene solo interi(int)
-    graphic_a_format = output_menu()#E' il menu per i formati in uscita
+    graphic_out_formats = output_menu()#Lista menu per i formati in uscita
     """
-    indx: range che esclude gli indici in lista in datastrings.py 
-    graphic_a_format per i formati definiti in variabile f_limit
-    perche mp3, ogg, ape, is available decoding in wav/aiff only:
+    indx: range che indica gli indici per i formati non supportati in 
+    lista graphic_out_formats data da output_menu() solo per i formati definiti 
+    in variabile f_limit, perche mp3, ogg, ape, is available decoding in 
+    wav/aiff only:
     """
     f_limit = ['mp3','ogg','ape']
     indx = 2,3,4,5,6
@@ -78,7 +79,7 @@ def batch_parser(f_list, path_O):
       NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati 
                     integralmente con l'originale 
       """
-      new = graphic_a_format[:] # RELOAD
+      new = graphic_out_formats[:] # RELOAD
       print ("\n    Available formats for encoding/decoding "
           "'\033[32;1m%s\033[0m' audio stream" % input_format)
       """
@@ -101,7 +102,7 @@ def batch_parser(f_list, path_O):
               NOTE 2 SET: qui con l'intero ottenuto rimuovo dalla lista
                           i formati che non sono trattati o incompatibili.
               """
-              new.remove(graphic_a_format[v[0]])# SET
+              new.remove(graphic_out_formats[v[0]])# SET
           for outformat in new:# realizzazione menu di output
             print "    %s"%(outformat)
           output_selection = raw_input('    Choice a format by a letter '
@@ -113,10 +114,11 @@ def batch_parser(f_list, path_O):
           """
           del new[:] # DELETE
           
-          #####################CREAZIONE OUTPUT MENU ############################
+          #####################CREAZIONE OUTPUT MENU #######################
           main = Audio_Formats(input_format)# Have a ext input >
           b = main.output_selector(output_selection)
           output_format = b
+          print output_selection
           if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
           elif output_format is None:
@@ -134,9 +136,10 @@ def batch_parser(f_list, path_O):
           if formats == {}:# se è completamente vuoto, esco
             sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
-          bitrate_test(main.retcode[0], main.retcode[1], main.retcode[2], 
-                main.retcode[3], main.retcode[4], formats.get(input_format), 
-                path_O, input_format)
+          bitrate_test(main.retcode[0], main.retcode[1], 
+                       main.retcode[2], main.retcode[3], 
+                       main.retcode[4], formats.get(input_format), 
+                       path_O, input_format)
 
 #print '1---- %s' %(main.retcode[0])# comando, nome codificatore/decodificatore
 #print '2----%s' % main.retcode[1]# dizionario quality usato dal prog
@@ -150,7 +153,7 @@ def batch_parser(f_list, path_O):
 def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, 
                  out_format, path_in, path_O, input_format):
     """
-    Check if out_format has bitrate.
+    Check if codec out_format has bitrate.
     Here in reality, it is only used: dict_bitrate, graphic_bitrate, 
     and dialog parameters.
  

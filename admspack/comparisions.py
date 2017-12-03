@@ -33,7 +33,7 @@ def output_menu():
     """
     Menu for output audio selection format used from all process(f,d,b)
     """
-    graphic_a_format = [
+    graphic_out_formats = [
                     "----------------------",
                     "  \033[34;1mA\033[0m ......... Wav", 
                     "  \033[34;1mB\033[0m ......... Aiff", 
@@ -45,7 +45,7 @@ def output_menu():
                     " \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m", 
                     "----------------------"
                             ]
-    return graphic_a_format
+    return graphic_out_formats
 
 
 def a_formats():

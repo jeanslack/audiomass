@@ -34,8 +34,11 @@ class Audio_Formats(object):
 
     def input_selector(self, input_selection):
         """
-        evaluate the audio input extension strings for combine format; 
-        return the attribute input_format for directory file conversions
+        Accept numbers string in input_selection parameter, see the 
+        admspack.comparisions.input_menu.
+        Get the audio input format for evaluate a possible compatibility
+        conversion; return the attribute input_format for directory file 
+        conversions
         """
         supported_formats = a_formats()
         if supported_formats[0].has_key(input_selection):
@@ -50,9 +53,10 @@ class Audio_Formats(object):
 
     def output_selector(self, output_selection):
         """
-        looking for a comparison between the input format and the 
-        output format.
-        Accept integer only .
+        looking for a comparison/compatibilities between the input 
+        format and the output format.
+        Accept letters string in output_selection parameter, see the
+        output_menu in comparisions module.
         when both formats are paired they are sent to the method 
         diction_strings
         """

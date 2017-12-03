@@ -42,14 +42,14 @@ def file_parser(input_format, path_name, path_O):
         sys.exit('\n%s Not format supported "%s"\nPlease, choice one of: '
         '%s\n' % (errors, input_format, supported_formats[1]))
 
-    graphic_a_format = output_menu()
-    new = graphic_a_format[:]
+    graphic_out_formats = output_menu()
+    new = graphic_out_formats[:]
 
     if input_format in f_limit:
         indx = 2,3,4,5,6
         new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
     else:
-        new.remove(graphic_a_format[input_selection])
+        new.remove(graphic_out_formats[input_selection])
     #subprocess.call(['clear'])
     print ("\n    Available formats for "
               "encoding/decoding '\033[32;1m%s\033[0m' audio " 
