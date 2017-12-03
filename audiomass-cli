@@ -59,6 +59,8 @@ def main():
     elif '-c' in sys.argv or '--copying' in sys.argv:
         print LICENSE
         return
+    elif len(sys.argv) == 1:
+        print LICENSE, LONG_HELP
     else:
         sys.exit("%s Invalid options: '%s' \n%s" % (errors,
                                             sys.argv[1:][0], TRY))

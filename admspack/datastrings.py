@@ -33,8 +33,9 @@ Lame, Vorbis-tools, Monkey's Audio, Shntool FFmpeg, etc.
   usage = """--------------------------------------------------------------
 Audiomass-cli - %s by %s
 --------------------------------------------------------------
-Front-end wrapper audio converter interface for Flac, 
-Lame, Ogg, Mac, Shntool and FFmpeg audio libraries.
+This is the short help; for more information read the manual: 
+'man audiomass-cli' or read the audiomass-cli.pdf into source
+directory.
 
 Usage: 
   audiomass-cli option <infile>
@@ -58,7 +59,7 @@ Exemples:
   
   try_help = u"Try: 'audiomass-cli --help' or 'man audiomass-cli'."
 
-  license = u"""
+  license = u"""==============================================================
 Copyright %s - %s
 Author and Developer: %s
 Mail: %s
@@ -75,6 +76,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this package; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+==============================================================
 """ % (copyright, author, author, mail)
 
   short_license = u"'Gnu GPL3 (Gnu Public License)"
