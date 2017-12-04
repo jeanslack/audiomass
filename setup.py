@@ -12,7 +12,6 @@
 # license: GPL3
 # Rev 1 november 22 2017
 #########################################################
-
 from distutils.core import setup
 from setuptools import setup
 import platform
@@ -40,13 +39,15 @@ def glob_files(pattern):
     this is a simple function for globbing that iterate 
     for list files in dir
     """
-    
     return [f for f in glob(pattern) if os.path.isfile(f)]
 
-
 def LINUX_SLACKWARE(id_distro, id_version):
-    
-    
+    """
+    Slackware distribuitions use the slackbuild for automatize 
+    the building package. Here there are some informations to pass
+    at slackbuild for compile this package.
+    """
+
     setup(name = RLS_NAME,
         version = VERSION,
         description = DESCRIPTION,
@@ -87,16 +88,13 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     # even path must be relative-path
     DATA_FILES = [
         ('share/man/man1', ['man/audiomass-cli.1.gz']),
-        ('share/doc/python-cliffwall', ['AUTHORS', 'BUGS', 'CHANGELOG', 
+        ('share/doc/python-audiomass-cli', ['AUTHORS', 'BUGS', 'CHANGELOG', 
                               'COPYING', 'LICENSE', 'README.md', 'TODO']),
                 ]
-    
     DEPENDENCIES = ['python >=2.6']
-    
     EXTRA_DEPEND = {'vorbis-tools':  ["vorbis-tools"],'shntool':  ["shntool"],
                     'flac':  ["flac"], 'monkeys-audio':  ["monkeys-audio"], 
                     'lame':  ["lame"], 'sox':  ["sox"],'ffmpeg':  ["ffmpeg"]}
-    
     setup(name = RLS_NAME,
         version = VERSION,
         description = DESCRIPTION,
@@ -112,25 +110,17 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         install_requires = DEPENDENCIES,
         extras_require = EXTRA_DEPEND,
         )
-
 ##################################################
-
 if sys.platform.startswith('linux2'):
-    
     dist_name = platform.linux_distribution()[0]
     dist_version = platform.linux_distribution()[1]
-    
     if dist_name == 'Slackware ':
         LINUX_SLACKWARE(dist_name, dist_version)
-        
     elif dist_name == 'debian' or dist_name == 'Ubuntu':
         LINUX_DEBIAN_UBUNTU(dist_name, dist_version)
-        
     else:
         print 'this platform is not yet implemented: %s %s' % (
                                        dist_name, dist_version)
-        
-
 else:
     print 'OS not supported'
 ###################################################
