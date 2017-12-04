@@ -27,15 +27,17 @@ def batch_parser(f_list, path_O):
       in order to group the streams with the same format into separate lists 
     3- Creation input menu
     4- Creation output menu
+    During output menu creation, Get a tuple with specified command
+    elements
     """
-    ##########################RIMOZIONE DUPLICATI ########################
+    ##########################  RIMOZIONE DUPLICATI
     # Clean-up list contaminated by duplicate files.
     for k,v in Counter(f_list).items():# controllo doppioni accidentali.
         if v>1:
             print "%s Removing following duplicates: > '%s' >" % (warnings, k)
     f_list = list(set(f_list)) # elimino eventuali doppioni
     """
-    ##########################CREAZIONE DIZ ##############################
+    ##########################  CREAZIONE DIZ 
     The following block of code is for sorting input formats into 
     separate lists
     ORDINAZIONE SEPARATA IN LISTE PER CIASCUN FILE FORMAT.
@@ -63,7 +65,7 @@ def batch_parser(f_list, path_O):
       new = ext.replace(".","")# tolgo il punto all'estensione
       formats[new].append("%s%s" %(name,ext))
       
-    #####################CREAZIONE INPUT MENU ############################
+    ##########################  CREAZIONE INPUT MENU 
     input_selection = []#Contiene solo interi(int)
     graphic_out_formats = output_menu()#Lista menu per i formati in uscita
     """
@@ -107,27 +109,24 @@ def batch_parser(f_list, path_O):
             print "    %s"%(outformat)
           output_selection = raw_input('    Choice a format by a letter '
                                         'and just hit enter: ')
-          """
-          NOTE 3 DELETE: cancello il grafico dei formati settati prima
-                         altrimenti rimangono in memoria con gli elementi
-                         cancellati
-          """
+          """NOTE 3 DELETE: cancello il grafico dei formati settati prima
+            altrimenti rimangono in memoria con gli elementi gia rimossi"""
           del new[:] # DELETE
           
-          #####################CREAZIONE OUTPUT MENU #######################
+          #####################  CREAZIONE OUTPUT MENU 
           main = Audio_Formats(input_format)# Have a ext input >
-          b = main.output_selector(output_selection)
-          output_format = b
+          output_format = main.output_selector(output_selection)# get out format
+          tuple_data = main.diction_strings()# return a tuple data of the codec
           if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
           elif output_format is None:
             print ("\n%s Entry error in selection output format, "
                      " %s >> skipping" % (warnings, output_selection))
-            formats.pop(input_format, None)#Se nessuna selezione e premi enter rimuovo 
-            #chiave e valore dal dizionario, cioè escludo quei files dalla
-            #conversione.
+            formats.pop(input_format, None)#Se nessuna selezione e premi enter
+            #rimuovo  chiave e valore dal dizionario, cioè escludo quei files
+            #dalla conversione.
             continue # meglio partire da capo 
-          if main.retcode == 'KeyError':
+          if tuple_data == 'KeyError':
             print ("\n%s Incompatible conversion >> skipping >>" % warnings)
             formats.pop(input_format, None)
             continue # troppi errori, meglio contimuare da capo
@@ -135,46 +134,24 @@ def batch_parser(f_list, path_O):
           if formats == {}:# se è completamente vuoto, esco
             sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
-          bitrate_test(main.retcode[0], main.retcode[1], 
-                       main.retcode[2], main.retcode[3], 
-                       main.retcode[4], formats.get(input_format), 
-                       path_O, input_format)
+          bitrate_test(tuple_data, output_format, formats.get(input_format), 
+                       path_O)
 
-#print '1---- %s' %(main.retcode[0])# comando, nome codificatore/decodificatore
-#print '2----%s' % main.retcode[1]# dizionario quality usato dal prog
-#print '3----%s' % main.retcode[2]# reference quality usato dallo user
-#print '4----%s' % main.retcode[3]#stringa contestuale bit-rate di object_assignment diz. 
-#print '5----%s' % main.retcode[4]# nome del formato in uscita
-#print '6----%s' % formats.get(a)# percorso o filename (dai la lista)
-#print '7----%s' % path_O # percorso salvataggio output stream
-#print '8----%s' % a # formato dei file da convertire
-
-def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog, 
-                 out_format, path_in, path_O, input_format):
+def bitrate_test(tuple_data, output_format, path_in, path_O):
     """
-    Check if codec out_format has bitrate.
-    Here in reality, it is only used: dict_bitrate, graphic_bitrate, 
-    and dialog parameters.
- 
-    just to remind me notified:
-
-    dammi il valore di questa chiave: 
-        command = main.retcode[0] 
-    dammi il dizionario per il confronto del fattore di compressione:
-        dict_bitrate = main.retcode[1]
-    dammi il grafico del fattore compressione:
-        graphic_bitrate = main.retcode[2]
-    dialogo immissione fattore di compressione:
-        dialog = main.retcode[3] 
-    l'estensione finale dei files convertiti:
-        out_format = main.retcode[4]
+    Check if codec support bitrate for level compression.
+    
     """
+    dict_bitrate = tuple_data[1] # a dictionary of corresponding bitrate values
+    graphic_bitrate = tuple_data[2]# a list with strings for graphic of choice
+    contestual_text = tuple_data[3]# 'please, select a bitrate value'
+    #output_format = tuple_data[4] # non serve, gia definito
+
     if dict_bitrate is None:
         bitrate = ''
     else:
         print graphic_bitrate
-        level = raw_input(dialog)
-
+        level = raw_input(contestual_text)
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
         valid = bitrate
@@ -183,32 +160,19 @@ def bitrate_test(command, dict_bitrate, graphic_bitrate, dialog,
                 warnings, level)
                     )
             bitrate = ''
-            
-    command_builder(command, bitrate, out_format, path_in, path_O, 
-                    input_format)
-    
-#print command # comando impostato per conversione
-#print dict_bitrate #  dizionario bit-rate
-#print graphic_bitrate # grafico per scelta livello bit-rate
-#print dialog # stringa usata per il contesto su level = raw_input(dialog)
-#print out_format # formato di uscita
-#print path_in # lista file da convertire
-#print path_O # percorso salvataggio output stream
-#print input_format # formato dei file da convertire
+    command_builder(tuple_data, bitrate, output_format, path_in, path_O)
 
-def command_builder(command, bitrate, out_format, path_in, path_O, 
-                    input_formatt):
+def command_builder(tuple_data, bitrate, out_format, path_in, path_O):
     """
-    command_builder is based on construction of the paths and formats
-    strings (out_format, path_in, path_O) and the 'command' variable, that 
-    contains the key (codec) for an corresponding values used for process.
+    command_builder build the command, with the options, the paths names, etc.
+    The 'id_codec' variable, contains the key (codec) for an corresponding 
+    value with command_dict.
     """
-    exe = 'False'
+    id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     count = 0
     for path_name in path_in:
         stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'
         file_name = os.path.splitext(stream_I)[0]#only stream with no ext
-        exe = None
         count += 1
         if path_O is None: # se non ce sys.argv[3]
             path_O = os.path.dirname(path_name)
@@ -238,12 +202,10 @@ def command_builder(command, bitrate, out_format, path_in, path_O,
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                     % (str(count),out_format, path_O, file_name, out_format))
         try:
-            #print command_dict[command]# uncomment for debug
-            subprocess.check_call(command_dict[command], shell=True)
+            #print command_dict[id_codec]# uncomment for debug
+            subprocess.check_call(command_dict[id_codec], shell=True)
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
     print "\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in)
     print "\n\033[37;7mDone...\033[0m\n"
-
-

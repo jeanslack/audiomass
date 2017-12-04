@@ -15,22 +15,18 @@ from comparisions import a_formats, comparision
 
 class Audio_Formats(object):
     """
-    Interface for combine audio formats in the conversion processes that 
-    use different libraries .
+    interface for comparison audio formats in the conversion 
+    processes where different libraries and codecs are used.
     """
     def __init__(self, input_format):
         """
-        Can be accept one argument of type strings or None values.
-
-        Pass argument with audio input extension strings without dot, if 
-        you have already chosen a single file (one audio track conversion). 
-
-        Pass None if you want also select the input format for directory 
-        file process. 
+        Can be accept one argument of type string or None values.
+        If not None, Argument is the audio input extension string 
+        without dot punctuation.  
         """
         self.input_format = input_format
+        self.output_format = None
         self.retcode = None # return a data tuple
-
 
     def input_selector(self, input_selection):
         """
@@ -50,46 +46,37 @@ class Audio_Formats(object):
             return self.input_format
         return self.input_format
 
-
     def output_selector(self, output_selection):
         """
         looking for a comparison/compatibilities between the input 
         format and the output format.
         Accept letters string in output_selection parameter, see the
         output_menu in comparisions module.
-        when both formats are paired they are sent to the method 
-        diction_strings
         """
         case = a_formats()
         if output_selection in case[2].keys():
-            output_format = case[2][output_selection]
-            self.diction_strings(self.input_format, output_format)
+            self.output_format = case[2][output_selection]
         else:
-            output_format = None
-            return output_format
-        return output_format
-        print output_selection
-        print output_format
+            #output_format = None
+            return self.output_format
+        return self.output_format
 
-
-    def diction_strings(self, input_format, output_format):
+    def diction_strings(self,):
         """
         returns data for that pair input_format and output_format
-        type_proc è un contrassegno file/dir o batch
         """
-        pair = '%s > %s' % (input_format, output_format)
+        pair = '%s > %s' % (self.input_format, self.output_format)
 
         if self.retcode == 'KeyError':
             self.retcode = comparision
         else:
             self.retcode = comparision(pair)
-            
-
+        return self.retcode
 
     def quality_level(self, dict_bitrate, level):
         """
-        If audio codec support audio quality or bitrate, this method 
-        return a level of bitrate.
+        If audio codec support audio bitrate level, this method 
+        define true or false and return a level of bitrate.
         """
         if level in dict_bitrate:
             valid = True
@@ -97,5 +84,3 @@ class Audio_Formats(object):
         else:
             valid = False
             return valid
-
-
