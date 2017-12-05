@@ -217,3 +217,26 @@ def comparision(pair):
 
   except KeyError:
       return 'KeyError' 
+  
+def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
+    """
+    """
+    command_dict = {
+'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                        file_name, output_format),
+'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                file_name, output_format),
+'lame --decode':'lame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
+                                file_name, output_format),
+'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
+                                        file_name, output_format),
+'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, output_format,
+                                bitrate),
+'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
+                                        file_name, output_format),
+'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
+                                    output_format),
+'shntool':'shntool conv -o %s "%s" -d "%s"' % (output_format, path_name, path_O),
+                        }
+
+    return command_dict[id_codec]

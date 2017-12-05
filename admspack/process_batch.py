@@ -15,7 +15,7 @@ import sys
 import os
 from collections import Counter
 from audio_formats import Audio_Formats
-from comparisions import a_formats, output_menu
+from comparisions import a_formats, output_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -162,7 +162,7 @@ def bitrate_test(tuple_data, output_format, path_in, path_O):
             bitrate = ''
     command_builder(tuple_data, bitrate, output_format, path_in, path_O)
 
-def command_builder(tuple_data, bitrate, out_format, path_in, path_O):
+def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
     """
     command_builder build the command, with the options, the paths names, etc.
     The 'id_codec' variable, contains the key (codec) for an corresponding 
@@ -176,34 +176,20 @@ def command_builder(tuple_data, bitrate, out_format, path_in, path_O):
         count += 1
         if path_O is None: # se non ce sys.argv[3]
             path_O = os.path.dirname(path_name)
-        if os.path.exists('%s/%s.%s' % (path_O, file_name, out_format)):
+        if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
             print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
-                    warnings, path_O, file_name, out_format)
+                    warnings, path_O, file_name, output_format)
                     )
             continue
         
-        command_dict = {
-'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, out_format),
-'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                file_name, out_format),
-'lame --decode':'ame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
-                                file_name, out_format),
-'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, out_format),
-'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, out_format,
-                                bitrate),
-'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
-                                        file_name, out_format),
-'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
-                                    out_format),
-'shntool':'shntool conv -o %s "%s" -d "%s"' % (out_format, path_name, path_O),
-                        }
+        command = build_cmd(id_codec, bitrate, path_name, 
+                           path_O, file_name, output_format)
+
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
-                    % (str(count),out_format, path_O, file_name, out_format))
+            % (str(count),output_format, path_O, file_name, output_format))
         try:
-            #print command_dict[id_codec]# uncomment for debug
-            subprocess.check_call(command_dict[id_codec], shell=True)
+            #print command # uncomment for debug
+            subprocess.check_call(command, shell=True)
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             

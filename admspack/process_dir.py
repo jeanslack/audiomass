@@ -15,7 +15,7 @@ import glob
 import sys
 import os
 from audio_formats import Audio_Formats
-from comparisions import a_formats, input_menu, output_menu
+from comparisions import a_formats, input_menu, output_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -113,7 +113,7 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
     exe = 'False'
     count = 0
         # nome del singolo file completo
-    for path_name in glob.glob("%s/*.%s" % (path_I, input_format)): 
+    for path_name in glob.glob("%s/*.%s" % (path_I, input_format)):
         stream_I = os.path.basename(path_name)
         file_name = os.path.splitext(stream_I)[0]
         exe = None
@@ -125,29 +125,14 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
                     warnings, path_O, file_name, output_format)
                     )
             continue
-
-        command_dict = {
-'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                file_name, output_format),
-'lame --decode':'lame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
-                                file_name, output_format),
-'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, output_format,
-                                bitrate),
-'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
-                                        file_name, output_format),
-'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
-                                    output_format),
-'shntool':'shntool conv -o %s "%s" -d "%s"' % (output_format, path_name, path_O),
-                        }
+        
+        command = build_cmd(id_codec, bitrate, path_name, 
+                           path_O, file_name, output_format)
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (str(count),output_format, path_O, file_name, output_format))
         try:
-            #print command_dict[id_codec] # uncomment for debug
-            subprocess.check_call(command_dict[id_codec], shell=True)
+            #print command # uncomment for debug
+            subprocess.check_call(command, shell=True)
                 
         except subprocess.CalledProcessError as err:
             sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
