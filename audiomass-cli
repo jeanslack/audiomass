@@ -52,13 +52,10 @@ def main():
         get_batch()
     elif '-v' in sys.argv or '--version' in sys.argv:
         print "%s - %s - Released %s" % (RLS_NAME, VERSION, RELEASE) 
-        return
     elif '-h' in sys.argv or '--help' in sys.argv:
         print LONG_HELP
-        return
     elif '-c' in sys.argv or '--copying' in sys.argv:
         print LICENSE
-        return
     elif len(sys.argv) == 1:
         print LICENSE, LONG_HELP
     else:
