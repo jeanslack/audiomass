@@ -5,10 +5,10 @@
 # Name: audiomass (main script)
 # Porpose:  Boot straps for audiomass script
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Version: (Ver.0.6) Febbruary 2015
-# Rev
+# Version: (Ver.0.7) December 2017
+# Rev 3
 #########################################################
 
 import sys
