@@ -1,4 +1,15 @@
 +--------------------------+
+Dec. 06 2017 Version 0.7.2
++--------------------------+
+
+ - Now every file to be converted can have either uppercase or 
+   lowercase names
+
+ - Fixed the bugs of the previous version
+
+ - The code has also been improved a little bit
+
++--------------------------+
 Dec. 01 2017 Version 0.7.1
 +--------------------------+
 

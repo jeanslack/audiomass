@@ -55,11 +55,17 @@ def a_formats():
   comparision
   """
   
-  support = ['wav','aiff','flac','ape','mp3','ogg']
+  support = ['wav','aiff','flac','ape','mp3','ogg',
+             'WAV','AIFF','FLAC','APE','MP3','OGG'
+             ]
   
-  supported_formats = {'1': (1,'wav'), '2': (2,'aiff'), 
-                  '3': (3,'flac'), '4': (4,'ape'), 
-                  '5': (5,'mp3'),'6': (6,'ogg')}
+  """
+  supported_format: it is useful to limit the choices within 
+  the available options of the graphic input menu.
+  """
+  supported_formats = {'1': (1,'WAV','wav'), '2': (2,'AIFF','aiff'), 
+                  '3': (3,'FLAC','flac'), '4': (4,'APE','ape'), 
+                  '5': (5,'MP3','mp3'),'6': (6,'OGG','ogg')}
   
   case = {'a':'wav', 'A':'wav', 'b':'aiff','B':'aiff', 'c':'flac', 
               'C':'flac','d':'ape', 'D':'ape', 'e':'mp3', 'E':'mp3', 

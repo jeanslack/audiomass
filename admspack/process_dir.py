@@ -21,7 +21,7 @@ warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
 #lista dei formati con limiti di scelta nella conversioni
-f_limit = ['mp3','ogg','ape']
+f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
 
 def dir_parser(path_I, path_O):
     """
@@ -42,6 +42,7 @@ def dir_parser(path_I, path_O):
             sys.exit("\n%s Entry error in select input format, exit!" % errors)
     graphic_out_formats = output_menu()
     new = graphic_out_formats[:]
+
     if input_format in f_limit:
         indx = 2,3,4,5,6
         new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
@@ -109,38 +110,42 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
     path_I = '/home/Musica solo input dir-name'
     path_O = '/dir/dir solo output dir-name'
     """
+    format_ = [input_format, input_format.upper()]
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     exe = 'False'
     count = 0
-        # nome del singolo file completo
-    for path_name in glob.glob("%s/*.%s" % (path_I, input_format)):
-        stream_I = os.path.basename(path_name)
-        file_name = os.path.splitext(stream_I)[0]
-        exe = None
-        count += 1
-        if path_O is None: # se non ce sys.argv[3]
-            path_O = os.path.dirname(path_name)
-        if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
-            print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
-                    warnings, path_O, file_name, output_format)
-                    )
-            continue
+    for upper_lower in format_:
+
         
-        command = build_cmd(id_codec, bitrate, path_name, 
-                           path_O, file_name, output_format)
-        print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
-                % (str(count),output_format, path_O, file_name, output_format))
-        try:
-            #print command # uncomment for debug
-            subprocess.check_call(command, shell=True)
-                
-        except subprocess.CalledProcessError as err:
-            sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
-    
+            # nome del singolo file completo
+        for path_name in glob.glob("%s/*.%s" % (path_I, upper_lower)):
+            stream_I = os.path.basename(path_name)
+            file_name = os.path.splitext(stream_I)[0]
+            exe = None
+            count += 1
+            if path_O is None: # se non ce sys.argv[3]
+                path_O = os.path.dirname(path_name)
+            if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
+                print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
+                        warnings, path_O, file_name, output_format)
+                        )
+                continue
+            
+            command = build_cmd(id_codec, bitrate, path_name, 
+                            path_O, file_name, output_format)
+            print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
+                    % (str(count),output_format, path_O, file_name, output_format))
+            try:
+                #print command # uncomment for debug
+                subprocess.check_call(command, shell=True)
+                    
+            except subprocess.CalledProcessError as err:
+                sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
+        
     if exe == 'False':
             sys.exit("\n%s Files missing: No files '%s' "
                 "in '%s' \n" % (errors, input_format, path_I)
-                    )
+                        )
     print "\n\033[37;7mDone...\033[0m\n"
 
 

@@ -18,8 +18,8 @@ def info():################################### INFO
   author = u"Gianluca Pernigotto aka Jeanslack"
   mail = u'<jeanlucperni@gmail.com>'
   copyright = u'© 2013-2017'
-  version = u'v0.7.1'
-  release = u'Dec. 1 2017'
+  version = u'v0.7.2'
+  release = u'Dec. 6 2017'
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"

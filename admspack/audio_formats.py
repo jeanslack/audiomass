@@ -30,17 +30,17 @@ class Audio_Formats(object):
 
     def input_selector(self, input_selection):
         """
-        Accept numbers string in input_selection parameter, see the 
-        admspack.comparisions.input_menu.
-        Get the audio input format for evaluate a possible compatibility
-        conversion; return the attribute input_format for directory file 
-        conversions
+        Accept number string argument and return the corresponding 
+        format or None. This method is related to the graphic input menu
+        and from process_dir only. it is useful to limit the choices within 
+        the available options of the graphic input menu.
         """
+
         supported_formats = a_formats()
         if supported_formats[0].has_key(input_selection):
             # mi da il formato:
-            self.input_format = supported_formats[0][input_selection][1] 
-
+            input_format = supported_formats[0][input_selection][1]
+            self.input_format = input_format.lower()
         else:
             self.input_format = None
             return self.input_format
@@ -50,10 +50,11 @@ class Audio_Formats(object):
         """
         looking for a comparison/compatibilities between the input 
         format and the output format.
-        Accept letters string in output_selection parameter, see the
+        Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
         """
         case = a_formats()
+
         if output_selection in case[2].keys():
             self.output_format = case[2][output_selection]
         else:

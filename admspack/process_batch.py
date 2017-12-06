@@ -51,8 +51,10 @@ def batch_parser(f_list, path_O):
       new = ext.replace(".","")#Tolgo il punto all'estensione
       if new in supported_formats[1]:#Se estensione input è supportata
         new_list.append(i)#Lista ripulita file importati
-        if not formats.has_key(new):#Add not present key at dict
-          formats[new] = [] #Aggiungo chiavi non presenti nel diz +
+
+
+        if not formats.has_key(new.lower()):#Add not present key at dict
+          formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
                             #valore lista vuota: {formato:[]}
       else:
         print '\n%s Not supported file format: "%s%s" >> skipping >>'% (
@@ -63,7 +65,7 @@ def batch_parser(f_list, path_O):
     for i in new_list:
       name, ext = os.path.splitext(i)
       new = ext.replace(".","")# tolgo il punto all'estensione
-      formats[new].append("%s%s" %(name,ext))
+      formats[new.lower()].append("%s%s" %(name,ext))
       
     ##########################  CREAZIONE INPUT MENU 
     input_selection = []#Contiene solo interi(int)
@@ -74,7 +76,7 @@ def batch_parser(f_list, path_O):
     in variabile f_limit, perche mp3, ogg, ape, is available decoding in 
     wav/aiff only:
     """
-    f_limit = ['mp3','ogg','ape']
+    f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
     indx = 2,3,4,5,6
     for input_format in formats.keys():#Itero sui formati importati
       """
@@ -97,6 +99,7 @@ def batch_parser(f_list, path_O):
           comparisions.a_formats()
           """
           input_selection.append(v[0])# v[0] mi da l'intero
+
           if input_format in f_limit:
               new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
           else:
@@ -113,7 +116,7 @@ def batch_parser(f_list, path_O):
             altrimenti rimangono in memoria con gli elementi gia rimossi"""
           del new[:] # DELETE
           
-          #####################  CREAZIONE OUTPUT MENU 
+          ######################  CREAZIONE OUTPUT MENU 
           main = Audio_Formats(input_format)# Have a ext input >
           output_format = main.output_selector(output_selection)# get out format
           tuple_data = main.diction_strings()# return a tuple data of the codec

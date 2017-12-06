@@ -22,7 +22,7 @@ warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
 #lista dei formati con limiti di scelta nella conversioni
-f_limit = ['mp3','ogg','ape']
+f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
 
 def file_parser(input_format, path_name, path_O):
     """
@@ -54,7 +54,7 @@ def file_parser(input_format, path_name, path_O):
     #subprocess.call(['clear'])
     print ("\n    Available formats for "
               "encoding/decoding '\033[32;1m%s\033[0m' audio " 
-              "stream" % input_format
+              "stream" % input_format.lower()
             )
     for outformat in new:
         print "    %s"%(outformat)
@@ -62,7 +62,7 @@ def file_parser(input_format, path_name, path_O):
     output_selection = raw_input('    Type a letter for your encoding '
                                     'and just hit enter: '
                                     )
-    main = Audio_Formats(input_format)# Have a ext input >
+    main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
     tuple_data = main.diction_strings()# return a tuple data of the codec
     
