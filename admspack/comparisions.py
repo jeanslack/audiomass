@@ -10,7 +10,6 @@
 # Version: (Ver.0.6) Febbruary 2015
 # Rev
 #########################################################
-############################################################## MENUs
 def input_menu():
     """
     Menu for input audio selection format used from process_dir
@@ -54,26 +53,22 @@ def a_formats():
   you might start from here and then add formats modules to the function
   comparision
   """
-  
   support = ['wav','aiff','flac','ape','mp3','ogg',
              'WAV','AIFF','FLAC','APE','MP3','OGG'
              ]
-  
   """
   supported_format: it is useful to limit the choices within 
   the available options of the graphic input menu.
   """
   supported_formats = {'1': (1,'WAV','wav'), '2': (2,'AIFF','aiff'), 
-                  '3': (3,'FLAC','flac'), '4': (4,'APE','ape'), 
-                  '5': (5,'MP3','mp3'),'6': (6,'OGG','ogg')}
+                       '3': (3,'FLAC','flac'), '4': (4,'APE','ape'), 
+                       '5': (5,'MP3','mp3'),'6': (6,'OGG','ogg')}
   
   case = {'a':'wav', 'A':'wav', 'b':'aiff','B':'aiff', 'c':'flac', 
-              'C':'flac','d':'ape', 'D':'ape', 'e':'mp3', 'E':'mp3', 
-              'f':'ogg', 'F':'ogg',
+          'C':'flac','d':'ape', 'D':'ape', 'e':'mp3', 'E':'mp3', 
+          'f':'ogg', 'F':'ogg',
               }
-  
   return supported_formats, support, case
-
 
 def comparision(pair):
   """
@@ -154,21 +149,21 @@ def comparision(pair):
               "2":"--preset extreme", "3":"--preset insane"}
 
   ffmpeg_mp3_diz = {"0":"-acodec libmp3lame -b:a 128k -ar 44100",  
-                      "1":"-acodec libmp3lame -b:a 160k -ar 44100",
-                      "2":"-acodec libmp3lame -b:a 192k -ar 44100", 
-                      "3":"-acodec libmp3lame -b:a 260k -ar 44100",
-                      "4":"-acodec libmp3lame -b:a 320k -ar 44100",
+                    "1":"-acodec libmp3lame -b:a 160k -ar 44100",
+                    "2":"-acodec libmp3lame -b:a 192k -ar 44100", 
+                    "3":"-acodec libmp3lame -b:a 260k -ar 44100",
+                    "4":"-acodec libmp3lame -b:a 320k -ar 44100",
                           }
 
   ogg_diz = {"1":"-q 1", "2":"-q 2", "3":"-q 3", "4":"-q 4", "5":"-q 5",
-          "6":"-q 6", "7":"-q 7", "8":"-q 8", "9":"-q 9", "10":"-q 10"
+             "6":"-q 6", "7":"-q 7", "8":"-q 8", "9":"-q 9", "10":"-q 10"
                   }
 
   ffmpeg_ogg_diz = {"0":"-vn -acodec libvorbis -ar 44100 -ab 128k",  
-                      "1":"-vn -acodec libvorbis -ar 44100 -ab 160k", 
-                      "2":"-vn -acodec libvorbis -ar 44100 -ab 192k", 
-                      "3":"-vn -acodec libvorbis -ar 44100 -ab 260k",  
-                      "4":"-vn -acodec libvorbis -ar 44100 -ab 320k",
+                    "1":"-vn -acodec libvorbis -ar 44100 -ab 160k", 
+                    "2":"-vn -acodec libvorbis -ar 44100 -ab 192k", 
+                    "3":"-vn -acodec libvorbis -ar 44100 -ab 260k",  
+                    "4":"-vn -acodec libvorbis -ar 44100 -ab 320k",
                           }
       
   object_assignment = {
@@ -226,6 +221,11 @@ def comparision(pair):
   
 def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
     """
+    Each command associated with a type of codec appears to be different. 
+    This problem is solved here. Return a string with the command correctly 
+    formed.
+    NOTE: The keyo f this dictionary must match the first value of the 
+    'object assignment' dictionary to work well
     """
     command_dict = {
 'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
