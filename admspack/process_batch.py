@@ -181,8 +181,8 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
             % (str(count),output_format, path_O, file_name, output_format))
         try:
-            print command # uncomment for debug
-            #subprocess.check_call(command, shell=True)
+            #print command # uncomment for debug
+            subprocess.check_call(command, shell=True)
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
