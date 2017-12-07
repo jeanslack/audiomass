@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 #
 #########################################################
-# Name: audiomass (main script)
+# Name: audiomass (main script for execution)
 # Porpose:  Boot straps for audiomass script
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -10,7 +10,6 @@
 # Version: (Ver.0.7) December 2017
 # Rev 3
 #########################################################
-
 import sys
 import os
 from admspack.datastrings import info
@@ -65,7 +64,7 @@ def main():
 
 def get_file():
     """
-    Get the filename and output dirname if output dirname in argument
+    Get the filename and output dirname if output dirname in sys.argv
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
@@ -97,7 +96,7 @@ def get_file():
 
 def get_dir():
     """
-    Get input dirname and output dirname if output dirname in argument
+    Get input dirname and output dirname if output dirname in sys.argv
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
@@ -125,8 +124,9 @@ def get_dir():
 
 def get_batch():
     """
-    Put a queue stream in list and pass with the output dir if
-    in argument
+    Groups a queued input file stream and puts it in the queue list. 
+    Call the specified function and send queue list and output dirname 
+    if output dirname in sys.argv.
     """
     queue = []
     opts = [x for x in ['-o','--output'] if x in sys.argv]
