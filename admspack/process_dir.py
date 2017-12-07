@@ -115,9 +115,6 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
     exe = 'False'
     count = 0
     for upper_lower in format_:
-
-        
-            # nome del singolo file completo
         for path_name in glob.glob("%s/*.%s" % (path_I, upper_lower)):
             stream_I = os.path.basename(path_name)
             file_name = os.path.splitext(stream_I)[0]
@@ -134,7 +131,8 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
             command = build_cmd(id_codec, bitrate, path_name, 
                             path_O, file_name, output_format)
             print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
-                    % (str(count),output_format, path_O, file_name, output_format))
+                    % (str(count),output_format, path_O, file_name, 
+                       output_format))
             try:
                 #print command # uncomment for debug
                 subprocess.check_call(command, shell=True)

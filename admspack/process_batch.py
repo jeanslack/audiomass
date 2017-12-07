@@ -47,23 +47,23 @@ def sorting_dictionary(f_list, path_O):
     supported_formats = a_formats()#Chiamo la funzione su comparisions
     #Creazione keys (chiavi) nel diz. formats:
     for i in f_list: #Append separated file format
-      name, ext = os.path.splitext(i)
-      new = ext.replace(".","")#Tolgo il punto all'estensione
-      if new in supported_formats[1]:#Se estensione input è supportata
-        new_list.append(i)#Lista ripulita file importati
-        if not formats.has_key(new.lower()):#Add not present key at dict
-          formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
+        name, ext = os.path.splitext(i)
+        new = ext.replace(".","")#Tolgo il punto all'estensione
+        if new in supported_formats[1]:#Se estensione input è supportata
+            new_list.append(i)#Lista ripulita file importati
+            if not formats.has_key(new.lower()):#Add not present key at dict
+                formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
                             #valore lista vuota: {formato:[]}
-      else:
-        print '\n%s Not supported file format: "%s%s" >> skipping >>'% (
+        else:
+            print '\n%s Not supported file format: "%s%s" >> skipping >>'% (
                                                     warnings,name,ext)
     if new_list == []: # se i file importati sono tutti incompatibili
-      sys.exit('\n%s ...No audio streams to process, exit!' % errors)
+        sys.exit('\n%s ...No audio streams to process, exit!' % errors)
     # Creazione dei records (valori) nel diz. formats
     for i in new_list:
-      name, ext = os.path.splitext(i)
-      new = ext.replace(".","")# tolgo il punto all'estensione
-      formats[new.lower()].append("%s%s" %(name,ext))
+        name, ext = os.path.splitext(i)
+        new = ext.replace(".","")# tolgo il punto all'estensione
+        formats[new.lower()].append("%s%s" %(name,ext))
     menu_selections(formats, supported_formats, path_O)
 
 def menu_selections(formats, supported_formats, path_O):
@@ -77,58 +77,60 @@ def menu_selections(formats, supported_formats, path_O):
     graphic_out_formats = output_menu()#Lista menu per i formati in uscita
 
     for input_format in formats.keys():#Itero sui formati importati
-      # NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati 
-      # integralmente con l'originale 
-      new = graphic_out_formats[:] # RELOAD
-      print ("\n    Available formats for encoding/decoding "
-          "'\033[32;1m%s\033[0m' audio stream" % input_format)
-      # Dizion. = {chiavi'srtinga 1':(integear,'formato')} 
-      # itero sulla tupla valori 
-      for v in supported_formats[0].values():
-        if input_format in v:# mi prendo gli interi corrispondenti
-          # input_selection contiene solo integear, che sono il primo elemento
-          # del valore tupla della chiave del dizionario 'supported_formats' 
-          # corrispondente al formato (vedi supported_formats in 
-          # comparisions.a_formats()
-          input_selection.append(v[0])# v[0] mi da l'intero
+        # NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati 
+        # integralmente con l'originale 
+        new = graphic_out_formats[:] # RELOAD
+        print ("\n    Available formats for encoding/decoding "
+            "'\033[32;1m%s\033[0m' audio stream" % input_format)
+        # Dizion. = {chiavi'srtinga 1':(integear,'formato')} 
+        # itero sulla tupla valori 
+        for v in supported_formats[0].values():
+            if input_format in v:# mi prendo gli interi corrispondenti
+                # input_selection contiene solo integear, che sono il primo 
+                # elemento del valore tupla della chiave del dizionario 
+                # 'supported_formats' corrispondente al formato (vedi 
+                # supported_formats in comparisions.a_formats()
+                input_selection.append(v[0])# v[0] mi da l'intero
 
-          if input_format in f_limit:
-              new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
-          else:
-             # NOTE 2 SET: qui con l'intero ottenuto rimuovo dalla lista
-             # i formati che non sono trattati o incompatibili.
-              new.remove(graphic_out_formats[v[0]])# SET
-          for outformat in new:# realizzazione menu di output
-            print "    %s"%(outformat)
-          output_selection = raw_input('    Choice a format by a letter '
-                                        'and just hit enter: ')
-          # NOTE 3 DELETE: cancello il grafico dei formati settati prima
-          # altrimenti rimangono in memoria con gli elementi gia rimossi
-          del new[:] # DELETE
-          #------------------- CREAZIONE OUTPUT MENU ------------------#
-          main = Audio_Formats(input_format)# Have a ext input >
-          output_format = main.output_selector(output_selection)# get out format
-          tuple_data = main.diction_strings()# return a tuple data of the codec
-          if output_selection == 'q' or output_selection == 'Q':
-            sys.exit()
-          elif output_format is None:
-            # Se nessuna selezione e premi enter rimuovo  chiave e valore 
-            # dal dizionario, cioè escludo quei files dalla conversione.
-            print ("\n%s Entry error in selection output format, "
-                     " %s >> skipping" % (warnings, output_selection))
-            formats.pop(input_format, None)
-            continue # meglio partire da capo 
+                if input_format in f_limit:
+                    new = [ new[i] for i in xrange(len(new)) if i not in 
+                                                            set(indx) ]
+                else:
+                    # NOTE 2 SET: qui con l'intero ottenuto rimuovo dalla lista
+                    # i formati che non sono trattati o incompatibili.
+                    new.remove(graphic_out_formats[v[0]])# SET
+                for outformat in new:# realizzazione menu di output
+                    print "    %s"%(outformat)
+                output_selection = raw_input('    Choice a format by a letter '
+                                                'and just hit enter: ')
+                # NOTE 3 DELETE: cancello il grafico dei formati settati prima
+                # altrimenti rimangono in memoria con gli elementi gia rimossi
+                del new[:] # DELETE
+                #------------------- CREAZIONE OUTPUT MENU ------------------#
+                main = Audio_Formats(input_format)# Have a ext input >
+                output_format = main.output_selector(output_selection)
+                tuple_data = main.diction_strings()# return tuple data of codec
+                if output_selection == 'q' or output_selection == 'Q':
+                    sys.exit()
+                elif output_format is None:
+                    # Se nessuna selezione e premi enter rimuovo chiave e valore 
+                    # dal dizionario, cioè escludo quei files dalla conversione.
+                    print ("\n%s Entry error in selection output format, "
+                            " %s >> skipping" % (warnings, output_selection))
+                    formats.pop(input_format, None)
+                    continue # meglio partire da capo 
 
-          if tuple_data == 'KeyError':
-            print ("\n%s Incompatible conversion >> skipping >>" % warnings)
-            formats.pop(input_format, None)
-            continue # troppi errori, meglio contimuare da capo
+                if tuple_data == 'KeyError':
+                    print ("\n%s Incompatible conversion >> skipping >>" % 
+                                                                    warnings)
+                    formats.pop(input_format, None)
+                    continue # troppi errori, meglio contimuare da capo
 
-          if formats == {}:# se è completamente vuoto, esco
-            sys.exit('\n%s...End selection process, exit!\n'% warnings)
+                if formats == {}:# se è completamente vuoto, esco
+                    sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
-          bitrate_test(tuple_data, output_format, formats.get(input_format), 
-                       path_O)
+                bitrate_test(tuple_data, output_format, 
+                             formats.get(input_format), path_O)
 
 def bitrate_test(tuple_data, output_format, path_in, path_O):
     """
@@ -181,8 +183,8 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
             % (str(count),output_format, path_O, file_name, output_format))
         try:
-            #print command # uncomment for debug
-            subprocess.check_call(command, shell=True)
+            print command # uncomment for debug
+            #subprocess.check_call(command, shell=True)
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
