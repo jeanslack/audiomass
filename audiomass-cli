@@ -68,12 +68,12 @@ def get_file():
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
-      if os.path.isfile(sys.argv[2]): # must be file only here
-        path_in = os.path.abspath(sys.argv[2]) # is a file-name
-      else:
-        sys.exit("%s %s" % (file_access, sys.argv[2]))
+        if os.path.isfile(sys.argv[2]): # must be file only here
+            path_in = os.path.abspath(sys.argv[2]) # is a file-name
+        else:
+            sys.exit("%s %s" % (file_access, sys.argv[2]))
     except IndexError:
-      sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
+        sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
                                                     sys.argv[1],TRY))
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         #if sys.argv[3] != '-o':
@@ -82,7 +82,7 @@ def get_file():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name (if not empty)
+                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
@@ -100,10 +100,10 @@ def get_dir():
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
-      if os.path.isdir(sys.argv[2]): 
-        path_in = os.path.abspath(sys.argv[2]) # this is a dir-name (if not empty)
-      else:
-        sys.exit("%s %s"%(dir_access ,sys.argv[2]))
+        if os.path.isdir(sys.argv[2]): 
+            path_in = os.path.abspath(sys.argv[2]) # this is a dir-name
+        else:
+            sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
         sys.exit("%s Missing argument\n%s" % (errors,TRY))
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
@@ -112,7 +112,7 @@ def get_dir():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name (if not empty)
+                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
