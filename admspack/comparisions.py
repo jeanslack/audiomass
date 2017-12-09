@@ -26,7 +26,6 @@ def input_menu():
     \033[41;37;1m Q \033[0m \033[1m..EXIT\033[0m
     ----------------------------------------------- """
 
-
 def output_menu():
     """
     Menu for output audio selection format used from all process(f,d,b)
@@ -223,7 +222,7 @@ def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
     Each command associated with a type of codec appears to be different. 
     This problem is solved here. Return a string with the command correctly 
     formed.
-    NOTE: The keyo f this dictionary must match the first value of the 
+    NOTE: The key of this dictionary must match the first value of the 
     'object assignment' dictionary to work well
     """
     command_dict = {

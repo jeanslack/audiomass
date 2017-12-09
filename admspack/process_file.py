@@ -10,11 +10,10 @@
 # Rev.
 #########################################################
 import subprocess
-import glob
 import sys
 import os
 from audio_formats import Audio_Formats
-from comparisions import a_formats, output_menu
+from comparisions import a_formats, output_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -24,18 +23,19 @@ f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
 
 def file_parser(input_format, path_name, path_O):
     """
-    1 - Get the input filename format
-    2 - Creation output menu
-    During output menu creation, Get a tuple with specified command
-    elements
+    Get the input filename format and check if input format is supported;
+    If input format is supported, Dispay an output menu with the options 
+    conversion based on input format.
+    Also, get a tuple with specified command elements for process
+    conversion.
     """
     supported_formats = a_formats()
     input_selection = None
-    
+
     for supp in supported_formats[0].values():
-        if input_format in supp[1]:
+        if input_format in supp[1:]:
             input_selection = supp[0]
-    
+
     if input_selection is None:
         # the file-name must be supported and match with dict keys
         sys.exit('\n%s Not format supported "%s"\nPlease, choice one of: '
@@ -46,7 +46,7 @@ def file_parser(input_format, path_name, path_O):
 
     if input_format in f_limit:
         indx = 2,3,4,5,6
-        new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
+        new = [ new[i] for i in range(len(new)) if i not in set(indx) ]
     else:
         new.remove(graphic_out_formats[input_selection])
     #subprocess.call(['clear'])
@@ -63,7 +63,6 @@ def file_parser(input_format, path_name, path_O):
     main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
     tuple_data = main.diction_strings()# return a tuple data of the codec
-    
     if output_selection == 'q' or output_selection == 'Q':
             sys.exit()
     elif output_format is None:
@@ -76,7 +75,6 @@ def file_parser(input_format, path_name, path_O):
 def bitrate_test(tuple_data, output_format, path_name, path_O):
     """
     Check if codec support bitrate for level compression.
-    
     """
     dict_bitrate = tuple_data[1] # a dictionary of corresponding bitrate values
     graphic_bitrate = tuple_data[2]# a list with strings for graphic of choice
@@ -117,28 +115,13 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
         sys.exit("\n%s Already exists > '%s/%s.%s'" % (
                                 errors, path_O, file_name, output_format))
 
-    command_dict = {
-'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                file_name, output_format),
-'lame --decode':'lame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
-                                file_name, output_format),
-'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, output_format,
-                                bitrate),
-'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
-                                        file_name, output_format),
-'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
-                                    output_format),
-'shntool':'shntool conv -o %s "%s" -d "%s"' % (output_format, path_name, path_O),
-                        }
+    command = build_cmd(id_codec, bitrate, path_name, 
+                           path_O, file_name, output_format)
     try:
         print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (output_format, path_O, file_name, output_format))
-        #print command_dict[id_codec]# uncomment for debug
-        subprocess.check_call(command_dict[id_codec], shell=True)
+        #print command# uncomment for debug
+        subprocess.check_call(command, shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
     else:

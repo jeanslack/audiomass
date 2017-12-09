@@ -40,10 +40,9 @@ def dir_parser(path_I, path_O):
             sys.exit("\n%s Entry error in select input format, exit!" % errors)
     graphic_out_formats = output_menu()
     new = graphic_out_formats[:]
-
     if input_format in f_limit:
         indx = 2,3,4,5,6
-        new = [ new[i] for i in xrange(len(new)) if i not in set(indx) ]
+        new = [ new[i] for i in range(len(new)) if i not in set(indx) ]
     else:
         new.remove(graphic_out_formats[int(input_selection)])
     print ("\n    Available formats for encoding/decoding "

@@ -48,7 +48,7 @@ def sorting_dictionary(f_list, path_O):
     for i in f_list: #Append separated file format
         name, ext = os.path.splitext(i)
         new = ext.replace(".","")#Tolgo il punto all'estensione
-        if new in supported_formats[1]:#Se estensione input è supportata
+        if new in supported_formats[1]:#Se estens. input è supportata
             new_list.append(i)#Lista ripulita file importati
             if not formats.has_key(new.lower()):#Add not present key at dict
                 formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
@@ -92,7 +92,7 @@ def menu_selections(formats, supported_formats, path_O):
                 input_selection.append(v[0])# v[0] mi da l'intero
 
                 if input_format in f_limit:
-                    new = [ new[i] for i in xrange(len(new)) if i not in 
+                    new = [ new[i] for i in range(len(new)) if i not in 
                                                             set(indx) ]
                 else:
                     # NOTE 2 SET: qui con l'intero ottenuto rimuovo dalla lista
