@@ -17,15 +17,16 @@ def info():################################### INFO
   author = u"Gianluca Pernigotto aka Jeanslack"
   mail = u'<jeanlucperni@gmail.com>'
   copyright = u'© 2013-2017'
-  version = u'v0.7.2'
-  release = u'Dec. 6 2017'
+  version = u'v0.7.3'
+  release = u'Dec. 9 2017'
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
   short_decript = u'Audiomass-clc is a wrapper audio conversions interface'
   long_desript = u"""
 **Audiomass-clc** is a command line wrapper that interfaces on differents 
-audio codecs for multiple input data streams conversions. It can be easily implemented with other audio library codecs and currently supports: Flac, 
+audio codecs for multiple input data streams conversions. It can be easily 
+implemented with other audio library codecs and currently supports: Flac, 
 Lame, Vorbis-tools, Monkey's Audio, Shntool FFmpeg, etc.
 """
 

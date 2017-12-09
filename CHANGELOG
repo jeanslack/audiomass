@@ -1,4 +1,14 @@
 +--------------------------+
+Dec. 06 2017 Version 0.7.3
++--------------------------+
+ - Add functionalities for resolving inconsistant pathnames in the 
+   user arguments; So you can write '/home/john/MyMusic/' or 
+   ''/home/john/MyMusic'' or /home/john/MyMusic and return even 
+   '/home/john/MyMusic'. This avoid many others errors at the end of
+   the process
+   
+ - Re-created new manual pdf format
++--------------------------+
 Dec. 06 2017 Version 0.7.2
 +--------------------------+
 

@@ -8,7 +8,7 @@
 # Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Version: (Ver.0.7) December 2017
-# Rev 3
+# Rev 4 (dec 9 2017)
 #########################################################
 import sys
 import os
@@ -69,7 +69,7 @@ def get_file():
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
       if os.path.isfile(sys.argv[2]): # must be file only here
-        path_in = sys.argv[2] # is a file-name
+        path_in = os.path.abspath(sys.argv[2]) # is a file-name
       else:
         sys.exit("%s %s" % (file_access, sys.argv[2]))
     except IndexError:
@@ -82,7 +82,7 @@ def get_file():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = sys.argv[4] # this is a dir-name (if not empty)
+                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name (if not empty)
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
@@ -101,7 +101,7 @@ def get_dir():
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
       if os.path.isdir(sys.argv[2]): 
-        path_in = sys.argv[2] # this is a dir-name (if not empty)
+        path_in = os.path.abspath(sys.argv[2]) # this is a dir-name (if not empty)
       else:
         sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
@@ -112,7 +112,7 @@ def get_dir():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = sys.argv[4] # this is a dir-name (if not empty)
+                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name (if not empty)
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
@@ -135,14 +135,16 @@ def get_batch():
         try:
             if sys.argv[opt +1]: # se trovo percorso dopo l'opzione -o --output
                 path_O = sys.argv[opt +1]
+                
         except IndexError:
             sys.exit( "%s Missing argument after '%s' option.\n%s" % (
                                                         errors, opts[0], TRY))
         else:
             if os.path.isdir(path_O):#trovo opzione e percorso output corretti
-                arg = sys.argv[2:] # lista di passaggio per codice successivo
-                arg.remove(opts[0])
-                arg.remove(path_O)
+                arg = sys.argv[2:] # lista che incorpora solo gli input pathnames
+                arg.remove(opts[0])# infatti rimuovo '-o' , '--output'
+                arg.remove(path_O) # e rimuovo l'eventuale output pathname
+                path_O = os.path.abspath(path_O)#adesso posso settare il pathname
             else:
                 sys.exit("%s %s"%(dir_access ,path_O))
     else:
@@ -150,11 +152,10 @@ def get_batch():
         arg = sys.argv[2:] # dal 2° arg. lista
 
     for f in arg:
-      if os.path.isfile(f): # must be file only here
-        queue.append(f) 
-      else:
-        print "%s %s" % (file_access, f)
-        
+        if os.path.isfile(os.path.abspath(f)): # must be file only here
+            queue.append(f) 
+        else:
+            sys.exit("%s '%s'" % (file_access, f))
     batch_parser(queue, path_O)
 
 if __name__ == '__main__':
