@@ -14,7 +14,7 @@ import sys
 import os
 from collections import Counter
 from audio_formats import Audio_Formats
-from comparisions import a_formats, output_menu, build_cmd
+from comparisions import supported_formats, graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -43,12 +43,16 @@ def sorting_dictionary(f_list, path_O):
     """
     formats = {}#Dizionario {formato1:[file1,file2,etc],..]}
     new_list = []#La lista ripulita dai file non supportati
-    supported_formats = a_formats()#Chiamo la funzione su comparisions
+    all_formats = []# tutti i formati supportati 
+    for selection, upper_f, lower_f in supported_formats().values():
+        all_formats.append(upper_f)# WAV,AIF,FLAC,APE etc
+        all_formats.append(lower_f)# wav,aif,flac,ape etc
+
     #Creazione keys (chiavi) nel diz. formats:
     for i in f_list: #Append separated file format
         name, ext = os.path.splitext(i)
         new = ext.replace(".","")#Tolgo il punto all'estensione
-        if new in supported_formats[1]:#Se estens. input è supportata
+        if new in all_formats:#Se estens. input è supportata
             new_list.append(i)#Lista ripulita file importati
             if not formats.has_key(new.lower()):#Add not present key at dict
                 formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
@@ -63,9 +67,9 @@ def sorting_dictionary(f_list, path_O):
         name, ext = os.path.splitext(i)
         new = ext.replace(".","")# tolgo il punto all'estensione
         formats[new.lower()].append("%s%s" %(name,ext))
-    menu_selections(formats, supported_formats, path_O)
+    menu_selections(formats, all_formats, path_O)
 
-def menu_selections(formats, supported_formats, path_O):
+def menu_selections(formats, all_formats, path_O):
     """
     Creation input menu
     Creation output menu
@@ -73,22 +77,25 @@ def menu_selections(formats, supported_formats, path_O):
     elements
     """
     input_selection = []#Contiene solo interi(int)
-    graphic_out_formats = output_menu()#Lista menu per i formati in uscita
+    graphic_out_formats = graphic_menu()# Menu per i formati in uscita
 
     for input_format in formats.keys():#Itero sui formati importati
         # NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati 
         # integralmente con l'originale 
         new = graphic_out_formats[:] # RELOAD
         print ("\n    Available formats for encoding/decoding "
-            "'\033[32;1m%s\033[0m' audio stream" % input_format)
+            "'\033[32;1m%s\033[0m' audio streams" % input_format)
         # Dizion. = {chiavi'srtinga 1':(integear,'formato')} 
         # itero sulla tupla valori 
-        for v in supported_formats[0].values():
+
+        for v in supported_formats().values():
+            if formats == {}:# se è completamente vuoto, esco
+                sys.exit('\n%s...End selection process, exit!\n'% errors)
             if input_format in v:# mi prendo gli interi corrispondenti
                 # input_selection contiene solo integear, che sono il primo 
                 # elemento del valore tupla della chiave del dizionario 
                 # 'supported_formats' corrispondente al formato (vedi 
-                # supported_formats in comparisions.a_formats()
+                # comparisions.supported_formats()
                 input_selection.append(v[0])# v[0] mi da l'intero
 
                 if input_format in f_limit:
@@ -100,8 +107,8 @@ def menu_selections(formats, supported_formats, path_O):
                     new.remove(graphic_out_formats[v[0]])# SET
                 for outformat in new:# realizzazione menu di output
                     print "    %s"%(outformat)
-                output_selection = raw_input('    Choice a format by a letter '
-                                                'and just hit enter: ')
+                output_selection = raw_input("    Enter here the corresponding"
+                                             " number and hit enter... ")
                 # NOTE 3 DELETE: cancello il grafico dei formati settati prima
                 # altrimenti rimangono in memoria con gli elementi gia rimossi
                 del new[:] # DELETE
@@ -124,9 +131,6 @@ def menu_selections(formats, supported_formats, path_O):
                                                                     warnings)
                     formats.pop(input_format, None)
                     continue # troppi errori, meglio contimuare da capo
-
-                if formats == {}:# se è completamente vuoto, esco
-                    sys.exit('\n%s...End selection process, exit!\n'% warnings)
 
                 bitrate_test(tuple_data, output_format, 
                              formats.get(input_format), path_O)

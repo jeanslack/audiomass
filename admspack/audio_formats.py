@@ -10,7 +10,7 @@
 # Rev
 #########################################################
 
-from comparisions import a_formats, comparision
+from comparisions import supported_formats, comparision
 
 class Audio_Formats(object):
     """
@@ -35,11 +35,10 @@ class Audio_Formats(object):
         the available options of the graphic input menu.
         """
 
-        supported_formats = a_formats()
-        if supported_formats[0].has_key(input_selection):
-            # mi da il formato:
-            input_format = supported_formats[0][input_selection][1]
-            self.input_format = input_format.lower()
+        all_formats = supported_formats()
+        if all_formats.has_key(input_selection):
+            # mi da il formato lower case:
+            self.input_format = all_formats[input_selection][2]
         else:
             self.input_format = None
             return self.input_format
@@ -52,13 +51,12 @@ class Audio_Formats(object):
         Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
         """
-        case = a_formats()
-
-        if output_selection in case[2].keys():
-            self.output_format = case[2][output_selection]
+        all_formats = supported_formats()
+        if all_formats.has_key(output_selection):
+            # mi da il formato lower case:
+            self.output_format = all_formats[output_selection][2]
         else:
-            #output_format = None
-            return self.output_format
+            return self.output_format  # output_format = None
         return self.output_format
 
     def diction_strings(self,):

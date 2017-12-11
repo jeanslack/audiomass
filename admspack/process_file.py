@@ -13,7 +13,7 @@ import subprocess
 import sys
 import os
 from audio_formats import Audio_Formats
-from comparisions import a_formats, output_menu, build_cmd
+from comparisions import supported_formats, graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -29,19 +29,18 @@ def file_parser(input_format, path_name, path_O):
     Also, get a tuple with specified command elements for process
     conversion.
     """
-    supported_formats = a_formats()
+    all_formats = supported_formats()
     input_selection = None
 
-    for supp in supported_formats[0].values():
+    for supp in all_formats.values():
         if input_format in supp[1:]:
             input_selection = supp[0]
 
     if input_selection is None:
         # the file-name must be supported and match with dict keys
-        sys.exit('\n%s Not format supported "%s"\nPlease, choice one of: '
-        '%s\n' % (errors, input_format, supported_formats[1]))
+        sys.exit('\n%s Not format supported: "%s"\n' % (errors, input_format))
 
-    graphic_out_formats = output_menu()
+    graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
 
     if input_format in f_limit:
@@ -56,10 +55,9 @@ def file_parser(input_format, path_name, path_O):
             )
     for outformat in new:
         print "    %s"%(outformat)
-        
-    output_selection = raw_input('    Type a letter for your encoding '
-                                    'and just hit enter: '
-                                    )
+
+    output_selection = raw_input("    Enter here the corresponding number "
+                                "and hit enter... ")
     main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
     tuple_data = main.diction_strings()# return a tuple data of the codec

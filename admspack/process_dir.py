@@ -13,7 +13,7 @@ import glob
 import sys
 import os
 from audio_formats import Audio_Formats
-from comparisions import a_formats, input_menu, output_menu, build_cmd
+from comparisions import graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -28,7 +28,10 @@ def dir_parser(path_I, path_O):
     During output menu creation, Get a tuple with specified command
     elements
     """
-    input_menu()
+    print('    Select the audio input file format in your directory:')
+    for inputformat in graphic_menu():# realizzazione menu di output
+                    print "    %s"%(inputformat)
+
     input_selection = raw_input("    Enter here the corresponding number "
                                 "and hit enter... "
                                 )
@@ -38,7 +41,7 @@ def dir_parser(path_I, path_O):
             sys.exit()
     elif input_format is None:
             sys.exit("\n%s Entry error in select input format, exit!" % errors)
-    graphic_out_formats = output_menu()
+    graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
     if input_format in f_limit:
         indx = 2,3,4,5,6
@@ -49,8 +52,8 @@ def dir_parser(path_I, path_O):
             "'\033[32;1m%s\033[0m' audio stream" % input_format)
     for outformat in new:
         print "    %s"%(outformat)
-    output_selection = raw_input('    Type a letter for your encoding '
-                                    'and just hit enter: '
+    output_selection = raw_input("    Enter here the corresponding number "
+                                "and hit enter... "
                                     )
     output_format = main.output_selector(output_selection)
     tuple_data = main.diction_strings()# return a tuple data of the codec
@@ -131,8 +134,8 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
                     % (str(count),output_format, path_O, file_name, 
                        output_format))
             try:
-                print command # uncomment for debug
-                #subprocess.check_call(command, shell=True)
+                #print command # uncomment for debug
+                subprocess.check_call(command, shell=True)
                     
             except subprocess.CalledProcessError as err:
                 sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
