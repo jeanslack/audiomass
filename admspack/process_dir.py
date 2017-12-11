@@ -107,12 +107,12 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
     path_I = '/home/Musica solo input dir-name'
     path_O = '/dir/dir solo output dir-name'
     """
-    format_ = [input_format, input_format.upper()]
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     exe = 'False'
     count = 0
-    for upper_lower in format_:
-        for path_name in glob.glob("%s/*.%s" % (path_I, upper_lower)):
+    for upper_lower_name in [input_format, input_format.upper()]:
+        # itero su nomi formato upper-case e lower-case
+        for path_name in glob.glob("%s/*.%s" % (path_I, upper_lower_name)):
             stream_I = os.path.basename(path_name)
             file_name = os.path.splitext(stream_I)[0]
             exe = None
@@ -131,8 +131,8 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
                     % (str(count),output_format, path_O, file_name, 
                        output_format))
             try:
-                #print command # uncomment for debug
-                subprocess.check_call(command, shell=True)
+                print command # uncomment for debug
+                #subprocess.check_call(command, shell=True)
                     
             except subprocess.CalledProcessError as err:
                 sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
