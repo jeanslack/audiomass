@@ -208,7 +208,8 @@ def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
                                         file_name, output_format),
 'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
                                     output_format),
-'shntool':'shntool conv -o %s -O always "%s" -d "%s"' % (output_format, path_name, path_O),
+'shntool':'shntool conv -o %s -O always "%s" -d "%s"' % (output_format, 
+                                                         path_name, path_O),
                         }
 
     return command_dict[id_codec]
