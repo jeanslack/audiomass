@@ -67,9 +67,9 @@ def sorting_dictionary(f_list, path_O):
         name, ext = os.path.splitext(i)
         new = ext.replace(".","")# tolgo il punto all'estensione
         formats[new.lower()].append("%s%s" %(name,ext))
-    menu_selections(formats, all_formats, path_O)
+    menu_selections(formats, path_O)
 
-def menu_selections(formats, all_formats, path_O):
+def menu_selections(formats, path_O):
     """
     Creation input menu
     Creation output menu
@@ -87,7 +87,6 @@ def menu_selections(formats, all_formats, path_O):
             "'\033[32;1m%s\033[0m' audio streams" % input_format)
         # Dizion. = {chiavi'srtinga 1':(integear,'formato')} 
         # itero sulla tupla valori 
-
         for v in supported_formats().values():
             if formats == {}:# se è completamente vuoto, esco
                 sys.exit('\n%s...End selection process, exit!\n'% errors)
@@ -115,8 +114,9 @@ def menu_selections(formats, all_formats, path_O):
                 #------------------- CREAZIONE OUTPUT MENU ------------------#
                 main = Audio_Formats(input_format)# Have a ext input >
                 output_format = main.output_selector(output_selection)
-                tuple_data = main.diction_strings()# return tuple data of codec
-                if output_selection == 'q' or output_selection == 'Q':
+                tuple_data = main.pairing_formats()# return tuple data of codec
+                if output_selection == 'a' or output_selection == 'A':
+                    print('audiomass: \033[1mAbort!\033[0m')
                     sys.exit()
                 elif output_format is None:
                     # Se nessuna selezione e premi enter rimuovo chiave e valore 
@@ -138,7 +138,6 @@ def menu_selections(formats, all_formats, path_O):
 def bitrate_test(tuple_data, output_format, path_in, path_O):
     """
     Check if codec support bitrate for level compression.
-    
     """
     dict_bitrate = tuple_data[1] # a dictionary of corresponding bitrate values
     graphic_bitrate = tuple_data[2]# a list with strings for graphic of choice

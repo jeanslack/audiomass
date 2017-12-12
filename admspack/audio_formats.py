@@ -34,11 +34,9 @@ class Audio_Formats(object):
         and from process_dir only. it is useful to limit the choices within 
         the available options of the graphic input menu.
         """
-
-        all_formats = supported_formats()
-        if all_formats.has_key(input_selection):
+        if supported_formats().has_key(input_selection):
             # mi da il formato lower case:
-            self.input_format = all_formats[input_selection][2]
+            self.input_format = supported_formats()[input_selection][2]
         else:
             self.input_format = None
             return self.input_format
@@ -51,15 +49,14 @@ class Audio_Formats(object):
         Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
         """
-        all_formats = supported_formats()
-        if all_formats.has_key(output_selection):
+        if supported_formats().has_key(output_selection):
             # mi da il formato lower case:
-            self.output_format = all_formats[output_selection][2]
+            self.output_format = supported_formats()[output_selection][2]
         else:
             return self.output_format  # output_format = None
         return self.output_format
 
-    def diction_strings(self,):
+    def pairing_formats(self,):
         """
         returns data for that pair input_format and output_format
         """

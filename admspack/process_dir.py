@@ -37,7 +37,8 @@ def dir_parser(path_I, path_O):
                                 )
     main = Audio_Formats(None) # not have a ext input = None
     input_format = main.input_selector(input_selection) # return a input format string
-    if input_selection == 'q' or input_selection == 'Q':
+    if input_selection == 'a' or input_selection == 'A':
+            print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif input_format is None:
             sys.exit("\n%s Entry error in select input format, exit!" % errors)
@@ -56,9 +57,10 @@ def dir_parser(path_I, path_O):
                                 "and hit enter... "
                                     )
     output_format = main.output_selector(output_selection)
-    tuple_data = main.diction_strings()# return a tuple data of the codec
+    tuple_data = main.pairing_formats()# return a tuple data of the codec
 
-    if output_selection == 'q' or output_selection == 'Q':
+    if output_selection == 'a' or output_selection == 'A':
+            print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif output_format is None:
         sys.exit("\n%s Entry error in select output format, exit!" % errors)

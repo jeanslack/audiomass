@@ -60,8 +60,9 @@ def file_parser(input_format, path_name, path_O):
                                 "and hit enter... ")
     main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
-    tuple_data = main.diction_strings()# return a tuple data of the codec
-    if output_selection == 'q' or output_selection == 'Q':
+    tuple_data = main.pairing_formats()# return a tuple data of the codec
+    if output_selection == 'a' or output_selection == 'A':
+            print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif output_format is None:
         sys.exit("\n%s Entry error in select output format!\n" % errors)

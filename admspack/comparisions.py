@@ -23,7 +23,7 @@ def graphic_menu():
     " \033[1m 5 \033[0m> Mp3   (MPEG-1 Audio Layer 3)", 
     " \033[1m 6 \033[0m> Ogg   (ogg-vorbis lossy format)",  
     "------------", 
-    " \033[41;37;1m Q \033[0m \033[1m..ABORT\033[0m", 
+    " \033[41;37;1m A \033[0m \033[1m..ABORT\033[0m", 
     "------------"]
 
 def supported_formats():
@@ -43,7 +43,7 @@ def comparision(pair):
   You can add or remove new formats modules from here.
   """
   
-  flac_options = ("\n\033[1m"
+  flac_menu = ("\n\033[1m"
               "References on quality for Flac format:\033[0m\n"
               "  0 = low compression > more access space > better quality\n"
               "  1\n"
@@ -56,7 +56,7 @@ def comparision(pair):
               "  8 = maximum compression > less space > lower quality\n"
               )
 
-  ape_options = ("\n\033[1m"
+  ape_menu = ("\n\033[1m"
               "References on quality for Ape format:\033[0m\n"
               "  1    -c1000 = Fast (Best quality)\n"
               "  2    -c2000 = Normal\n"
@@ -65,7 +65,7 @@ def comparision(pair):
               "  5    -c5000 = Insane\033[0m\n"
               )
 
-  mp3_options = ("\n\033[1m"
+  mp3_menu = ("\n\033[1m"
               "References on quality and bit-rate for MP3:\033[0m\n"
               "  0     medium    >  VBR 92 kbit\n"
               "  1     standard  >  VBR 112 kbit/s\n"
@@ -73,7 +73,7 @@ def comparision(pair):
               "  3     insane    >  CBR 320 kbit/s\n\n"
               )
 
-  ffmpeg_mp3_options = ("\n\033[1m"
+  ffmpeg_mp3_menu = ("\n\033[1m"
               "References on quality and bit-rate for MP3:\033[0m\n"
               "  0     >  VBR 128 kbit\n"
               "  1     >  VBR 160 kbit/s\n"
@@ -82,7 +82,7 @@ def comparision(pair):
               "  4     >  CBR 320 kbit/s\n"
               )
 
-  ogg_options = ("\n\033[1m"
+  ogg_menu = ("\n\033[1m"
               "References on the quality and bit-rate for OGG:\033[0m\n"
               "  1    >   80 kbit        |     6   >   192 kbit/s\n"
               "  2    >   92 kbit/s      |     7   >   200 kbit/s\n"
@@ -91,7 +91,7 @@ def comparision(pair):
               "  5    >   134 kbit/s     |     10  >   520 kbit/s\n"
               )
 
-  ffmpeg_ogg_options = ("\n\033[1m"
+  ffmpeg_ogg_menu = ("\n\033[1m"
               "References on the quality and bit-rate for OGG:\033[0m\n"
               "  0    >  VBR 128 kbit\n"
               "  1    >  VBR 160 kbit/s\n"
@@ -102,35 +102,35 @@ def comparision(pair):
               
   ###################### end list strings
   
-  flac_diz = {"0":"-0", "1":"-1", "2":"-2", "3":"-3",
-              "4":"-4", "5":"-5", "6":"-6", "7":"-7",
-              "8":"-8"
+  flac_opt_comp = {"0":"-0", "1":"-1", "2":"-2", "3":"-3",
+                   "4":"-4", "5":"-5", "6":"-6", "7":"-7",
+                   "8":"-8"
+                    }
+
+  ape_opt_comp = {"1":"-c1000", "2":"-c2000", "3":"-c3000", 
+                  "4":"-c4000", "5":"-c5000"
               }
 
-  ape_diz = {"1":"-c1000", "2":"-c2000", "3":"-c3000", 
-              "4":"-c4000", "5":"-c5000"
-              }
+  mp3_opt_comp = {"0":"--preset medium", "1":"--preset standard", 
+                  "2":"--preset extreme", "3":"--preset insane"}
 
-  mp3_diz = {"0":"--preset medium", "1":"--preset standard", 
-              "2":"--preset extreme", "3":"--preset insane"}
-
-  ffmpeg_mp3_diz = {"0":"-acodec libmp3lame -b:a 128k -ar 44100",  
-                    "1":"-acodec libmp3lame -b:a 160k -ar 44100",
-                    "2":"-acodec libmp3lame -b:a 192k -ar 44100", 
-                    "3":"-acodec libmp3lame -b:a 260k -ar 44100",
-                    "4":"-acodec libmp3lame -b:a 320k -ar 44100",
+  ffmpeg_mp3_opt_comp = {"0":"-acodec libmp3lame -b:a 128k -ar 44100",  
+                         "1":"-acodec libmp3lame -b:a 160k -ar 44100",
+                         "2":"-acodec libmp3lame -b:a 192k -ar 44100", 
+                         "3":"-acodec libmp3lame -b:a 260k -ar 44100",
+                         "4":"-acodec libmp3lame -b:a 320k -ar 44100",
                           }
 
-  ogg_diz = {"1":"-q 1", "2":"-q 2", "3":"-q 3", "4":"-q 4", "5":"-q 5",
-             "6":"-q 6", "7":"-q 7", "8":"-q 8", "9":"-q 9", "10":"-q 10"
+  ogg_opt_comp = {"1":"-q 1", "2":"-q 2", "3":"-q 3", "4":"-q 4", "5":"-q 5",
+                  "6":"-q 6", "7":"-q 7", "8":"-q 8", "9":"-q 9", "10":"-q 10"
                   }
 
-  ffmpeg_ogg_diz = {"0":"-vn -acodec libvorbis -ar 44100 -ab 128k",  
-                    "1":"-vn -acodec libvorbis -ar 44100 -ab 160k", 
-                    "2":"-vn -acodec libvorbis -ar 44100 -ab 192k", 
-                    "3":"-vn -acodec libvorbis -ar 44100 -ab 260k",  
-                    "4":"-vn -acodec libvorbis -ar 44100 -ab 320k",
-                          }
+  ffmpeg_ogg_opt_comp = {"0":"-vn -acodec libvorbis -ar 44100 -ab 128k",  
+                         "1":"-vn -acodec libvorbis -ar 44100 -ab 160k", 
+                         "2":"-vn -acodec libvorbis -ar 44100 -ab 192k", 
+                         "3":"-vn -acodec libvorbis -ar 44100 -ab 260k",  
+                         "4":"-vn -acodec libvorbis -ar 44100 -ab 320k",
+                            }
       
   object_assignment = {
       'wav > aiff' : ('shntool', None, None, None, 'aiff'), 
@@ -143,39 +143,39 @@ def comparision(pair):
       'ape > aiff' : ('shntool', None, None, None, 'aiff'),
       'ape > flac' : ('shntool', None, None, None, 'flac'),
 
-      'wav > flac' : ('flac', flac_diz, flac_options, 'Enter the '
+      'wav > flac' : ('flac', flac_opt_comp, flac_menu, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'), 
-      'aiff > flac' : ('flac', flac_diz, flac_options, 'Enter the '
+      'aiff > flac' : ('flac', flac_opt_comp, flac_menu, 'Enter the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'),
 
-      'wav > mp3' : ('lame', mp3_diz, mp3_options, 'Enter the compression '
+      'wav > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Enter the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
-      'aiff > mp3' : ('lame', mp3_diz, mp3_options, 'Enter the compression '
+      'aiff > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Enter the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
       #'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
       
-      'wav > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
+      'wav > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-      'aiff > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
+      'aiff > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-      'flac > ogg' : ('oggenc', ogg_diz, ogg_options, 'Enter the compression '
+      'flac > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
 
       'ogg > wav' : ('oggdec', None, None, None, 'wav'),
 
-      'wav > ape' : ('mac', ape_diz, ape_options, 'Enter the compression '
+      'wav > ape' : ('mac', ape_opt_comp, ape_menu, 'Enter the compression '
                       'level in digits 1 to 5, and press enter key > ', 'ape'),
 
-      'flac > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'flac > mp3' : ('ffmpeg', ffmpeg_mp3_opt_comp, ffmpeg_mp3_menu, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
-      'ape > mp3' : ('ffmpeg', ffmpeg_mp3_diz, ffmpeg_mp3_options, 
+      'ape > mp3' : ('ffmpeg', ffmpeg_mp3_opt_comp, ffmpeg_mp3_menu, 
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
-      'ape > ogg' : ('ffmpeg', ffmpeg_ogg_diz, ffmpeg_ogg_options,
+      'ape > ogg' : ('ffmpeg', ffmpeg_ogg_opt_comp, ffmpeg_ogg_menu,
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
                           }
@@ -208,7 +208,7 @@ def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
                                         file_name, output_format),
 'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
                                     output_format),
-'shntool':'shntool conv -o %s "%s" -d "%s"' % (output_format, path_name, path_O),
+'shntool':'shntool conv -o %s -O always "%s" -d "%s"' % (output_format, path_name, path_O),
                         }
 
     return command_dict[id_codec]
