@@ -6,11 +6,12 @@ Dec. 06 2017 Version 0.7.3
    references. So you can write '/home/john/MyMusic/' or ''/home/john/MyMusic'' 
    or /home/john/MyMusic and return even '/home/john/MyMusic'. 
    This avoid many others errors at the end of the process
-   
+
  - Re-created new manual pdf format
  
  - Resolved shntool 'ask option' for overwriting existance file. 
-   For now all existance file are *overwritings* with shntool only, 
+   For now all existance file are *overwritings* with shntool only.
+
 +--------------------------+
 Dec. 06 2017 Version 0.7.2
 +--------------------------+

@@ -1,8 +1,15 @@
- 
+
+-----------------------------AUDIOMASS------------------------------
+leggend:
+        [?] not in working, [*] Needed soon, 
+
+        [DONE] already working. [TESTING] check for errors 
+
+--------------------------------------------------------------------
 - There is not a control interface for error, when not exist the codecs,
   make this soon [DONE]
   
-- make a file, dir and batch separate operations
+- make a file, dir and batch separate operations [DONE]
   with batch operation  content for multiples file format [DONE]
   
   ----------------------
@@ -15,4 +22,4 @@
   
   - se importi un file senza estensione, procede. Questo è inamissibile!
     ma c'è una attenuante: poi viene identificato e l'uscita è: Incompatible 
-    conversion
+    conversion [*]
