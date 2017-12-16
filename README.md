@@ -42,8 +42,7 @@ There is not yet a Windows implementation
 ## Download
 
 If you want a stable release of audiomass, suitable for common use and
-packaging for Debian and Slackware distribuitions, download here:
-[Downloads](https://github.com/jeanslack/audiomass/releases)   
+packaging for Debian and Slackware distribuitions, download [here](https://github.com/jeanslack/audiomass/releases)   
 
 ## Use
 
