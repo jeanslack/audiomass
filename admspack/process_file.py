@@ -12,8 +12,8 @@
 import subprocess
 import sys
 import os
-from audio_formats import Audio_Formats
-from comparisions import supported_formats, graphic_menu, build_cmd
+from admspack.audio_formats import Audio_Formats
+from admspack.comparisions import supported_formats, graphic_menu, build_cmd
 
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
@@ -57,7 +57,7 @@ def file_parser(input_format, path_name, path_O):
     for outformat in new:
         print ("    %s"%(outformat))
 
-    output_selection = raw_input("    Enter here the corresponding number "
+    output_selection = input("    Enter here the corresponding number "
                                 "and hit enter... ")
     main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
@@ -85,7 +85,7 @@ def bitrate_test(tuple_data, output_format, path_name, path_O):
     else:
         #subprocess.call(['clear'])
         print (graphic_bitrate)
-        level = raw_input(contestual_text)
+        level = input(contestual_text)
 
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
@@ -120,7 +120,7 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
     try:
         print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (output_format, path_O, file_name, output_format))
-        #print command# uncomment for debug
+        #print (command)# uncomment for debug
         subprocess.check_call(command, shell=True)
     except subprocess.CalledProcessError as err:
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))

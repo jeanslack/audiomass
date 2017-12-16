@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # First release: Version: (Ver.0.6) Febbruary 2015
@@ -91,7 +91,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         ('share/doc/python-audiomass-cli', ['AUTHORS', 'BUGS', 'CHANGELOG', 
                               'COPYING', 'README.md', 'TODO']),
                 ]
-    DEPENDENCIES = ['python >=2.6']
+    DEPENDENCIES = ['python >=3.5']
     EXTRA_DEPEND = {'vorbis-tools':  ["vorbis-tools"],'shntool':  ["shntool"],
                     'flac':  ["flac"], 'monkeys-audio':  ["monkeys-audio"], 
                     'lame':  ["lame"], 'ffmpeg':  ["ffmpeg"]}

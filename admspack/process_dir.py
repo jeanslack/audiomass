@@ -12,8 +12,8 @@ import subprocess
 import glob
 import sys
 import os
-from audio_formats import Audio_Formats
-from comparisions import graphic_menu, build_cmd
+from admspack.audio_formats import Audio_Formats
+from admspack.comparisions import graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -30,9 +30,9 @@ def dir_parser(path_I, path_O):
     """
     print('    Select the audio input file format in your directory:')
     for inputformat in graphic_menu():# realizzazione menu di output
-                    print "    %s"%(inputformat)
+                    print ("    %s"%(inputformat))
 
-    input_selection = raw_input("    Enter here the corresponding number "
+    input_selection = input("    Enter here the corresponding number "
                                 "and hit enter... "
                                 )
     main = Audio_Formats(None) # not have a ext input = None
@@ -52,8 +52,8 @@ def dir_parser(path_I, path_O):
     print ("\n    Available formats for encoding/decoding "
             "'\033[32;1m%s\033[0m' audio stream" % input_format)
     for outformat in new:
-        print "    %s"%(outformat)
-    output_selection = raw_input("    Enter here the corresponding number "
+        print ("    %s"%(outformat))
+    output_selection = input("    Enter here the corresponding number "
                                 "and hit enter... "
                                     )
     output_format = main.output_selector(output_selection)
@@ -81,8 +81,8 @@ def bitrate_test(tuple_data, output_format, path_I, path_O, input_format):
     if dict_bitrate is None:
         bitrate = ''
     else:
-        print graphic_bitrate
-        level = raw_input('%s' % contestual_text)
+        print (graphic_bitrate)
+        level = input('%s' % contestual_text)
 
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
@@ -136,7 +136,7 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
                     % (str(count),output_format, path_O, file_name, 
                        output_format))
             try:
-                #print command # uncomment for debug
+                #print (command) # uncomment for debug
                 subprocess.check_call(command, shell=True)
                     
             except subprocess.CalledProcessError as err:
@@ -146,6 +146,6 @@ def command_builder(tuple_data, bitrate, output_format, path_I,
             sys.exit("\n%s Files missing: No files '%s' "
                 "in '%s' \n" % (errors, input_format, path_I)
                         )
-    print "\n\033[37;7mDone...\033[0m\n"
+    print ("\n\033[37;7mDone...\033[0m\n")
 
 

@@ -13,8 +13,8 @@ import subprocess
 import sys
 import os
 from collections import Counter
-from audio_formats import Audio_Formats
-from comparisions import supported_formats, graphic_menu, build_cmd
+from admspack.audio_formats import Audio_Formats
+from admspack.comparisions import supported_formats, graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -32,7 +32,7 @@ def batch_parser(f_list, path_O):
     """
     for k,v in Counter(f_list).items():# controllo doppioni accidentali.
         if v>1:
-            print "%s Removing following duplicates: > '%s' >" % (warnings, k)
+            print ("%s Removing following duplicates: > '%s' >" % (warnings, k))
     f_list = list(set(f_list)) # removal of any duplicates in the list
     sorting_dictionary(f_list, path_O)
 
@@ -54,12 +54,12 @@ def sorting_dictionary(f_list, path_O):
         new = ext.replace(".","")#Tolgo il punto all'estensione
         if new in all_formats:#Se estens. input è supportata
             new_list.append(i)#Lista ripulita file importati
-            if not formats.has_key(new.lower()):#Add not present key at dict
+            if new.lower() not in formats:#Add not present key at dict
                 formats[new.lower()] = [] #Aggiungo chiavi non presenti nel diz +
                             #valore lista vuota: {formato:[]}
         else:
-            print '\n%s Not supported file format: "%s%s" >> skipping >>'% (
-                                                    warnings,name,ext)
+            print ('\n%s Not supported file format: "%s%s" >> skipping >>'% (
+                                                    warnings,name,ext))
     if new_list == []: # se i file importati sono tutti incompatibili
         sys.exit('\n%s ...No audio streams to process, exit!' % errors)
     # Creazione dei records (valori) nel diz. formats
@@ -105,8 +105,8 @@ def menu_selections(formats, path_O):
                     # i formati che non sono trattati o incompatibili.
                     new.remove(graphic_out_formats[v[0]])# SET
                 for outformat in new:# realizzazione menu di output
-                    print "    %s"%(outformat)
-                output_selection = raw_input("    Enter here the corresponding"
+                    print ("    %s" % outformat)
+                output_selection = input("    Enter here the corresponding"
                                              " number and hit enter... ")
                 # NOTE 3 DELETE: cancello il grafico dei formati settati prima
                 # altrimenti rimangono in memoria con gli elementi gia rimossi
@@ -147,15 +147,14 @@ def bitrate_test(tuple_data, output_format, path_in, path_O):
     if dict_bitrate is None:
         bitrate = ''
     else:
-        print graphic_bitrate
-        level = raw_input(contestual_text)
+        print (graphic_bitrate)
+        level = input(contestual_text)
         a = Audio_Formats(None)
         bitrate = a.quality_level(dict_bitrate, level)
         valid = bitrate
         if valid is False:
             print ("\n%s inexistent quality level '%s', ...use default\n" % (
-                warnings, level)
-                    )
+                                                            warnings, level))
             bitrate = ''
     command_builder(tuple_data, bitrate, output_format, path_in, path_O)
 
@@ -185,10 +184,10 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
             % (str(count),output_format, path_O, file_name, output_format))
         try:
-            #print command # uncomment for debug
+            #print (command) # uncomment for debug
             subprocess.check_call(command, shell=True)
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
-    print "\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in)
-    print "\n\033[37;7mDone...\033[0m\n"
+    print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
+    print ("\n\033[37;7mDone...\033[0m\n")

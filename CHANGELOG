@@ -1,6 +1,8 @@
 +--------------------------+
 Dec. 15 2017 Version 0.7.4
 +--------------------------+
+ - Add compatibility for python3
+ 
  - Add new option for check installed dependencies 
 
  - Re-formated datastrings.py content
@@ -15,6 +17,8 @@ Dec. 15 2017 Version 0.7.4
    Resolve with 'os.path.basename'
    
  - Resolved bug into parser if missing arg after -b option
+
+ - Some tweaks to the code for a future backward compatibility with python3
 
 +--------------------------+
 Dec. 06 2017 Version 0.7.3

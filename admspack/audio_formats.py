@@ -10,7 +10,7 @@
 # Rev
 #########################################################
 
-from comparisions import supported_formats, comparision
+from admspack.comparisions import supported_formats, comparision
 
 class Audio_Formats(object):
     """
@@ -34,7 +34,7 @@ class Audio_Formats(object):
         and from process_dir only. it is useful to limit the choices within 
         the available options of the graphic input menu.
         """
-        if supported_formats().has_key(input_selection):
+        if input_selection in supported_formats():
             # mi da il formato lower case:
             self.input_format = supported_formats()[input_selection][2]
         else:
@@ -49,7 +49,7 @@ class Audio_Formats(object):
         Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
         """
-        if supported_formats().has_key(output_selection):
+        if output_selection in supported_formats():
             # mi da il formato lower case:
             self.output_format = supported_formats()[output_selection][2]
         else:

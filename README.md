@@ -4,6 +4,8 @@ Audiomass-cli
 
 ## Description
 
+This version of audiomass is now compatible for python3 !
+
 **Audiomass-cli** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
 implemented with other audio library codecs and currently supports: Flac, 
@@ -27,7 +29,7 @@ There is not yet a Windows implementation
 
 **Required:**
 
-- python >=2.6 (no python 3)
+- python >=3.5.3 (no python 2)
 
 **Recommended:**
 
