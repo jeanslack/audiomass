@@ -47,8 +47,8 @@ packaging for Debian and Slackware distribuitions, download here:
 
 ## Use
 
-`audiomass-cli option <infile>`   
-`audiomass-cli option <infile> [-o] [<outdir>]`
+`audiomass-cli option <input filename/dirname>`   
+`audiomass-cli option <input filename/dirname> [-o] [<output dirname>]`
 
 **Options:**
 
