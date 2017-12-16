@@ -3,6 +3,7 @@
 *.pyo
 dist
 build
+__pycache__
 deb_dist
 *.egg-info
 *.DS_Store

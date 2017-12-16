@@ -94,7 +94,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     DEPENDENCIES = ['python >=2.6']
     EXTRA_DEPEND = {'vorbis-tools':  ["vorbis-tools"],'shntool':  ["shntool"],
                     'flac':  ["flac"], 'monkeys-audio':  ["monkeys-audio"], 
-                    'lame':  ["lame"], 'sox':  ["sox"],'ffmpeg':  ["ffmpeg"]}
+                    'lame':  ["lame"], 'ffmpeg':  ["ffmpeg"]}
     setup(name = RLS_NAME,
         version = VERSION,
         description = DESCRIPTION,

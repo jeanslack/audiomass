@@ -15,6 +15,7 @@ import os
 from audio_formats import Audio_Formats
 from comparisions import supported_formats, graphic_menu, build_cmd
 
+
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
@@ -38,8 +39,8 @@ def file_parser(input_format, path_name, path_O):
 
     if input_selection is None:
         # the file-name must be supported and match with dict keys
-        sys.exit('\n%s Not format supported: "%s"\n' % (errors, input_format))
-
+        sys.exit('\n%s Not file supported: "%s"\n' % (
+                                  errors, os.path.basename(path_name)))
     graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
 
@@ -54,7 +55,7 @@ def file_parser(input_format, path_name, path_O):
               "stream" % input_format.lower()
             )
     for outformat in new:
-        print "    %s"%(outformat)
+        print ("    %s"%(outformat))
 
     output_selection = raw_input("    Enter here the corresponding number "
                                 "and hit enter... ")
@@ -83,7 +84,7 @@ def bitrate_test(tuple_data, output_format, path_name, path_O):
         bitrate = ''
     else:
         #subprocess.call(['clear'])
-        print graphic_bitrate
+        print (graphic_bitrate)
         level = raw_input(contestual_text)
 
         a = Audio_Formats(None)
@@ -124,5 +125,5 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
     except subprocess.CalledProcessError as err:
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
     else:
-        print "\n\033[37;7mDone...\033[0m\n"
+        print ("\n\033[37;7mDone...\033[0m\n")
 

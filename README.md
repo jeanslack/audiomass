@@ -33,13 +33,11 @@ There is not yet a Windows implementation
 
 - flac
 - lame
-- sox
-- wavpack
 - vorbis-tools [oggenc, oggdec]
 - shntool
 - ffmpeg
 - monkey's audio (I've seen it has different names, this depends on the
-                  your O.S. - try search: libmac2, mac. monkey's audio)
+                  your O.S. - try search: libmac2, mac, monkey's audio)
 
 ## Download
 
@@ -58,6 +56,7 @@ packaging for Debian and Slackware distribuitions, download here:
  * -d, --dir     (run a process to multiple files in dir with single format)
  * -b, --batch   (run a process for multiple files queued)
  * -o, --output  (write the output streams into specified directory)
+ * -C, --check   (Check for required dependencies, no for python of course)
  * -h, --help    (show help and exit)
  * -v, --version (show version and date of the program)
  * -c, --copying (show license of the program)

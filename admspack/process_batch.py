@@ -6,7 +6,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Version: (Ver.0.7) Nov 27 2017
+# Version: (Ver.0.7) Nov 27 2017, Dec.15 2017
 # Rev
 #########################################################
 import subprocess

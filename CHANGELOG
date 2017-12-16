@@ -1,4 +1,26 @@
 +--------------------------+
+Dec. 15 2017 Version 0.7.4
++--------------------------+
+ - Add new option for check installed dependencies 
+
+ - Re-formated datastrings.py content
+
+ - Re-created new manual in pdf format
+
+ - Resolved shntool 'ask option' for overwriting existance file. 
+   For now all existance file are *overwritings* with shntool only.
+
+ - When load file with no extension with -f option result: 
+   audiomass: Error! Not format supported: ""
+   Resolve with 'os.path.basename'
+   
+ - Resolved bug into parser if missing arg after -b option
+
+ - Some tweaks to the code for a future backward compatibility with python3
+ 
+ - Resolve bug 
+
++--------------------------+
 Dec. 06 2017 Version 0.7.3
 +--------------------------+
  - Add functionalities for resolving some issue in the user arguments; 

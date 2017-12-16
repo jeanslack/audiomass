@@ -22,4 +22,4 @@ leggend:
   
   - se importi un file senza estensione, procede. Questo è inamissibile!
     ma c'è una attenuante: poi viene identificato e l'uscita è: Incompatible 
-    conversion [*]
+    conversion [DONE]
