@@ -89,7 +89,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     DATA_FILES = [
         ('share/man/man1', ['man/audiomass-cli.1.gz']),
         ('share/doc/python-audiomass-cli', ['AUTHORS', 'BUGS', 'CHANGELOG', 
-                              'COPYING', 'LICENSE', 'README.md', 'TODO']),
+                              'COPYING', 'README.md', 'TODO']),
                 ]
     DEPENDENCIES = ['python >=2.6']
     EXTRA_DEPEND = {'vorbis-tools':  ["vorbis-tools"],'shntool':  ["shntool"],
