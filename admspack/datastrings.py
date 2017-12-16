@@ -22,7 +22,7 @@ def info():################################### INFO
   rls_name = u"Audiomass-CLI"
   prg_name = u"audiomass-cli"
   webpage = u"https://github.com/jeanslack/audiomass"
-  short_decript = u'Audiomass-clc - Wrapper audio conversions interface'
+  short_decript = u'Audiomass-cli is a Wrapper audio conversions interface'
   long_desript = u"""
 **Audiomass-clc** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 

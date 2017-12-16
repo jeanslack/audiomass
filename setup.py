@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # First release: Version: (Ver.0.6) Febbruary 2015
-# 
+# REV: December 2017
 #########################################################
 # Name: setup.py
 # Porpose: script for building audiomass-cli package
@@ -66,23 +66,21 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         ------------------------------------------------
         setup build videomass debian package
         ------------------------------------------------
-        
         TOOLS: 
-        apt-get install python-all python-stdeb fakeroot
+        apt-get install python3-setuptools python3-all python3-stdeb fakeroot
 
         USAGE: 
         - for generate both source and binary packages :
             python setup.py --command-packages=stdeb.command bdist_deb
-            
+
         - Or you can generate source packages only :
             python setup.py --command-packages=stdeb.command sdist_dsc
-            
+
         RESOURCES:
         - look at there for major info:
             https://pypi.python.org/pypi/stdeb
             http://shallowsky.com/blog/programming/python-debian-packages-w-stdeb.html
     """
-    
     # this is DATA_FILE structure: 
     # ('dir/file destination of the data', ['dir/file on current place sources']
     # even path must be relative-path
@@ -111,7 +109,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         extras_require = EXTRA_DEPEND,
         )
 ##################################################
-if sys.platform.startswith('linux2'):
+if sys.platform.startswith('linux'):
     dist_name = platform.linux_distribution()[0]
     dist_version = platform.linux_distribution()[1]
     if dist_name == 'Slackware ':
@@ -119,8 +117,8 @@ if sys.platform.startswith('linux2'):
     elif dist_name == 'debian' or dist_name == 'Ubuntu':
         LINUX_DEBIAN_UBUNTU(dist_name, dist_version)
     else:
-        print 'this platform is not yet implemented: %s %s' % (
-                                       dist_name, dist_version)
+        print ('this platform is not yet implemented: %s %s' % (
+                                       dist_name, dist_version))
 else:
-    print 'OS not supported'
+    print ('OS not supported')
 ###################################################

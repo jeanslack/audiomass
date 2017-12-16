@@ -1,7 +1,14 @@
 +--------------------------+
 Dec. 15 2017 Version 0.7.4
 +--------------------------+
+
  - Add compatibility for python3
+ 
+ - Change the setup.py for build audiomass deb package for python3
+ 
+ - Change debian dependencies names for building tools, see: README.MD
+ 
+ - Change the command names for building package, see: README.md
  
  - Add new option for check installed dependencies 
 

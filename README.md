@@ -2,9 +2,13 @@
 Audiomass-cli
 =============
 
-## Description
+## please Note !
 
-This version of audiomass is now compatible for python3 !
+Since version 0.7.5 audiomass.cli is only compatible with python3.
+If you want a version compatible with python 2, please download the 
+latest version compatible for python 2 [here](https://github.com/jeanslack/audiomass/releases/tag/v0.7.4)
+
+## Description
 
 **Audiomass-cli** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
@@ -88,11 +92,11 @@ installable package, see below:
 
 **Debian:**
 
-Extra dependencies for build package with distutils:
-`~# apt-get install python-all python-stdeb fakeroot`
+Extra dependencies for build package with setuptools and distutils:
+`~# apt-get install python3-setuptools python3-all python3-stdeb fakeroot`
 
 Enter in unzipped sources folder and type (with not root):
-`~$ python setup.py --command-packages=stdeb.command bdist_deb`
+`~$ python3 setup.py --command-packages=stdeb.command bdist_deb`
 
 This should create a python-pysplitcue_version_all.deb in the new deb_dist directory.
 
