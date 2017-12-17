@@ -1,43 +1,46 @@
 +--------------------------+
-Dec. 15 2017 Version 0.7.4
+Dec. 17 2017 Version 0.7.5
 +--------------------------+
 
  - Add compatibility for python3
- 
  - Change the setup.py for build audiomass deb package for python3
- 
  - Change debian dependencies names for building tools, see: README.MD
- 
  - Change the command names for building package, see: README.md
- 
  - Add new option for check installed dependencies 
-
  - Re-formated datastrings.py content
-
  - Re-created new manual in pdf format
-
  - Resolved shntool 'ask option' for overwriting existance file. 
    For now all existance file are *overwritings* with shntool only.
-
  - When load file with no extension with -f option result: 
    audiomass: Error! Not format supported: ""
    Resolve with 'os.path.basename'
-   
  - Resolved bug into parser if missing arg after -b option
-
  - Some tweaks to the code for a future backward compatibility with python3
+ 
++--------------------------+
+Dec. 15 2017 Version 0.7.4
++--------------------------+
+
+ - Add new option for check installed dependencies
+ - Re-formated datastrings.py content
+ - Re-created new manual in pdf format
+ - Resolved shntool 'ask option' for overwriting existance file.
+   For now all existance file are overwritings with shntool only.
+ - When load file with no extension with -f option result:
+   audiomass: Error! Not format supported: ""
+   Resolve with 'os.path.basename'
+ - Resolved bug into parser if missing arg after -b option
 
 +--------------------------+
 Dec. 06 2017 Version 0.7.3
 +--------------------------+
+
  - Add functionalities for resolving some issue in the user arguments; 
    Normalize a pathnames by collapsing redundant separators and up-level 
    references. So you can write '/home/john/MyMusic/' or ''/home/john/MyMusic'' 
    or /home/john/MyMusic and return even '/home/john/MyMusic'. 
    This avoid many others errors at the end of the process
-
  - Re-created new manual pdf format
- 
  - Resolved shntool 'ask option' for overwriting existance file. 
    For now all existance file are *overwritings* with shntool only.
 
@@ -47,9 +50,7 @@ Dec. 06 2017 Version 0.7.2
 
  - Now every file to be converted can have either uppercase or 
    lowercase names
-
  - Fixed the bugs of the previous version
-
  - The code has also been improved a little bit
 
 +--------------------------+
@@ -60,23 +61,17 @@ NOTE: this is a definitive release.
 
  - New batch process implementation for convert multiple audio stream.
    The limits of the previous version are now outdated and work.
-
  - I continued with the improvements in errors management
-
  - Add new batch process option for files conversion with
    different formats :-)
-  
  - New process management for single file, files in dir and batch
    conversions.
-  
  - Add new implementations for saving in different folder for all
    the available process: single file conversion, file group conversion
    on directory and batch conversions.
-  
  - Now markeup cosmetic are more beautiful
- 
  - better organization of the code
-   
+
 +--------------------------+
 November 30 2017 Version 0.7.0
 +--------------------------+
@@ -86,17 +81,13 @@ NOTE: this release is just a passing version to experiment with some
       and generally it does not work very well.
 
 - I continued with the improvements in errors management
-
 - Add new batch process option for files conversion with
   different formats :-)
   This has some limits on output formats choice with -b option.
-  
 - New process management for single file, files in dir and batch
   conversions.
-  
 - Add new implementations for saving in different folder for all
   the process
-  
 - some small cosmetic makeup
 
 +--------------------------+
@@ -104,7 +95,6 @@ November 22 2017 Version 0.6.1
 +--------------------------+
 
 - some cosmetic touch to the exit code
-
 - Improved errors handling, but there is still work
 
 +--------------------------+
