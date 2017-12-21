@@ -1,4 +1,11 @@
 +--------------------------+
+Dec. 22 2017 Version 0.7.6
++--------------------------+
+
+- Add aiff conversions support for MP3, OGG and APE formats
+- Improved some line of code in comparisions.py
+
++--------------------------+
 Dec. 17 2017 Version 0.7.5
 +--------------------------+
 

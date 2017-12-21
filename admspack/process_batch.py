@@ -24,7 +24,7 @@ errors = 'audiomass: \033[31;7;3mError!\033[0m'
 # in variabile f_limit, perche mp3, ogg, ape, is available decoding in 
 # wav/aiff only:
 f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
-indx = 2,3,4,5,6
+indx = 3,4,5,6
 
 def batch_parser(f_list, path_O):
     """
@@ -189,5 +189,5 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
-    print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
-    print ("\n\033[37;7mDone...\033[0m\n")
+        print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
+        print ("\n\033[37;7mDone...\033[0m\n")

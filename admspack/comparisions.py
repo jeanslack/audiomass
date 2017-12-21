@@ -156,7 +156,6 @@ def comparision(pair):
       'aiff > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Enter the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
-      #'mp3 > aiff' : ('lame', None, None, None, 'aiff'), ## WARNING Valutare
       
       'wav > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
@@ -179,8 +178,10 @@ def comparision(pair):
       'ape > ogg' : ('ffmpeg', ffmpeg_ogg_opt_comp, ffmpeg_ogg_menu,
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
+      'mp3 > aiff' : ('ffmpeg', None, None, None, 'aiff'),
+      'ogg > aiff' : ('ffmpeg', None, None, None, 'aiff'),
                           }
-  object_assignment.get(pair, 'key_error')
+  return object_assignment.get(pair, 'key_error')
 
 def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
     """
