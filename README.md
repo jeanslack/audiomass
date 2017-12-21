@@ -2,7 +2,7 @@
 Audiomass-cli
 =============
 
-## please Note !
+## Please Note !
 
 Since version 0.7.5 audiomass.cli is only compatible with python3.
 If you want a version compatible with python 2, please download the 
@@ -104,10 +104,10 @@ see the setup.py for more info on how-to build .deb package
 
 **Slackware**
 
-Is available a SlackBuild script to build a package *.tgz* for Slackware and Slackware based 
-distributions. See here [pysplitcue.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
+Is available a SlackBuild script to build a Slackware package *.tgz*, See here:   
+[audiomass-cli.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
 
 Remember: install **pysetuptools** if not present first.
-You can search on this site: 
+You can search on this site:   
 [SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
 
