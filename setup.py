@@ -23,16 +23,13 @@ from admspack.datastrings import info
 cr = info()
 AUTHOR = cr[0]
 MAIL = cr[1]
-COPYRIGHT = cr[2]
 VERSION = cr[3]
-RELEASE = cr[4]
 RLS_NAME = cr[5]# release name first letter is Uppercase
 PRG_NAME = cr[6]
 URL = cr[7]
-DESCRIPTION = cr[8]
+SHORT_DESCRIPTION = cr[8]
 LONG_DESCRIPTION = cr[9]
-LONG_HELP = cr[10]
-LICENSE = cr[12]# short_license
+SHORT_LICENSE = cr[12]# short_license
 
 def glob_files(pattern):
     """
@@ -50,12 +47,12 @@ def LINUX_SLACKWARE(id_distro, id_version):
 
     setup(name = RLS_NAME,
         version = VERSION,
-        description = DESCRIPTION,
+        description = SHORT_DESCRIPTION,
         long_description = LONG_DESCRIPTION,
         author = AUTHOR,
         author_email = MAIL,
         url = URL,
-        license = LICENSE,
+        license = SHORT_LICENSE,
         platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
         packages = ['admspack'],
         scripts = [PRG_NAME],
@@ -95,12 +92,12 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
                     'lame':  ["lame"], 'ffmpeg':  ["ffmpeg"]}
     setup(name = RLS_NAME,
         version = VERSION,
-        description = DESCRIPTION,
+        description = SHORT_DESCRIPTION,
         long_description = LONG_DESCRIPTION,
         author = AUTHOR,
         author_email = MAIL,
         url = URL,
-        license = LICENSE,
+        license = SHORT_LICENSE,
         platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
         packages = ['admspack'],
         scripts = [PRG_NAME],

@@ -42,7 +42,8 @@ def comparision(pair):
   Accept one only string argument in this form: 'exemple > exemple'.
   You can add or remove new formats modules from here.
   """
-  
+
+  ####------------------------------  BITRATES MENU:
   flac_menu = ("\n\033[1m"
               "References on quality for Flac format:\033[0m\n"
               "  0 = low compression > more access space > better quality\n"
@@ -99,9 +100,9 @@ def comparision(pair):
               "  3    >  VBR 260 kbit/s\n"
               "  4    >  CBR 320 kbit/s\n"
               )
-              
-  ###################### end list strings
-  
+
+  #### ----------------------------- BITRATES LEVELS:
+
   flac_opt_comp = {"0":"-0", "1":"-1", "2":"-2", "3":"-3",
                    "4":"-4", "5":"-5", "6":"-6", "7":"-7",
                    "8":"-8"
@@ -131,7 +132,7 @@ def comparision(pair):
                          "3":"-vn -acodec libvorbis -ar 44100 -ab 260k",  
                          "4":"-vn -acodec libvorbis -ar 44100 -ab 320k",
                             }
-      
+  ####-------------------------------  PAIRING ASSOCIATIONS FORMATS:
   object_assignment = {
       'wav > aiff' : ('shntool', None, None, None, 'aiff'), 
       'aiff > wav' : ('shntool', None, None, None, 'wav'), 
@@ -179,19 +180,15 @@ def comparision(pair):
                       'Enter the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
                           }
-  try:
-      return object_assignment[pair]
+  object_assignment.get(pair, 'key_error')
 
-  except KeyError:
-      return 'KeyError' 
-  
 def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
     """
     Each command associated with a type of codec appears to be different. 
     This problem is solved here. Return a string with the command correctly 
     formed.
-    NOTE: The key of this dictionary must match the first value of the 
-    'object assignment' dictionary to work well
+    NOTE: The key of this dictionary must match with the first value of 
+    the 'object assignment' dictionary to work well
     """
     command_dict = {
 'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,

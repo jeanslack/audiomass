@@ -67,7 +67,7 @@ def file_parser(input_format, path_name, path_O):
             sys.exit()
     elif output_format is None:
         sys.exit("\n%s Entry error in select output format!\n" % errors)
-    if tuple_data == 'KeyError':
+    if tuple_data == 'key_error':
         sys.exit("\n%s Incompatible conversion" % errors)
 
     bitrate_test(tuple_data, output_format, path_name, path_O)

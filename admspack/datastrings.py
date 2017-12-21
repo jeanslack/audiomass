@@ -14,23 +14,23 @@ def info():################################### INFO
   """
   All general info of the audiomass-cli
   """
-  author = u"Gianluca Pernigotto aka Jeanslack"
-  mail = u'<jeanlucperni@gmail.com>'
-  copyright = u'© 2013-2017'
-  version = u'v0.7.5'
-  release = u'Dec. 15 2017'
-  rls_name = u"Audiomass-CLI"
-  prg_name = u"audiomass-cli"
-  webpage = u"https://github.com/jeanslack/audiomass"
-  short_decript = u'Audiomass-cli is a Wrapper audio conversions interface'
-  long_desript = u"""
+  AUTHOR = u"Gianluca Pernigotto aka Jeanslack"
+  MAIL = u'<jeanlucperni@gmail.com>'
+  COPYRIGHT = u'© 2013-2017'
+  VERSION = u'v0.7.5'
+  RELEASE = u'Dec. 15 2017'
+  RLS_NAME = u"Audiomass-CLI"
+  PRG_NAME = u"audiomass-cli"
+  URL = u"https://github.com/jeanslack/audiomass"
+  SHORT_DESCRIPT = u'Audiomass-cli is a Wrapper audio conversions interface'
+  LONG_DESCRIPT = u"""
 **Audiomass-clc** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
 implemented with other audio library codecs and currently supports: Flac, 
 Lame, Vorbis-tools, Monkey's Audio, Shntool FFmpeg, etc.
 """
 
-  usage = u"""This is a short help of Audiomass-cli.
+  USAGE = u"""This is a short help of Audiomass-cli.
 For more explanations, please read the manual: 'man audiomass-cli' 
 or read the audiomass-cli.pdf into its source directory.
 
@@ -54,9 +54,9 @@ Exemples:
   audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' -o /output/dir
 --------------------------------------------------------------"""
   
-  try_help = "Try: 'audiomass-cli --help' or 'man audiomass-cli'."
+  TRY = "Try: 'audiomass-cli --help' or 'man audiomass-cli'."
 
-  license = (u"""==============================================================
+  LICENSE = (u"""==============================================================
 %s version %s
 Copyright %s - %s
 Mail: %s
@@ -75,9 +75,22 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 ==============================================================
-""" % (short_decript, version, copyright, author, mail))
+""" % (SHORT_DESCRIPT, VERSION, COPYRIGHT, AUTHOR, MAIL))
 
-  short_license = u"'Gnu GPL3 (Gnu Public License)"
+  SHORT_LICENSE = u"'Gnu GPL3 (Gnu Public License)"
 
-  return (author, mail, copyright, version, release, rls_name, prg_name, webpage, 
-          short_decript, long_desript, usage, license, short_license, try_help)
+  return (AUTHOR, 
+          MAIL, 
+          COPYRIGHT, 
+          VERSION, 
+          RELEASE, 
+          RLS_NAME, 
+          PRG_NAME, 
+          URL, 
+          SHORT_DESCRIPT, 
+          LONG_DESCRIPT, 
+          USAGE, 
+          LICENSE, 
+          SHORT_LICENSE, 
+          TRY
+          )

@@ -62,7 +62,7 @@ class Audio_Formats(object):
         """
         pair = '%s > %s' % (self.input_format, self.output_format)
 
-        if self.retcode == 'KeyError':
+        if self.retcode == 'key_error':
             self.retcode = comparision
         else:
             self.retcode = comparision(pair)

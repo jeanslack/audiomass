@@ -64,7 +64,7 @@ def dir_parser(path_I, path_O):
             sys.exit()
     elif output_format is None:
         sys.exit("\n%s Entry error in select output format, exit!" % errors)
-    if tuple_data == 'KeyError':
+    if tuple_data == 'key_error':
         sys.exit("\n%s Incompatible conversion" % errors)
 
     bitrate_test(tuple_data, output_format, path_I, path_O, input_format)

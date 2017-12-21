@@ -18,20 +18,8 @@ from admspack.process_file import file_parser
 from admspack.process_dir import  dir_parser
 from admspack.process_batch import batch_parser
 
-cr = info()
-AUTHOR = cr[0]
-MAIL = cr[1]
-COPYRIGHT = cr[2]
-VERSION = cr[3]
-RELEASE = cr[4]
-RLS_NAME = cr[5]# release name first letter is Uppercase
-PRG_NAME = cr[6]
-URL = cr[7]
-DECRIPTION = cr[8]
-LONG_DESRIPTION = cr[9]
-LONG_HELP = cr[10]
-LICENSE = cr[11]# long_license
-TRY = cr[13]
+AUTHOR, MAIL, COPYRIGHT, VERSION, RELEASE, RLS_NAME, PRG_NAME, URL, \
+    SHORT_DESCRIPT, LONG_DESCRIPT, USAGE, LICENSE, SHORT_LICENSE, TRY = info()
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -61,12 +49,12 @@ def main():
         print ("%s - %s - Released %s" % (RLS_NAME, VERSION, RELEASE))
     elif '-h' in sys.argv or '--help' in sys.argv:
         print (title)
-        print (LONG_HELP)
+        print (USAGE)
     elif '-c' in sys.argv or '--copying' in sys.argv:
         print (LICENSE)
     elif len(sys.argv) == 1:
         print (title)
-        print (LONG_HELP)
+        print (USAGE)
     else:
         print (title)
         sys.exit("%s Invalid options: '%s' \n%s" % (errors,

@@ -126,7 +126,7 @@ def menu_selections(formats, path_O):
                     formats.pop(input_format, None)
                     continue # meglio partire da capo 
 
-                if tuple_data == 'KeyError':
+                if tuple_data == 'key_error':
                     print ("\n%s Incompatible conversion >> skipping >>" % 
                                                                     warnings)
                     formats.pop(input_format, None)
