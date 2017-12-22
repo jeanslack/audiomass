@@ -104,10 +104,8 @@ see the setup.py for more info on how-to build .deb package
 
 **Slackware**
 
-Is available a SlackBuild script to build a Slackware package *.tgz*, See here:   
-[audiomass-cli.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
+Is available a SlackBuild script to build a Slackware package (*.tgz*), See in: [audiomass-cli.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
 
 Remember: install **pysetuptools** if not present first.
-You can search on this site:   
-[SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
+You can search on this site: [SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
 
