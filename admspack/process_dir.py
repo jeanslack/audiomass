@@ -13,13 +13,10 @@ import glob
 import sys
 import os
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import graphic_menu, build_cmd
+from admspack.comparisions import graphic_menu, build_cmd, f_limits
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
-
-#lista dei formati con limiti di scelta nella conversioni
-f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
 
 def dir_parser(path_I, path_O):
     """
@@ -32,30 +29,29 @@ def dir_parser(path_I, path_O):
     for inputformat in graphic_menu():# realizzazione menu di output
                     print ("    %s"%(inputformat))
 
-    input_selection = input("    Enter here the corresponding number "
-                                "and hit enter... "
-                                )
+    input_selection = input("    Type a number corresponding"
+                                            " format and press enter key... ")
     main = Audio_Formats(None) # not have a ext input = None
     input_format = main.input_selector(input_selection) # return a input format string
     if input_selection == 'a' or input_selection == 'A':
             print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif input_format is None:
-            sys.exit("\n%s Entry error in select input format, exit!" % errors)
+            sys.exit("\n%s Unknow option '%s' in select input format, Abort!" % 
+                                                    (errors,input_selection))
     graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
-    if input_format in f_limit:
-        indx = 3,4,5,6
-        new = [ new[i] for i in range(len(new)) if i not in set(indx) ]
+    if input_format in f_limits().keys():
+        new = [ new[i] for i in range(len(new)) if i not in 
+                                                set(f_limits()[input_format]) ]
     else:
         new.remove(graphic_out_formats[int(input_selection)])
     print ("\n    Available formats for encoding/decoding "
             "'\033[32;1m%s\033[0m' audio stream" % input_format)
     for outformat in new:
         print ("    %s"%(outformat))
-    output_selection = input("    Enter here the corresponding number "
-                                "and hit enter... "
-                                    )
+    output_selection = input("    Type a number corresponding"
+                                            " format and press enter key... ")
     output_format = main.output_selector(output_selection)
     tuple_data = main.pairing_formats()# return a tuple data of the codec
 
@@ -63,9 +59,11 @@ def dir_parser(path_I, path_O):
             print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif output_format is None:
-        sys.exit("\n%s Entry error in select output format, exit!" % errors)
+        sys.exit("\n%s Unknow option '%s' in select output format, Abort!" % 
+                                                    (errors,output_selection))
     if tuple_data == 'key_error':
-        sys.exit("\n%s Incompatible conversion" % errors)
+        sys.exit("\n%s No match available for '%s' option, Abort!" % (errors, 
+                                                            output_selection))
 
     bitrate_test(tuple_data, output_format, path_I, path_O, input_format)
 
@@ -89,9 +87,8 @@ def bitrate_test(tuple_data, output_format, path_I, path_O, input_format):
         valid = bitrate
 
         if valid is False:
-            print ("\n%s inexistent quality level '%s', "
-                   "...use default\n" % (warnings, level)
-                   )
+            print ("\n%s Unknow option '%s', ...use default\n" % (warnings, 
+                                                                  level))
             bitrate = ''
             
     command_builder(tuple_data, bitrate, output_format, path_I, 

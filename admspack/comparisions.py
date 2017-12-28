@@ -36,6 +36,14 @@ def supported_formats():
           '5': (5,'MP3','mp3'),'6': (6,'OGG','ogg')
           }
 
+def f_limits():
+    """
+    Set the list in the graphic_menu with the appropriate formats indexes
+    """
+    return {'mp3' : [3,4,5,6],'MP3' : [3,4,5,6],'ogg' : [3,4,5,6],
+           'OGG' : [3,4,5,6], 'ape' : [3,4],'APE' : [3,4]
+           }
+
 def comparision(pair):
   """
   returns the required values for each pair of audio formats. 
@@ -142,41 +150,41 @@ def comparision(pair):
       'flac > ape' : ('shntool', None, None, None, 'ape'), 
       'ape > wav' : ('shntool', None, None, None, 'wav'),
       'ape > aiff' : ('shntool', None, None, None, 'aiff'),
-      'ape > flac' : ('shntool', None, None, None, 'flac'),
+      #'ape > flac' : ('shntool', None, None, None, 'flac'),
 
-      'wav > flac' : ('flac', flac_opt_comp, flac_menu, 'Enter the '
+      'wav > flac' : ('flac', flac_opt_comp, flac_menu, 'Type the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'), 
-      'aiff > flac' : ('flac', flac_opt_comp, flac_menu, 'Enter the '
+      'aiff > flac' : ('flac', flac_opt_comp, flac_menu, 'Type the '
                       'compression level in digits 0 to 8, and press '
                       'enter key > ', 'flac'),
 
-      'wav > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Enter the compression '
+      'wav > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Type the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
-      'aiff > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Enter the compression '
+      'aiff > mp3' : ('lame', mp3_opt_comp, mp3_menu, 'Type the compression '
                       'level in digits 0 to 3, and press enter key > ', 'mp3'),
       'mp3 > wav' : ('lame --decode', None, None, None, 'wav'),
       
-      'wav > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
+      'wav > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Type the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-      'aiff > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
+      'aiff > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Type the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
-      'flac > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Enter the compression '
+      'flac > ogg' : ('oggenc', ogg_opt_comp, ogg_menu, 'Type the compression '
                       'level in digits 1 to 10, and press enter key > ', 'ogg'),
 
       'ogg > wav' : ('oggdec', None, None, None, 'wav'),
 
-      'wav > ape' : ('mac', ape_opt_comp, ape_menu, 'Enter the compression '
+      'wav > ape' : ('mac', ape_opt_comp, ape_menu, 'Type the compression '
                       'level in digits 1 to 5, and press enter key > ', 'ape'),
 
       'flac > mp3' : ('ffmpeg', ffmpeg_mp3_opt_comp, ffmpeg_mp3_menu, 
-                      'Enter the compression level in digits 0 to 4, '
+                      'Type the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
       'ape > mp3' : ('ffmpeg', ffmpeg_mp3_opt_comp, ffmpeg_mp3_menu, 
-                      'Enter the compression level in digits 0 to 4, '
+                      'Type the compression level in digits 0 to 4, '
                       'and press enter key > ', 'mp3'),
       'ape > ogg' : ('ffmpeg', ffmpeg_ogg_opt_comp, ffmpeg_ogg_menu,
-                      'Enter the compression level in digits 0 to 4, '
+                      'Type the compression level in digits 0 to 4, '
                       'and press enter key > ', 'ogg'),
       'mp3 > aiff' : ('ffmpeg', None, None, None, 'aiff'),
       'ogg > aiff' : ('ffmpeg', None, None, None, 'aiff'),

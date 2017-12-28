@@ -13,14 +13,11 @@ import subprocess
 import sys
 import os
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats, graphic_menu, build_cmd
-
+from admspack.comparisions import supported_formats, graphic_menu, \
+                                  build_cmd, f_limits
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
-
-#lista dei formati con limiti di scelta nella conversioni
-f_limit = ['mp3','ogg','ape','MP3','OGG','APE']
 
 def file_parser(input_format, path_name, path_O):
     """
@@ -44,9 +41,9 @@ def file_parser(input_format, path_name, path_O):
     graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
 
-    if input_format in f_limit:
-        indx = 3,4,5,6
-        new = [ new[i] for i in range(len(new)) if i not in set(indx) ]
+    if input_format in f_limits().keys():
+        new = [ new[i] for i in range(len(new)) if i not in 
+                                            set(f_limits()[input_format]) ]
     else:
         new.remove(graphic_out_formats[input_selection])
     #subprocess.call(['clear'])
@@ -57,8 +54,8 @@ def file_parser(input_format, path_name, path_O):
     for outformat in new:
         print ("    %s"%(outformat))
 
-    output_selection = input("    Enter here the corresponding number "
-                                "and hit enter... ")
+    output_selection = input("    Type a number corresponding"
+                                            " format and press enter key... ")
     main = Audio_Formats(input_format.lower())# Have a ext input >
     output_format = main.output_selector(output_selection)# get out format
     tuple_data = main.pairing_formats()# return a tuple data of the codec
@@ -66,9 +63,10 @@ def file_parser(input_format, path_name, path_O):
             print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif output_format is None:
-        sys.exit("\n%s Entry error in select output format!\n" % errors)
+        sys.exit("\n%s Unknow option '%s', Abort!" % (errors, output_selection))
     if tuple_data == 'key_error':
-        sys.exit("\n%s Incompatible conversion" % errors)
+        sys.exit("\n%s No match available for '%s' option, Abort!" % (errors, 
+                                                            output_selection))
 
     bitrate_test(tuple_data, output_format, path_name, path_O)
 
@@ -92,7 +90,7 @@ def bitrate_test(tuple_data, output_format, path_name, path_O):
         valid = bitrate
 
         if valid is False:
-            print ("\n%s Inexistent quality level '%s', "
+            print ("\n%s Unknow option '%s', "
                    "...use default\n" % (warnings, level)
                    )
             bitrate = ''
@@ -117,9 +115,9 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
 
     command = build_cmd(id_codec, bitrate, path_name, 
                            path_O, file_name, output_format)
-    try:
-        print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
+    print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
                 % (output_format, path_O, file_name, output_format))
+    try:
         #print (command)# uncomment for debug
         subprocess.check_call(command, shell=True)
     except subprocess.CalledProcessError as err:
