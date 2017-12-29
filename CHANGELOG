@@ -7,7 +7,9 @@ Dec. 28 2017 Version 0.7.6
 - Add 'get()' method in comparisions.py
 - Resolved bug in process_batch.py. In 'for' loop raise a [RuntimeError: 
   dictionary changed size during iteration] when turn with 'continue' statement.
-- Change the 'f_limits' in dictionary and place in function on comparisions.py
+- Add a limites formats list into comparisions.supported_formats() dictionary and 
+  removed some redundant body of code into all process files
+- Some improved console output
 
 +--------------------------+
 Dec. 17 2017 Version 0.7.5

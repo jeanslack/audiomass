@@ -14,8 +14,7 @@ import sys
 import os
 from collections import Counter
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats, graphic_menu, \
-                                  f_limits, build_cmd
+from admspack.comparisions import supported_formats, graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -38,7 +37,7 @@ def sorting_dictionary(f_list, path_O):
     formats = {}#Dizionario {formato1:[file1,file2,etc],..]}
     new_list = []#La lista ripulita dai file non supportati
     all_formats = []# tutti i formati supportati 
-    for selection, upper_f, lower_f in supported_formats().values():
+    for selection, upper_f, lower_f, limits in supported_formats().values():
         all_formats.append(upper_f)# WAV,AIF,FLAC,APE etc
         all_formats.append(lower_f)# wav,aif,flac,ape etc
 
@@ -70,13 +69,11 @@ def menu_selections(formats, path_O):
     During output menu creation, Get a tuple with specified command
     elements
     """
-    input_selection = []#Contiene solo interi(int)
-    graphic_out_formats = graphic_menu()# Menu per i formati in uscita
-
+    input_selection = []# deve contenere solo interi(int)
     for input_format in list(formats.keys()):#Itero sui formati importati
         # NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati 
         # integralmente con l'originale 
-        new = graphic_out_formats[:] # RELOAD
+        menu = graphic_menu()
         print ("\n    Available formats for encoding/decoding "
             "'\033[32;1m%s\033[0m' audio streams" % input_format)
         # Dizion. = {chiavi'srtinga 1':(integear,'formato')} 
@@ -84,28 +81,14 @@ def menu_selections(formats, path_O):
         for v in supported_formats().values():
             if formats == {}:# se è completamente vuoto, esco
                 sys.exit('\n%s...End selection process, exit!\n'% errors)
-            if input_format in v:# mi prendo gli interi corrispondenti
-                # input_selection contiene solo integear, che sono il primo 
-                # elemento del valore tupla della chiave del dizionario 
-                # 'supported_formats' corrispondente al formato (vedi 
-                # comparisions.supported_formats()
+            if input_format in v[1:3]:# mi prendo gli interi corrispondenti
                 input_selection.append(v[0])# v[0] mi da l'intero
-
-                if input_format in f_limits().keys():
-                    new = [ new[i] for i in range(len(new)) if i not in 
-                                                set(f_limits()[input_format]) ]
-                else:
-                    # NOTE 2 SET: qui con l'intero ottenuto rimuovo dalla lista
-                    # i formati che non sono trattati o incompatibili.
-                    new.remove(graphic_out_formats[v[0]])# SET
-                for outformat in new:# realizzazione menu di output
+                menu = [ menu[i] for i in range(len(menu)) if i not in set(v[3]) ]
+                for outformat in menu:# realizzazione menu di output
                     print ("    %s" % outformat)
                 output_selection = input("    Type a number corresponding"
                                             " format and press enter key... ")
-                # NOTE 3 DELETE: cancello il grafico dei formati settati prima
-                # altrimenti rimangono in memoria con gli elementi gia rimossi
-                del new[:] # DELETE
-                #------------------- CREAZIONE OUTPUT MENU ------------------#
+                ##------------------- CREAZIONE OUTPUT MENU ------------------#
                 main = Audio_Formats(input_format)# Have a ext input >
                 output_format = main.output_selector(output_selection)
                 tuple_data = main.pairing_formats()# return tuple data of codec
@@ -160,6 +143,7 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
     """
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     count = 0
+    not_processed = []
     for path_name in path_in:
         stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'
         file_name = os.path.splitext(stream_I)[0]#only stream with no ext
@@ -170,11 +154,12 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
             print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
                     warnings, path_O, file_name, output_format)
                     )
+            #path_in.remove(path_name)
+            not_processed.append(path_name)
             continue
         
         command = build_cmd(id_codec, bitrate, path_name, 
                            path_O, file_name, output_format)
-
         print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
             % (str(count),output_format, path_O, file_name, output_format))
         try:
@@ -183,5 +168,18 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         except subprocess.CalledProcessError as err:
             sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
             
-        print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
-        print ("\n\033[37;7mDone...\033[0m\n")
+    if not_processed:
+        for fiLe in not_processed:
+            if fiLe in path_in:
+                path_in.remove(fiLe)
+        #print ("\n\033[31;7mStreams NOT Processed:\033[0m >> %s\n" % (not_processed))
+        print ("\n\033[33;7;3mStreams NOT Processed:\033[0m")
+        for list1 in not_processed:
+            print(list1)
+        
+    #print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
+    print ("\n\033[32;7mQueue Streams Processed:\033[0m")
+    for list2 in path_in:
+        print(list2)
+    print ("\n\033[37;7mDone...\033[0m\n")
+        

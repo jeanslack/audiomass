@@ -13,8 +13,7 @@ import subprocess
 import sys
 import os
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats, graphic_menu, \
-                                  build_cmd, f_limits
+from admspack.comparisions import supported_formats, graphic_menu, build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'

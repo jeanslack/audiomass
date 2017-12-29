@@ -25,3 +25,6 @@ leggend:
     conversion [DONE]
     
   - Check builds packages for distribuitions with python3 [DONE]
+  
+  - Manca di modificare il file process_file.py
+  - Migliora output di console in process_dir.py

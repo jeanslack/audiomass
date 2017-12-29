@@ -27,22 +27,14 @@ def graphic_menu():
     "------------"]
 
 def supported_formats():
-  """
-  supported_format: it is useful to limit the choices within 
-  the available options of the graphic_menu.
-  """
-  return {'1': (1,'WAV','wav'), '2': (2,'AIFF','aiff'), 
-          '3': (3,'FLAC','flac'), '4': (4,'APE','ape'), 
-          '5': (5,'MP3','mp3'),'6': (6,'OGG','ogg')
-          }
-
-def f_limits():
     """
-    Set the list in the graphic_menu with the appropriate formats indexes
+    supported_format: it is useful to limit the choices within 
+    the available options of the graphic_menu.
     """
-    return {'mp3' : [3,4,5,6],'MP3' : [3,4,5,6],'ogg' : [3,4,5,6],
-           'OGG' : [3,4,5,6], 'ape' : [3,4],'APE' : [3,4]
-           }
+    return {'1': (1,'WAV','wav',[1]), '2': (2,'AIFF','aiff',[2,4]), 
+          '3': (3,'FLAC','flac',[3]), '4': (4,'APE','ape',[3,4]), 
+          '5': (5,'MP3','mp3',[3,4,5,6]),'6': (6,'OGG','ogg',[3,4,5,6])
+            }
 
 def comparision(pair):
   """

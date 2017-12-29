@@ -13,7 +13,7 @@ import glob
 import sys
 import os
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import graphic_menu, build_cmd, f_limits
+from admspack.comparisions import graphic_menu, build_cmd, supported_formats
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
@@ -30,8 +30,10 @@ def dir_parser(path_I, path_O):
                     print ("    %s"%(inputformat))
 
     input_selection = input("    Type a number corresponding"
-                                            " format and press enter key... ")
+                         " format and press enter key... ") # una stringa num.
+
     main = Audio_Formats(None) # not have a ext input = None
+
     input_format = main.input_selector(input_selection) # return a input format string
     if input_selection == 'a' or input_selection == 'A':
             print('audiomass: \033[1mAbort!\033[0m')
@@ -41,13 +43,8 @@ def dir_parser(path_I, path_O):
                                                     (errors,input_selection))
     graphic_out_formats = graphic_menu()
     new = graphic_out_formats[:]
-    if input_format in f_limits().keys():
-        new = [ new[i] for i in range(len(new)) if i not in 
-                                                set(f_limits()[input_format]) ]
-    else:
-        new.remove(graphic_out_formats[int(input_selection)])
-    print ("\n    Available formats for encoding/decoding "
-            "'\033[32;1m%s\033[0m' audio stream" % input_format)
+    sel = [x for x in supported_formats().values() if input_format in x]
+    new = [ new[i] for i in range(len(new)) if i not in set(sel[0][3]) ]
     for outformat in new:
         print ("    %s"%(outformat))
     output_selection = input("    Type a number corresponding"
