@@ -41,11 +41,10 @@ def dir_parser(path_I, path_O):
     elif input_format is None:
             sys.exit("\n%s Unknow option '%s' in select input format, Abort!" % 
                                                     (errors,input_selection))
-    graphic_out_formats = graphic_menu()
-    new = graphic_out_formats[:]
-    sel = [x for x in supported_formats().values() if input_format in x]
-    new = [ new[i] for i in range(len(new)) if i not in set(sel[0][3]) ]
-    for outformat in new:
+    rawmenu = graphic_menu()
+    sel = [x for x in supported_formats().values() if input_format in x[1:3]]
+    menu = [rawmenu[i] for i in range(len(rawmenu)) if i not in set(sel[0][3])]
+    for outformat in menu:
         print ("    %s"%(outformat))
     output_selection = input("    Type a number corresponding"
                                             " format and press enter key... ")

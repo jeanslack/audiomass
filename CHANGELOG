@@ -8,8 +8,11 @@ Dec. 28 2017 Version 0.7.6
 - Resolved bug in process_batch.py. In 'for' loop raise a [RuntimeError: 
   dictionary changed size during iteration] when turn with 'continue' statement.
 - Add a limites formats list into comparisions.supported_formats() dictionary and 
-  removed some redundant body of code into all process files
+  removed some redundant code into all process files
 - Some improved console output
+- Removed the whichcraft retro-compatibility with python 2, it used 
+  *shutil.which* module instead of
+
 
 +--------------------------+
 Dec. 17 2017 Version 0.7.5

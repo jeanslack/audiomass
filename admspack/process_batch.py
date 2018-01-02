@@ -83,7 +83,7 @@ def menu_selections(formats, path_O):
                 sys.exit('\n%s...End selection process, exit!\n'% errors)
             if input_format in v[1:3]:# mi prendo gli interi corrispondenti
                 input_selection.append(v[0])# v[0] mi da l'intero
-                menu = [ menu[i] for i in range(len(menu)) if i not in set(v[3]) ]
+                menu = [menu[i] for i in range(len(menu)) if i not in set(v[3])]
                 for outformat in menu:# realizzazione menu di output
                     print ("    %s" % outformat)
                 output_selection = input("    Type a number corresponding"
@@ -178,8 +178,9 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
             print(list1)
         
     #print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
-    print ("\n\033[32;7mQueue Streams Processed:\033[0m")
-    for list2 in path_in:
-        print(list2)
+    if path_in:
+        print ("\n\033[32;7mQueue Streams Processed:\033[0m")
+        for list2 in path_in:
+            print(list2)
     print ("\n\033[37;7mDone...\033[0m\n")
         

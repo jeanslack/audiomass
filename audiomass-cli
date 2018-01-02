@@ -12,7 +12,7 @@
 #########################################################
 import sys
 import os
-from admspack.whichcraft import which
+from admspack.whichcraft import check_dependencies
 from admspack.datastrings import info
 from admspack.process_file import file_parser
 from admspack.process_dir import  dir_parser
@@ -159,21 +159,7 @@ def get_batch():
         sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
                                                     sys.argv[1],TRY))
     batch_parser(queue, path_O)
-    
-def check_dependencies():
-    """
-    Check for dependencies into your system (compatible with Linux, 
-    MacOsX, Windows)
-    [https://stackoverflow.com/questions/11210104/check-if-a-program-exists-
-    from-a-python-script]
-    """
-    listing = ['ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc', 'shntool', 'mac']
-    #listing = ['sox', 'wavpack']# this are for futures implementations
-    for required in  listing:
-        if which(required):
-            print ("Check for: '%s' ..Ok" % required)
-        else:
-            print ("Check for: '%s' ..Not Installed" % required)
+
 
 if __name__ == '__main__':
     status = main()

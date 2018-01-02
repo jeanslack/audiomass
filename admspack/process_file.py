@@ -26,33 +26,24 @@ def file_parser(input_format, path_name, path_O):
     Also, get a tuple with specified command elements for process
     conversion.
     """
-    all_formats = supported_formats()
     input_selection = None
-
-    for supp in all_formats.values():
-        if input_format in supp[1:]:
+    rawmenu = graphic_menu()
+    
+    for supp in supported_formats().values():
+        if input_format in supp[1:3]:
             input_selection = supp[0]
-
+            menu = [rawmenu[i] for i in range(len(rawmenu)) if i not in 
+                                                            set(supp[3])]
     if input_selection is None:
         # the file-name must be supported and match with dict keys
-        sys.exit('\n%s Not file supported: "%s"\n' % (
-                                  errors, os.path.basename(path_name)))
-    graphic_out_formats = graphic_menu()
-    new = graphic_out_formats[:]
-
-    if input_format in f_limits().keys():
-        new = [ new[i] for i in range(len(new)) if i not in 
-                                            set(f_limits()[input_format]) ]
-    else:
-        new.remove(graphic_out_formats[input_selection])
-    #subprocess.call(['clear'])
+        sys.exit('\n%s File not supported: "%s"\n' % (errors, 
+                                                 os.path.basename(path_name)))
     print ("\n    Available formats for "
               "encoding/decoding '\033[32;1m%s\033[0m' audio " 
               "stream" % input_format.lower()
             )
-    for outformat in new:
+    for outformat in menu:
         print ("    %s"%(outformat))
-
     output_selection = input("    Type a number corresponding"
                                             " format and press enter key... ")
     main = Audio_Formats(input_format.lower())# Have a ext input >
@@ -95,7 +86,7 @@ def bitrate_test(tuple_data, output_format, path_name, path_O):
             bitrate = ''
 
     command_builder(tuple_data, bitrate, output_format, path_name, path_O)
-            
+
 def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
     """
     command_builder build the command, with the options, the paths names, etc.
@@ -110,7 +101,7 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
 
     if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
         sys.exit("\n%s Already exists > '%s/%s.%s'" % (
-                                errors, path_O, file_name, output_format))
+                                warnings, path_O, file_name, output_format))
 
     command = build_cmd(id_codec, bitrate, path_name, 
                            path_O, file_name, output_format)
@@ -123,4 +114,3 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
         sys.exit("audiomass:\033[31;1m ERROR!\033[0m %s" % (err))
     else:
         print ("\n\033[37;7mDone...\033[0m\n")
-
