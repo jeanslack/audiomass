@@ -23,7 +23,7 @@ Lame, Vorbis-tools, Monkey's Audio, Shntool and FFmpeg, etc.
 
 ## Usage
 
-usage: `audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK] [-f FILE] [-d DIRECTORY] [-b BATCH] [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]`   
+usage: `audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK] [-f FILE] [-d DIRECTORY] [-b BATCH [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]`   
   
 Optional arguments:   
 
