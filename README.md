@@ -1,14 +1,5 @@
 
-Audiomass-cli
-=============
-
-## Please Note !
-
-Since version 0.7.5 audiomass.cli is only compatible with python3.
-If you want a version compatible with python 2, please download the 
-latest version compatible for python 2 [here](https://github.com/jeanslack/audiomass/releases/tag/v0.7.4)
-
-## Description
+# Audiomass - audio conversion utility.
 
 **Audiomass-cli** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
@@ -22,90 +13,57 @@ Author and Developer: Gianluca Pernigotto
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE file in the docs folder)
 
-## System Requirements
-
-* Gnu/Linux
-* OSX 10.7 or later
-
-There is not yet a Windows implementation
-
 ## Essential Dependencies
 
-**Required:**
+**Required:**   
 
-- python >=3.5.3 (no python 2)
+- python >=3.5.3   
 
-**Recommended:**
+**Recommended:**   
 
-- flac
-- lame
-- vorbis-tools [oggenc, oggdec]
-- shntool
-- ffmpeg
-- monkey's audio (I've seen it has different names, this depends on the
-                  your O.S. - try search: libmac2, mac, monkey's audio)
+- flac   
+- lame   
+- vorbis-tools *(include: oggenc, oggdec)*   
+- shntool   
+- ffmpeg   
+- mac *(monkey's-audio, name depends to your O.S., try search: libmac2, mac)*   
 
-## Download
+## Usage
 
-If you want a stable release of audiomass, suitable for common use and
-packaging for Debian and Slackware distribuitions, download [here](https://github.com/jeanslack/audiomass/releases)   
+usage: `audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK] [-f FILE] [-d DIRECTORY] [-b BATCH] [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]`   
+  
+Optional arguments:   
 
-## Use
+  `-f  --file`     single audio stream conversion.   
+  `-d, --dir`      specifies a directory to process   
+  `-b, --batch`    run a process for different queued file formats   
+  `-o  --output`   write the output streams into specified folder   
+  `-C, --check`    Check for required dependencies   
+  `-h, --help`     print this help and exit   
+  `-v, --version`  print version and date and exit   
+  `-c, --copying`  print license and exit   
 
-`audiomass-cli option <input filename/dirname>`   
-`audiomass-cli option <input filename/dirname> [-o] [<output dirname>]`
+## Examples 
 
-**Options:**
+Convert a single file and write into same directory:   
 
- * -f  --file    (run process for single file-stream)
- * -d, --dir     (run a process to multiple files in dir with single format)
- * -b, --batch   (run a process for multiple files queued)
- * -o, --output  (write the output streams into specified directory)
- * -C, --check   (Check for required dependencies, no for python of course)
- * -h, --help    (show help and exit)
- * -v, --version (show version and date of the program)
- * -c, --copying (show license of the program)
+`audiomass -f '/home/Name/my Music/audiofile.wav'`   
 
-**Examples:** 
+Convert a group of audio stream and put output stream into specified folder:   
 
-Unzip the sources tarball of audiomass-cli, open a terminal window on its 
-path-name them and add the *-f* option (f=file) and proceeded to convert a 
-single audio file:   
-`~$ ./audiomass-cli -f '/home/Name/my Music/audiofile.wav'`. 
+`audiomass-cli -d /MyDirName/Music -o '/MyOtherDir/converted`   
 
-Do you have many files with the same format to convert? then loads the folder 
-that contains them and add the *-d* option, (d=dir):   
-`~$ ./audiomass-cli -d '/home/Name/MyFolder/flac_files'`
+Convert a queue audio streams and put output stream into specified folder:   
 
-Load audio streams queue with differents formats also on differents locations on
-the user-space. The *-b* option (b=batch), the *-o* option indicates the output 
-directory for saving. If  more  than one stream is specified, they must either 
-be quoted and separated to one or more white-space.   
-`~$ ./audiomass-cli -b 'STREAM1' 'STREAM2' 'STREAM3' 'STREAM4' -o /output/dir`   
-
-For a shortcut help, type `audiomass-cli --help` or read the best audiomass man page.
+`audiomass -b '..STREAM1.wav' '..STREAM2.mp3' '..STREAM3.flac' '...' -o /output/dir`
 
 ## Installation
 
-audiomass-cli not require installation, but if you are interested build an 
-installable package, see below:
+`pip install audiomass`   
 
-**Debian:**
+## License and Copyright
 
-Extra dependencies for build package with setuptools and distutils:
-`~# apt-get install python3-setuptools python3-all python3-stdeb fakeroot`
-
-Enter in unzipped sources folder and type (with not root):
-`~$ python3 setup.py --command-packages=stdeb.command bdist_deb`
-
-This should create a python-pysplitcue_version_all.deb in the new deb_dist directory.
-
-see the setup.py for more info on how-to build .deb package
-
-**Slackware**
-
-Is available a SlackBuild script to build a Slackware package (*.tgz*), See in: [audiomass-cli.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/audiomass)
-
-Remember: install **pysetuptools** if not present first.
-You can search on this site: [SlackBuild.org](http://slackbuilds.org/repository/14.1/python/pysetuptools/)
-
+Copyright © 2010 - 2019 Gianluca Pernigotto   
+Author and Developer: Gianluca Pernigotto   
+Mail: <jeanlucperni@gmail.com>   
+License: GPL3 (see LICENSE file in the docs folder)   

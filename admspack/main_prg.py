@@ -1,14 +1,12 @@
-#!/usr/bin/python3
-# -*- coding: UTF-8 -*-
 #
 #########################################################
-# Name: audiomass (main script for execution)
+# Name: main_prg.py
 # Porpose:  Boot straps and arg parser for audiomass script
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Version: (Ver.0.7) December 2017
-# Rev 4 (dec 9 2017)
+# Rev: dec 9 2017, Aug 8 2019
 #########################################################
 import sys
 import os
@@ -21,13 +19,11 @@ from admspack.process_batch import batch_parser
 AUTHOR, MAIL, COPYRIGHT, VERSION, RELEASE, RLS_NAME, PRG_NAME, URL, \
     SHORT_DESCRIPT, LONG_DESCRIPT, USAGE, LICENSE, SHORT_LICENSE, TRY = info()
 
-warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
-errors = 'audiomass: \033[31;7;3mError!\033[0m'
+warnings = 'audiomass: \033[33;7;3mwarning:\033[0m'
+errors = 'audiomass: \033[31;7;3merror:\033[0m'
 file_access = "%s Unable to access, invalid file-name  >\033[0m" % errors
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
-title = ("""--------------------------------------------------------------
-\033[1m%s\033[0m - wrapper audio conversions interface -
---------------------------------------------------------------""" % (RLS_NAME))
+title = ("""\033[1m%s\033[0m - audio conversion utility""" %(RLS_NAME))
 
 def main():
     """
@@ -46,17 +42,16 @@ def main():
         print (title)
         check_dependencies()
     elif '-v' in sys.argv or '--version' in sys.argv:
-        print ("%s - %s - Released %s" % (RLS_NAME, VERSION, RELEASE))
+        print ("%s - version %s - released %s" % (RLS_NAME, VERSION, 
+                                                  RELEASE))
     elif '-h' in sys.argv or '--help' in sys.argv:
-        print (title)
         print (USAGE)
     elif '-c' in sys.argv or '--copying' in sys.argv:
         print (LICENSE)
     elif len(sys.argv) == 1:
         print (title)
-        print (USAGE)
+        print (TRY)
     else:
-        print (title)
         sys.exit("%s Invalid options: '%s' \n%s" % (errors,
                                             sys.argv[1:][0], TRY))
     return 0
