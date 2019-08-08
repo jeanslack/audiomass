@@ -6,13 +6,6 @@ audio codecs for multiple input data streams conversions. It can be easily
 implemented with other audio library codecs and currently supports: Flac, 
 Lame, Vorbis-tools, Monkey's Audio, Shntool and FFmpeg, etc.
 
-## License and Copyright
-
-Copyright © 2010 - 2017 Gianluca Pernigotto   
-Author and Developer: Gianluca Pernigotto   
-Mail: <jeanlucperni@gmail.com>   
-License: GPL3 (see LICENSE file in the docs folder)
-
 ## Essential Dependencies
 
 **Required:**   
