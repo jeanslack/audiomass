@@ -1,7 +1,7 @@
 
 # Audiomass - audio conversion utility.
 
-**Audiomass-cli** is a command line wrapper that interfaces on differents 
+**Audiomass** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
 implemented with other audio library codecs and currently supports: Flac, 
 Lame, Vorbis-tools, Monkey's Audio, Shntool and FFmpeg, etc.
@@ -44,7 +44,7 @@ Convert a single file and write into same directory:
 
 Convert a group of audio stream and put output stream into specified folder:   
 
-`audiomass-cli -d /MyDirName/Music -o '/MyOtherDir/converted`   
+`audiomass -d /MyDirName/Music -o '/MyOtherDir/converted`   
 
 Convert a queue audio streams and put output stream into specified folder:   
 

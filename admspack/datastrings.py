@@ -11,7 +11,7 @@
 
 def info():################################### INFO
     """
-    All general info of the audiomass-cli
+    All general info of the audiomass
     """
     AUTHOR = "Gianluca Pernigotto aka Jeanslack"
     MAIL = '<jeanlucperni@gmail.com>'
@@ -21,7 +21,7 @@ def info():################################### INFO
     RLS_NAME = "Audiomass"
     PRG_NAME = "audiomass"
     URL = "https://github.com/jeanslack/audiomass"
-    SHORT_DESCRIPT = 'Audiomass is a audio conversion utility.'
+    SHORT_DESCRIPT = 'Audiomass is an audio conversion utility.'
     LONG_DESCRIPT = """
 **Audiomass** is a command line wrapper that interfaces on differents 
 audio codecs for multiple input data streams conversions. It can be easily 
