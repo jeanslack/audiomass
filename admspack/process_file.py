@@ -12,10 +12,13 @@ import subprocess
 import sys
 import os
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats, graphic_menu, build_cmd
+from admspack.comparisions import supported_formats
+from admspack.comparisions import graphic_menu
+from admspack.comparisions import build_cmd
 
-warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
-errors = 'audiomass: \033[31;7;3mError!\033[0m'
+warnings = 'audiomass: \033[33;7;3mwarning:\033[0m'
+errors = 'audiomass: \033[31;7;3merror:\033[0m'
+#---------------------------------------------------------------------#
 
 def file_parser(input_format, path_name, path_O):
     """
@@ -24,6 +27,7 @@ def file_parser(input_format, path_name, path_O):
     conversion based on input format.
     Also, get a tuple with specified command elements for process
     conversion.
+    
     """
     input_selection = None
     rawmenu = graphic_menu()
@@ -36,7 +40,8 @@ def file_parser(input_format, path_name, path_O):
     if input_selection is None:
         # the file-name must be supported and match with dict keys
         sys.exit('\n%s File not supported: "%s"\n' % (errors, 
-                                                 os.path.basename(path_name)))
+                                                      os.path.basename(
+                                                          path_name)))
     print ("\n    Available formats for "
               "encoding/decoding '\033[32;1m%s\033[0m' audio " 
               "stream" % input_format.lower()
@@ -52,16 +57,19 @@ def file_parser(input_format, path_name, path_O):
             print('audiomass: \033[1mAbort!\033[0m')
             sys.exit()
     elif output_format is None:
-        sys.exit("\n%s Unknow option '%s', Abort!" % (errors, output_selection))
+        sys.exit("\n%s Unknow option '%s', Abort!" % (errors, 
+                                                      output_selection))
     if tuple_data == 'key_error':
         sys.exit("\n%s No match available for '%s' option, Abort!" % (errors, 
                                                             output_selection))
 
     bitrate_test(tuple_data, output_format, path_name, path_O)
+#---------------------------------------------------------------------#
 
 def bitrate_test(tuple_data, output_format, path_name, path_O):
     """
     Check if codec support bitrate for level compression.
+    
     """
     dict_bitrate = tuple_data[1] # a dictionary of corresponding bitrate values
     graphic_bitrate = tuple_data[2]# a list with strings for graphic of choice
@@ -85,12 +93,14 @@ def bitrate_test(tuple_data, output_format, path_name, path_O):
             bitrate = ''
 
     command_builder(tuple_data, bitrate, output_format, path_name, path_O)
+#---------------------------------------------------------------------#
 
 def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
     """
-    command_builder build the command, with the options, the paths names, etc.
-    The 'id_codec' variable, contains the key (codec) for an corresponding 
-    value with command_dict.
+    command_builder build the command, with the options, 
+    the paths names, etc. The 'id_codec' variable, contains the key 
+    (codec) for an corresponding value with command_dict.
+    
     """
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'

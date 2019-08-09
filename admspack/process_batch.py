@@ -13,25 +13,32 @@ import sys
 import os
 from collections import Counter
 from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats, graphic_menu, build_cmd
+from admspack.comparisions import supported_formats
+from admspack.comparisions import graphic_menu
+from admspack.comparisions import build_cmd
 
 warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
 errors = 'audiomass: \033[31;7;3mError!\033[0m'
+#-------------------------------------------------------#
 
 def batch_parser(f_list, path_O):
     """
     Clean-up list contaminated by duplicate files.
+    
     """
     for k,v in Counter(f_list).items():# controllo doppioni accidentali.
         if v>1:
             print ("%s Removing following duplicates: > '%s' >" % (warnings, k))
     f_list = list(set(f_list)) # removal of any duplicates in the list
     sorting_dictionary(f_list, path_O)
+#-------------------------------------------------------#
 
 def sorting_dictionary(f_list, path_O):
     """
-    Dictionary creation key = format: value = [filename, filename, etc] 
-    in order to group the streams with the same format into separate lists.
+    Dictionary creation key = format: value = [filename, filename, 
+    etc] in order to group the streams with the same format into 
+    separate lists.
+    
     """
     formats = {}#Dizionario {formato1:[file1,file2,etc],..]}
     new_list = []#La lista ripulita dai file non supportati
@@ -60,13 +67,15 @@ def sorting_dictionary(f_list, path_O):
         new = ext.replace(".","")# tolgo il punto all'estensione
         formats[new.lower()].append("%s%s" %(name,ext))
     menu_selections(formats, path_O)
+#-------------------------------------------------------#
 
 def menu_selections(formats, path_O):
     """
-    Creation input menu
-    Creation output menu
+    - Make input menu
+    - Make output menu
     During output menu creation, Get a tuple with specified command
     elements
+    
     """
     input_selection = []# deve contenere solo interi(int)
     for input_format in list(formats.keys()):#Itero sui formati importati
@@ -82,7 +91,9 @@ def menu_selections(formats, path_O):
                 sys.exit('\n%s...End selection process, exit!\n'% errors)
             if input_format in v[1:3]:# mi prendo gli interi corrispondenti
                 input_selection.append(v[0])# v[0] mi da l'intero
-                menu = [menu[i] for i in range(len(menu)) if i not in set(v[3])]
+                menu = [menu[i] for i in range(len(menu)) 
+                        if i not in set(v[3])
+                        ]
                 for outformat in menu:# realizzazione menu di output
                     print ("    %s" % outformat)
                 output_selection = input("    Type a number corresponding"
@@ -90,13 +101,14 @@ def menu_selections(formats, path_O):
                 ##------------------- CREAZIONE OUTPUT MENU ------------------#
                 main = Audio_Formats(input_format)# Have a ext input >
                 output_format = main.output_selector(output_selection)
-                tuple_data = main.pairing_formats()# return tuple data of codec
+                tuple_data = main.pairing_formats()# return tuple data codec
                 if output_selection == 'a' or output_selection == 'A':
                     print('audiomass: \033[1mAbort!\033[0m')
                     sys.exit()
                 elif output_format is None:
-                    # Se nessuna selezione e premi enter rimuovo chiave e valore 
-                    # dal dizionario, cioè escludo quei files dalla conversione.
+                    # Se nessuna selezione e premi enter rimuovo chiave 
+                    # e valore dal dizionario, cioè escludo quei files 
+                    # dalla conversione.
                     print ("\n%s Unknow option '%s' >> skipping" % (warnings, 
                                                              output_selection))
                     formats.pop(input_format, None)
@@ -109,14 +121,17 @@ def menu_selections(formats, path_O):
                     continue # troppi errori, meglio contimuare da capo
 
                 bitrate_test(tuple_data, output_format, 
-                             formats.get(input_format), path_O)
+                             formats.get(input_format), path_O
+                             )
+#-------------------------------------------------------#
 
 def bitrate_test(tuple_data, output_format, path_in, path_O):
     """
     Check if codec support bitrate for level compression.
+    
     """
-    dict_bitrate = tuple_data[1] # a dictionary of corresponding bitrate values
-    graphic_bitrate = tuple_data[2]# a list with strings for graphic of choice
+    dict_bitrate = tuple_data[1]#a dictionary with corresponding bitrate values
+    graphic_bitrate = tuple_data[2]# a list with strings for graphic choice
     contestual_text = tuple_data[3]# 'please, select a bitrate value'
     #output_format = tuple_data[4] # non serve, gia definito
 
@@ -133,12 +148,14 @@ def bitrate_test(tuple_data, output_format, path_in, path_O):
                                                             warnings, level))
             bitrate = ''
     command_builder(tuple_data, bitrate, output_format, path_in, path_O)
+#-------------------------------------------------------#
 
 def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
     """
-    command_builder build the command, with the options, the paths names, etc.
-    The 'id_codec' variable, contains the key (codec) for an corresponding 
-    value with command_dict.
+    command_builder build the command with the options, the paths names, 
+    etc. The 'id_codec' variable, contains the key (codec) for an 
+    corresponding value with command_dict.
+    
     """
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     count = 0
@@ -174,8 +191,7 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         #print ("\n\033[31;7mStreams NOT Processed:\033[0m >> %s\n" % (not_processed))
         print ("\n\033[33;7;3mStreams NOT Processed:\033[0m")
         for list1 in not_processed:
-            print(list1)
-        
+            print(list1)   
     #print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
     if path_in:
         print ("\n\033[32;7mQueue Streams Processed:\033[0m")

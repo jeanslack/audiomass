@@ -12,6 +12,7 @@
 def graphic_menu():
     """
     Menu for output audio selection format used from all process(f,d,b)
+    
     """
     return [
     "------------",
@@ -24,22 +25,26 @@ def graphic_menu():
     "------------", 
     " \033[41;37;1m A \033[0m \033[1m..ABORT\033[0m", 
     "------------"]
+#--------------------------------------------------------------#
 
 def supported_formats():
     """
     supported_format: it is useful to limit the choices within 
     the available options of the graphic_menu.
+    
     """
     return {'1': (1,'WAV','wav',[1]), '2': (2,'AIFF','aiff',[2,4]), 
           '3': (3,'FLAC','flac',[3]), '4': (4,'APE','ape',[3,4]), 
           '5': (5,'MP3','mp3',[3,4,5,6]),'6': (6,'OGG','ogg',[3,4,5,6])
             }
+#--------------------------------------------------------------#
 
 def comparision(pair):
   """
   returns the required values for each pair of audio formats. 
   Accept one only string argument in this form: 'exemple > exemple'.
   You can add or remove new formats modules from here.
+  
   """
 
   ####------------------------------  BITRATES MENU:
@@ -181,14 +186,17 @@ def comparision(pair):
       'ogg > aiff' : ('ffmpeg', None, None, None, 'aiff'),
                           }
   return object_assignment.get(pair, 'key_error')
+#--------------------------------------------------------------#
 
-def build_cmd(id_codec, bitrate, path_name, path_O, file_name, output_format):
+def build_cmd(id_codec, bitrate, path_name, 
+              path_O, file_name, output_format):
     """
-    Each command associated with a type of codec appears to be different. 
-    This problem is solved here. Return a string with the command correctly 
-    formed.
-    NOTE: The key of this dictionary must match with the first value of 
-    the 'object assignment' dictionary to work well
+    Each command associated with a type of codec appears to be 
+    different. This is solved here. Return a string with the 
+    command correctly formed.
+    NOTE: The key of this dictionary must match with the first 
+    value of the 'object assignment' dictionary to work well
+    
     """
     command_dict = {
 'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,

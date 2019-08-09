@@ -12,6 +12,7 @@
 def info():################################### INFO
     """
     All general info of the audiomass
+    
     """
     AUTHOR = "Gianluca Pernigotto aka Jeanslack"
     MAIL = '<jeanlucperni@gmail.com>'

@@ -16,8 +16,10 @@ from admspack.process_file import file_parser
 from admspack.process_dir import  dir_parser
 from admspack.process_batch import batch_parser
 
-AUTHOR, MAIL, COPYRIGHT, VERSION, RELEASE, RLS_NAME, PRG_NAME, URL, \
-    SHORT_DESCRIPT, LONG_DESCRIPT, USAGE, LICENSE, SHORT_LICENSE, TRY = info()
+AUTHOR, MAIL, COPYRIGHT, VERSION, \
+    RELEASE, RLS_NAME, PRG_NAME, URL, \
+    SHORT_DESCRIPT, LONG_DESCRIPT, USAGE, \
+    LICENSE, SHORT_LICENSE, TRY = info()
 
 warnings = 'audiomass: \033[33;7;3mwarning:\033[0m'
 errors = 'audiomass: \033[31;7;3merror:\033[0m'
@@ -25,9 +27,11 @@ file_access = "%s Unable to access, invalid file-name  >\033[0m" % errors
 dir_access = "%s Unable to access, Invalid dir-name  >\033[0m" % errors
 title = ("""\033[1m%s\033[0m - audio conversion utility""" %(RLS_NAME))
 
+#--------------------------------------------------------------#
 def main():
     """
     Boot straps and arg parsing
+    
     """
     if '-f' in sys.argv or '--file' in sys.argv:
         print (title)
@@ -55,19 +59,21 @@ def main():
         sys.exit("%s Invalid options: '%s' \n%s" % (errors,
                                             sys.argv[1:][0], TRY))
     return 0
+#--------------------------------------------------------------#
 
 def get_file():
     """
     Get the filename and output dirname if output dirname in sys.argv
+    
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
         if os.path.isfile(sys.argv[2]): # must be file only here
-            path_in = os.path.abspath(sys.argv[2]) # is a file-name
+            path_in = os.path.abspath(os.path.join(sys.argv[2]))#filename
         else:
             sys.exit("%s %s" % (file_access, sys.argv[2]))
     except IndexError:
-        sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
+        sys.exit("%s Missing argument after option '%s'\n%s" % (errors,
                                                     sys.argv[1],TRY))
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         #if sys.argv[3] != '-o':
@@ -76,26 +82,28 @@ def get_file():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name
+                path_out = os.path.abspath(os.path.join(sys.argv[4]))#dirname
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
-            sys.exit("%s Missing output dir-name after '%s' option.\n%s" % (
+            sys.exit("%s Missing output dir-name after option '%s'\n%s" % (
                                                         errors, opts[0],TRY))
     else:
         path_out = None
     # input_format is the extension format of path_in
     input_format = os.path.splitext(path_in)[1].replace(".","")
     file_parser(input_format, path_in, path_out)
+#--------------------------------------------------------------#
 
 def get_dir():
     """
     Get input dirname and output dirname if output dirname in sys.argv
+    
     """
     opts = [x for x in ['-o','--output'] if x in sys.argv]
     try:
         if os.path.isdir(sys.argv[2]): 
-            path_in = os.path.abspath(sys.argv[2]) # this is a dir-name
+            path_in = os.path.abspath(os.path.join(sys.argv[2]))#dirname
         else:
             sys.exit("%s %s"%(dir_access ,sys.argv[2]))
     except IndexError:
@@ -106,21 +114,23 @@ def get_dir():
                                                       sys.argv[3], TRY))
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
-                path_out = os.path.abspath(sys.argv[4]) # this is a dir-name
+                path_out = os.path.abspath(os.path.join(sys.argv[4]))#dirname
             else:
                 sys.exit("%s %s"%(dir_access ,sys.argv[4]))
         else:
-            sys.exit("%s Missing output dir-name after '%s' option.\n%s" % (
+            sys.exit("%s Missing output dir-name after option '%s'\n%s" % (
                                                         errors, opts[0],TRY))
     else:
         path_out = None
     dir_parser(path_in, path_out)
+#--------------------------------------------------------------#
 
 def get_batch():
     """
     Groups a queued input file stream and puts it in the queue list. 
     Call the specified function and send queue list and output dirname 
     if output dirname in sys.argv.
+    
     """
     queue = []
     opts = [x for x in ['-o','--output'] if x in sys.argv]
@@ -131,14 +141,14 @@ def get_batch():
                 path_O = sys.argv[opt +1]
                 
         except IndexError:
-            sys.exit( "%s Missing argument after '%s' option.\n%s" % (
+            sys.exit( "%s Missing argument after option '%s'\n%s" % (
                                                         errors, opts[0], TRY))
         else:
             if os.path.isdir(path_O):#se opzione e percorso output corretti
                 arg = sys.argv[2:] # incorpora solo gli input pathnames
                 arg.remove(opts[0])# infatti rimuovo '-o' , '--output'
                 arg.remove(path_O) # e rimuovo l'eventuale output pathname
-                path_O = os.path.abspath(path_O)#ora setto il pathname
+                path_O = os.path.abspath(os.path.join(path_O))#pathname set
             else:
                 sys.exit("%s %s"%(dir_access ,path_O))
     else:
@@ -146,12 +156,12 @@ def get_batch():
         arg = sys.argv[2:] # dal 2° arg. lista
 
     for f in arg:
-        if os.path.isfile(os.path.abspath(f)): # must be file only here
+        if os.path.isfile(os.path.abspath(os.path.join(f))):#must be file
             queue.append(f) 
         else:
             sys.exit("%s '%s'" % (file_access, f))
     if not queue:
-        sys.exit("%s Missing argument after '%s' option.\n%s" % (errors,
+        sys.exit("%s Missing argument after option '%s'\n%s" % (errors,
                                                     sys.argv[1],TRY))
     batch_parser(queue, path_O)
 

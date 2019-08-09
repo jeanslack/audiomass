@@ -15,12 +15,14 @@ class Audio_Formats(object):
     """
     interface for comparison audio formats in the conversion 
     processes where different libraries and codecs are used.
+    
     """
     def __init__(self, input_format):
         """
         Can be accept one argument of type string or None values.
         If not None, Argument is the audio input extension string 
         without dot punctuation.  
+        
         """
         self.input_format = input_format
         self.output_format = None
@@ -32,6 +34,7 @@ class Audio_Formats(object):
         format or None. This method is related to the graphic input menu
         and from process_dir only. it is useful to limit the choices within 
         the available options of the graphic input menu.
+        
         """
         if input_selection in supported_formats():
             # mi da il formato lower case:
@@ -47,6 +50,7 @@ class Audio_Formats(object):
         format and the output format.
         Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
+        
         """
         if output_selection in supported_formats():
             # mi da il formato lower case:
@@ -58,6 +62,7 @@ class Audio_Formats(object):
     def pairing_formats(self,):
         """
         returns data for that pair input_format and output_format
+        
         """
         pair = '%s > %s' % (self.input_format, self.output_format)
 
@@ -71,6 +76,7 @@ class Audio_Formats(object):
         """
         If audio codec support audio bitrate level, this method 
         define true or false and return a level of bitrate.
+        
         """
         if level in dict_bitrate:
             valid = True

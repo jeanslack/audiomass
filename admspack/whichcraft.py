@@ -6,9 +6,10 @@ def check_dependencies(arg=None):
     """
     Check for dependencies into your system (compatible with Linux, 
     MacOsX, Windows)
-    When not arg, print a list of all required dependencies, otherwise accept
-    *one* name only to pass at the function parameter and return *None* if 
-    not exist or return its executable path-name.
+    When not arg, print a list of all required dependencies, otherwise 
+    accept *one* name only to pass at the function parameter and return 
+    *None* if not exist or return its executable path-name.
+    
     """
     if not arg:
         listing = ['ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc', 
