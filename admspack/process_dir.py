@@ -22,8 +22,8 @@ errors = 'audiomass: \033[31;7;3mError!\033[0m'
 
 def dir_parser(path_I, path_O):
     """
-    1 - Show input menu for files input format choice
-    2 - Creation output menu
+    1 - Show input menu to files input format choice
+    2 - Create output menu
     During output menu creation, Get a tuple with specified command
     elements
     
@@ -131,26 +131,29 @@ def command_builder(tuple_data, bitrate,
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     exe = 'False'
     count = 0
-    for upper_lower_name in [input_format, input_format.upper()]:
+    for names in [input_format, input_format.upper()]:
         # itero su nomi formato upper-case e lower-case
-        for path_name in glob.glob("%s/*.%s" % (path_I, upper_lower_name)):
+        for path_name in glob.glob(os.path.join("%s","*.%s" % (path_I, 
+                                                               names))):
             stream_I = os.path.basename(path_name)
             file_name = os.path.splitext(stream_I)[0]
             exe = None
             count += 1
-            if path_O is None: # se non ce sys.argv[3]
-                path_O = os.path.dirname(path_name)
-            if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
-                print ("\n%s Already exists > '%s/%s.%s' >> skipping >>" % (
-                        warnings, path_O, file_name, output_format)
-                        )
+            if path_O is None:#se scrive l'output nell'input source
+                path_O = os.path.dirname(path_name)#prendo lo stesso input path
+                
+            norm = os.path.join('%s' % path_O, 
+                                '%s.%s' % (file_name, 
+                                           output_format)
+                                ) # rendo portabili i pathnames
+            if os.path.exists(norm):
+                print ("\n%s Already exists > '%s' >> skipping >>" % (warnings, 
+                                                                      norm))
                 continue
             
-            command = build_cmd(id_codec, bitrate, path_name, 
-                            path_O, file_name, output_format)
-            print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
-                    % (str(count),output_format, path_O, file_name, 
-                       output_format))
+            command = build_cmd(id_codec, bitrate, path_name, norm)
+            print ("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s'\n" 
+                    % (str(count),output_format, norm))
             try:
                 #print (command) # uncomment for debug
                 subprocess.check_call(command, shell=True)

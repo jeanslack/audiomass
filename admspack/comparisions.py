@@ -42,7 +42,7 @@ def supported_formats():
 def comparision(pair):
   """
   returns the required values for each pair of audio formats. 
-  Accept one only string argument in this form: 'exemple > exemple'.
+  Accept one only string argument in this form: 'example > example'.
   You can add or remove new formats modules from here.
   
   """
@@ -188,33 +188,36 @@ def comparision(pair):
   return object_assignment.get(pair, 'key_error')
 #--------------------------------------------------------------#
 
-def build_cmd(id_codec, bitrate, path_name, 
-              path_O, file_name, output_format):
+def build_cmd(id_codec, bitrate, path_name, norm):
     """
-    Each command associated with a type of codec appears to be 
-    different. This is solved here. Return a string with the 
-    command correctly formed.
-    NOTE: The key of this dictionary must match with the first 
-    value of the 'object assignment' dictionary to work well
+    Since each command associated with a type of codec appears to be 
+    different, the key of the 'command_dict' must match with 
+    the first value of the 'object assignment' dictionary.
+    
+    This function Return a string with the command correctly formed.
+    
+    The parameters accepted are:
+    
+    - id_codec: key of the command_dict
+    - bitrate: str('value')
+    - path_name: str('/dirname/filename.input_format')
+    - norm: str('/dirname/filename.output_format')
     
     """
+    fname, output_format = os.path.splitext(os.path.basename(norm))
+    dirname = os.path.dirname(norm)
     command_dict = {
-'flac':'flac -V %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'lame':'lame --nohist %s "%s" "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                file_name, output_format),
-'lame --decode':'lame --decode "%s" "%s/%s.%s"' % (path_name, path_O,
-                                file_name, output_format),
-'oggenc':'oggenc %s "%s" -o "%s/%s.%s"' % (bitrate, path_name, path_O,
-                                        file_name, output_format),
-'mac':'mac "%s" "%s/%s.%s" %s' % (path_name, path_O, file_name, output_format,
-                                bitrate),
-'ffmpeg':'ffmpeg -i "%s" %s "%s/%s.%s"' % (path_name, bitrate, path_O,
-                                        file_name, output_format),
-'oggdec':'oggdec "%s" -o "%s/%s.%s"' % (path_name, path_O, file_name,
-                                    output_format),
-'shntool':'shntool conv -o %s -O always "%s" -d "%s"' % (output_format, 
-                                                         path_name, path_O),
-                        }
+        'flac':'flac -V %s "%s" -o "%s"' % (bitrate, path_name, norm),
+        'lame':'lame --nohist %s "%s" "%s"' % (bitrate, path_name, norm),
+        'lame --decode':'lame --decode "%s" "%s"' % (path_name, norm),
+        'oggenc':'oggenc %s "%s" -o "%s"' % (bitrate, path_name, norm),
+        'mac':'mac "%s" "%s" %s' % (path_name, norm, bitrate),
+        'ffmpeg':'ffmpeg -i "%s" %s "%s"' % (path_name, bitrate, norm),
+        'oggdec':'oggdec "%s" -o "%s"' % (path_name, norm),
+        'shntool':'shntool conv -o %s -O always "%s" -d "%s"' % (
+                                        output_format.split('.')[1], 
+                                        path_name, 
+                                        dirname),
+                    }
 
     return command_dict[id_codec]

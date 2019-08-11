@@ -105,17 +105,18 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
     id_codec = tuple_data[0] # as lame --decodec or oggenc, etc
     stream_I = os.path.basename(path_name)#input, es: nome-canzone.wav'
     file_name = os.path.splitext(stream_I)[0]#only stream with no ext
-    if path_O is None: # se non ce sys.argv[3]
-        path_O = os.path.dirname(path_name)
+    if path_O is None:#se scrive l'output nell'input source
+        path_O = os.path.dirname(path_name)# prendo lo stesso input path
+    norm = os.path.join('%s' % path_O,
+                        '%s.%s' % (file_name, 
+                                   output_format,)
+                        ) # rendo portabili i pathnames
+    if os.path.exists(norm):
+        sys.exit("\n%s Already exists > '%s'" % (warnings, norm))
 
-    if os.path.exists('%s/%s.%s' % (path_O, file_name, output_format)):
-        sys.exit("\n%s Already exists > '%s/%s.%s'" % (
-                                warnings, path_O, file_name, output_format))
-
-    command = build_cmd(id_codec, bitrate, path_name, 
-                           path_O, file_name, output_format)
-    print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s/%s.%s'\n" 
-                % (output_format, path_O, file_name, output_format))
+    command = build_cmd(id_codec, bitrate, path_name, norm)
+    print ("\n\033[36;7m %s Output Stream:\033[0m >> '%s'\n" % (output_format,
+                                                                norm))
     try:
         #print (command)# uncomment for debug
         subprocess.check_call(command, shell=True)
