@@ -1,16 +1,26 @@
 +--------------------------+
+July. 25 2020 Version 0.8.1
++--------------------------+
+
+* Removed constant definitions from modules. Used __init__.py to definitions.
+* Fixed setup.py to use setuptools.
+* Fixed PEP8 with pycodestyle.
+* Fixed bug on process_dir.py (glob.glob) when converts files on directory.
+
+
++--------------------------+
 Dec. 28 2017 Version 0.7.6
 +--------------------------+
 
 - Add aiff conversions support for MP3 and OGG formats.
 - Add wav, aiff, mp3 and ogg support for APE format.
 - Add 'get()' method in comparisions.py
-- Resolved bug in process_batch.py. In 'for' loop raise a [RuntimeError: 
+- Resolved bug in process_batch.py. In 'for' loop raise a [RuntimeError:
   dictionary changed size during iteration] when turn with 'continue' statement.
-- Add a limites formats list into comparisions.supported_formats() dictionary and 
+- Add a limites formats list into comparisions.supported_formats() dictionary and
   removed some redundant code into all process files
 - Some improved console output
-- Removed the whichcraft retro-compatibility with python 2, it used 
+- Removed the whichcraft retro-compatibility with python 2, it used
   *shutil.which* module instead of
 
 
@@ -22,17 +32,17 @@ Dec. 17 2017 Version 0.7.5
  - Change the setup.py for build audiomass deb package for python3
  - Change debian dependencies names for building tools, see: README.MD
  - Change the command names for building package, see: README.md
- - Add new option for check installed dependencies 
+ - Add new option for check installed dependencies
  - Re-formated datastrings.py content
  - Re-created new manual in pdf format
- - Resolved shntool 'ask option' for overwriting existance file. 
+ - Resolved shntool 'ask option' for overwriting existance file.
    For now all existance file are *overwritings* with shntool only.
- - When load file with no extension with -f option result: 
+ - When load file with no extension with -f option result:
    audiomass: Error! Not format supported: ""
    Resolve with 'os.path.basename'
  - Resolved bug into parser if missing arg after -b option
  - Some tweaks to the code for a future backward compatibility with python3
- 
+
 +--------------------------+
 Dec. 15 2017 Version 0.7.4
 +--------------------------+
@@ -51,20 +61,20 @@ Dec. 15 2017 Version 0.7.4
 Dec. 06 2017 Version 0.7.3
 +--------------------------+
 
- - Add functionalities for resolving some issue in the user arguments; 
-   Normalize a pathnames by collapsing redundant separators and up-level 
-   references. So you can write '/home/john/MyMusic/' or ''/home/john/MyMusic'' 
-   or /home/john/MyMusic and return even '/home/john/MyMusic'. 
+ - Add functionalities for resolving some issue in the user arguments;
+   Normalize a pathnames by collapsing redundant separators and up-level
+   references. So you can write '/home/john/MyMusic/' or ''/home/john/MyMusic''
+   or /home/john/MyMusic and return even '/home/john/MyMusic'.
    This avoid many others errors at the end of the process
  - Re-created new manual pdf format
- - Resolved shntool 'ask option' for overwriting existance file. 
+ - Resolved shntool 'ask option' for overwriting existance file.
    For now all existance file are *overwritings* with shntool only.
 
 +--------------------------+
 Dec. 06 2017 Version 0.7.2
 +--------------------------+
 
- - Now every file to be converted can have either uppercase or 
+ - Now every file to be converted can have either uppercase or
    lowercase names
  - Fixed the bugs of the previous version
  - The code has also been improved a little bit
@@ -92,7 +102,7 @@ NOTE: this is a definitive release.
 November 30 2017 Version 0.7.0
 +--------------------------+
 
-NOTE: this release is just a passing version to experiment with some 
+NOTE: this release is just a passing version to experiment with some
       variations. Although it is usable it may have some bugs
       and generally it does not work very well.
 
@@ -117,4 +127,4 @@ November 22 2017 Version 0.6.1
 febbruary 24 2015 Version 0.6
 +--------------------------+
 
-Initial release 
+Initial release

@@ -2,32 +2,36 @@
 # -*- coding: utf-8 -*-
 #
 #########################################################
-# Name: setup.py
-# Porpose: script for building and setup audiomass package
-# Platform: Gnu/Linux, Unix
-# Writer: jeanslack <jeanlucperni@gmail.com>
-# Copyright: (c) 2015 jeanslack <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: nov 22 2017, aug 8 2019
+# Name:          setup.py
+# Porpose:       building and setup audiomass package
+# Platform:      Gnu/Linux, Unix
+# Writer:        jeanslack <jeanlucperni@gmail.com>
+# Copyright:     (c) 2015 jeanslack <jeanlucperni@gmail.com>
+# license:       GPL3
+# Rev:           July.25.2020
 #########################################################
-
-from distutils.core import setup
 from setuptools import setup, find_packages
-from admspack.datastrings import info
+from admspack import (
+    __author__,
+    __mail__,
+    __copyright__,
+    __version__,
+    __release__,
+    __rls_name__,
+    __prg_name__,
+    __url__,
+    __short_descript__,
+    __long_descript__,
+    __license__,
+    __short_license__,
+    )
 
-cr = info()
-AUTHOR = cr[0]
-MAIL = cr[1]
-VERSION = cr[3]
-RLS_NAME = cr[5]# release name first letter is Uppercase
-PRG_NAME = cr[6]
-URL = cr[7]
-SHORT_DESCRIPTION = cr[8]
-LONG_DESCRIPTION = cr[9]
-SHORT_LICENSE = cr[12]# short_license
 
-# ---- categorize with ----#
-CLASSIFIERS = [
+def build():
+    """build"""
+
+    # ---- categorize with ----#
+    classifiers = [
             'Development Status :: 4 - Beta',
             'Environment :: Console',
             'Intended Audience :: End Users/Desktop',
@@ -41,29 +45,36 @@ CLASSIFIERS = [
             'Programming Language :: Python :: 3.7',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
-                ]
+            ]
 
-#----------  Source/Build distributions  ----------------#
+    # get the package data
+    data_files = [('share/man/man1', ['man/audiomass.1.gz']),
+                  ('share/audiomass', ['AUTHORS',
+                                       'BUGS',
+                                       'CHANGELOG',
+                                       'COPYING',
+                                       'README.md',
+                                       'TODO']),
+                  ]
+    # Setup
+    setup(name=__prg_name__,
+          version=__version__,
+          description=__short_descript__,
+          long_description=open('README.md').read(),
+          long_description_content_type='text/markdown',
+          author=__author__[0],
+          author_email=__mail__,
+          url=__url__,
+          license=__short_license__,
+          platforms=["Linux", "Unix", "MacOS"],
+          packages=find_packages(),
+          data_files=data_files,
+          zip_safe=False,
+          python_requires=">=3.5.3, <4",
+          entry_points={'gui_scripts': ['audiomass=admspack.main_prg:main']},
+          classifiers=classifiers,
+          )
 
-# get the package data
-DATA_FILES = [('share/man/man1', ['man/audiomass.1.gz']),
-              ('share/audiomass', ['AUTHORS', 'BUGS', 'CHANGELOG', 
-               'COPYING', 'README.md', 'TODO']),
-              ]
-# Setup
-setup(name=PRG_NAME,
-        version=VERSION,
-        description=SHORT_DESCRIPTION,
-        long_description=open('README.md').read(),
-        long_description_content_type='text/markdown',
-        author=AUTHOR,
-        author_email=MAIL,
-        url=URL,
-        license=SHORT_LICENSE,
-        platforms=["Linux","Unix","MacOS"],
-        packages=find_packages(),
-        scripts=['audiomass'],
-        data_files=DATA_FILES,
-        classifiers=CLASSIFIERS,
-        #install_requires=REQUIRES,
-        )
+
+if __name__ == '__main__':
+    build()

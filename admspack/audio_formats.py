@@ -1,40 +1,40 @@
 #
 #########################################################
-# Name: audio_formats.py (module)
-# Porpose: module to pair audio formats
-# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Name:      audio_formats.py (module)
+# Porpose:   module to pair audio formats
+# Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license: GPL3
-# Version: (Ver.0.6) Febbruary 2015
+# license:   GPL3
+# Version:   (Ver.0.6) Febbruary 2015
 # Rev
 #########################################################
-
 from admspack.comparisions import supported_formats, comparision
+
 
 class Audio_Formats(object):
     """
-    interface for comparison audio formats in the conversion 
+    interface for comparison audio formats in the conversion
     processes where different libraries and codecs are used.
-    
+
     """
     def __init__(self, input_format):
         """
         Can be accept one argument of type string or None values.
-        If not None, Argument is the audio input extension string 
-        without dot punctuation.  
-        
+        If not None, Argument is the audio input extension string
+        without dot punctuation.
+
         """
         self.input_format = input_format
         self.output_format = None
-        self.retcode = None # return a data tuple
+        self.retcode = None  # return a data tuple
 
     def input_selector(self, input_selection):
         """
-        Accept number string argument and return the corresponding 
+        Accept number string argument and return the corresponding
         format or None. This method is related to the graphic input menu
-        and from process_dir only. it is useful to limit the choices within 
+        and from process_dir only. it is useful to limit the choices within
         the available options of the graphic input menu.
-        
+
         """
         if input_selection in supported_formats():
             # mi da il formato lower case:
@@ -46,11 +46,11 @@ class Audio_Formats(object):
 
     def output_selector(self, output_selection):
         """
-        looking for a comparison/compatibilities between the input 
+        looking for a comparison/compatibilities between the input
         format and the output format.
         Accept letters string in corresponding with output menu. see the
         output_menu in comparisions module.
-        
+
         """
         if output_selection in supported_formats():
             # mi da il formato lower case:
@@ -62,7 +62,7 @@ class Audio_Formats(object):
     def pairing_formats(self,):
         """
         returns data for that pair input_format and output_format
-        
+
         """
         pair = '%s > %s' % (self.input_format, self.output_format)
 
@@ -74,9 +74,9 @@ class Audio_Formats(object):
 
     def quality_level(self, dict_bitrate, level):
         """
-        If audio codec support audio bitrate level, this method 
+        If audio codec support audio bitrate level, this method
         define true or false and return a level of bitrate.
-        
+
         """
         if level in dict_bitrate:
             valid = True
