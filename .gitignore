@@ -1,11 +1,21 @@
 #Files mentioned in this file will be ignored by git
 *.pyc
-*.pyo
+*.log
+*.mbtree
 dist
 build
-__pycache__
+audiomass.egg-info
 deb_dist
+*.tar.gz
+ENV
+env
+APPDIR_RELESES
+*.spec
+*.AppImage
 *.egg-info
+Pipfile
+Pipfile.lock
 *.DS_Store
 *.directory
+*.kate-swp
 *~

@@ -11,9 +11,9 @@
 
 __author__ = ('Gianluca Pernigotto', '(aka jeanslack)')
 __mail__ = '<jeanlucperni@gmail.com>'
-__copyright__ = '© 2013-2019'
+__copyright__ = '© 2013-2020'
 __version__ = '0.8.1'
-__release__ = 'July 25 2020'
+__release__ = 'August 31 2020'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
 __url__ = "https://github.com/jeanslack/audiomass"

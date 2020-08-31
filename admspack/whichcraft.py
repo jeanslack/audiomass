@@ -1,15 +1,23 @@
-
+# -*- coding: utf-8 -*-
+#
+#########################################################
+# Name:      whichcraft.py (module)
+# Porpose:   checks for binaries
+# Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license:   GPL3
+# Version:   (Ver.0.6) Febbruary 2015
+# Rev        July.26.2020
+#########################################################
 import os
 from shutil import which
 
 
 def check_dependencies(arg=None):
     """
-    Check for dependencies into your system (compatible with Linux,
-    MacOsX, Windows)
-    When not arg, print a list of all required dependencies, otherwise
-    accept *one* name only to pass at the function parameter and return
-    *None* if not exist or return its executable path-name.
+    Without *arg* checks for binaries in *listing* and print result.
+    Otherwise accepts one argument and returns result of *which*: `None`
+    if not exist or its executable path-name.
 
     """
     if not arg:
@@ -23,4 +31,4 @@ def check_dependencies(arg=None):
             else:
                 print("Check for: '%s' ..Not Installed" % required)
     else:
-        return which(arg, mode=os.F_OK | os.X_OK, path=None)
+        return which(str(arg), mode=os.F_OK | os.X_OK, path=None)
