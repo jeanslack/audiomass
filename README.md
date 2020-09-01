@@ -19,11 +19,13 @@ folder.
 
 ## Usage
 
-```audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK]
+```
+audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK]
 [-f FILE {..FILENAME}]
 [-d DIRECTORY {..DIRNAME}]
 [-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] 
-[-o OUTPUT {..DIRNAME}] [-o DIRNAME]```   
+[-o OUTPUT {..DIRNAME}]
+```   
   
 Optional arguments:   
 
