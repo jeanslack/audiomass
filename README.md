@@ -1,5 +1,5 @@
 
-# Audiomass - wrapper for command line audio libraries.
+# Audiomass - wrapper for audio libraries and for wave data processing.
 
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools, 
 Monkey's Audio, Shntool and FFmpeg libraries. 

@@ -17,7 +17,7 @@ __release__ = 'August 31 2020'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
 __url__ = "https://github.com/jeanslack/audiomass"
-__short_descript__ = 'Audiomass is a wrapper for command line audio libraries.'
+__short_descript__ = 'Wrapper for audio libraries and for wave data processing '
 __long_descript__ = """
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools,
 Monkey's Audio, Shntool and FFmpeg libraries. It supports conversions of

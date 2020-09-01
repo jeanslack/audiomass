@@ -6,6 +6,7 @@ Aug. 31 2020 Version 0.8.1
 * Fixed setup.py to use setuptools.
 * Fixed PEP8 with pycodestyle.
 * Fixed bug on process_dir.py (glob.glob) when converts files on directory.
+* The Audiomass Python package has been renamed to src
 
 
 +--------------------------+
