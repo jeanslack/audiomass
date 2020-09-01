@@ -1,5 +1,5 @@
 
-# Audiomass - wrapper for audio libraries and for wave data processing.
+# Audiomass - wrapper for multiple audio conversion libraries.
 
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools, 
 Monkey's Audio, Shntool and FFmpeg libraries. 
@@ -19,7 +19,11 @@ folder.
 
 ## Usage
 
-usage: `audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK] [-f FILE] [-d DIRECTORY] [-b BATCH [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]`   
+```audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK]
+[-f FILE {..FILENAME}]
+[-d DIRECTORY {..DIRNAME}]
+[-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] 
+[-o OUTPUT {..DIRNAME}] [-o DIRNAME]```   
   
 Optional arguments:   
 

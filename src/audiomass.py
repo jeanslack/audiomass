@@ -40,8 +40,8 @@ def main():
 
     """
     msg = msg_str()
-    title = ("""\033[1m%s\033[0m - audio conversion utility""" % (
-                                                                __rls_name__))
+    title = ("\033[1m%s\033[0m - Wrapper for multiple audio "
+             "conversion libraries." % (__rls_name__))
 
     if '-f' in sys.argv or '--file' in sys.argv:
         print(title)

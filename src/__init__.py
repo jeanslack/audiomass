@@ -17,7 +17,7 @@ __release__ = 'August 31 2020'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
 __url__ = "https://github.com/jeanslack/audiomass"
-__short_descript__ = 'Wrapper for audio libraries and for wave data processing '
+__short_descript__ = 'Wrapper for multiple audio conversion libraries. '
 __long_descript__ = """
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools,
 Monkey's Audio, Shntool and FFmpeg libraries. It supports conversions of
@@ -25,8 +25,8 @@ different audio formats at a time and the ability to convert even groups of
 files in a directory, saving the output in a specific folder.
 """
 synapsy = ("usage: audiomass [-h HELP] [-v VERSION] [-c COPYING] "
-               "[-C CHECK] [-f FILE] [-d DIRECTORY] "
-               "[-b BATCH [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]"
+           "[-C CHECK] [-f FILE {..FILENAME}] [-d DIRECTORY {..DIRNAME}] "
+           "[-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] [-o OUTPUT {..DIRNAME}]"
                )
 __usage__ = """%s
 
