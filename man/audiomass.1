@@ -1,0 +1,90 @@
+.TH AUDIOMASS 1
+.SH NAME
+.B audiomass
+\- Wrapper for command line audio libraries.
+.SH SYNOPSIS
+
+.B audiomass
+\fI[-h HELP] [-v VERSION] [-c COPYING] [-C CHECK]
+[-f FILE] [-d DIRECTORY] [-b BATCH [..FILE1 ..FILE2 ..FILE3 ..]] [-o DIRNAME]\fR
+
+.SH DESCRIPTION
+
+Audiomass is a command line audio wrapper of the Flac, Lame, Vorbis-tools,
+Monkey's Audio, Shntool and FFmpeg libraries.
+It supports conversions of different audio formats at a time and the ability
+to convert even groups of files in a directory, saving the output in a specific
+folder.
+
+For each input file, audiomass-cli writes to a filename based on the input
+filename, but with the extension changed to as appropriate to encoding.
+
+.SH OPTIONS
+.TP
+.B \-f, \-\-file
+Single audio conversion. If the (\fB\-o\fR) option is not specified, write to
+the same source directory.
+.TP
+.B \-d, \-\-dir
+Converts a bunch of audio files with the same extension contained in a directory.
+If the (\fB\-o\fR) option is not specified, write to the same source directory.
+.TP
+.B \-b, \-\-batch
+Load a queue of audio files even with different formats located in different
+locations. If option (\fB\-o\fR) is not specified, writes the output to same
+input file. If more than one file is specified, they must either be separated
+to one or more white-space.
+.TP
+.B \-o \-\-output
+Save the output files into specified folder. Can be used in conjunction with
+the (\fB\-f\fR), (\fB\-d\fR) and (\fB\-b\fR) options described above. If you
+want to save the outputs to a different folder, you might consider using this
+option.
+.TP
+.B \-C \-\-check
+This option checks the required dependencies by audiomass.
+Installed packages are marked with '..Ok', while non-installed packages are
+marked with '..Not Installed'
+.TP
+.B \-h, \-\-help
+Show a short help and exit.
+.TP
+.B \-v, \-\-version
+Show version and date and exit.
+.TP
+.B \-c, \-\-copying
+Show license and exit.
+
+.SH EXAMPLES
+.TP
+Convert a single file and save it into same directory:
+.TP
+.B audiomass-cli -f '/MyDirName/SomeFile.wav''
+.TP
+---------------------
+.TP
+Convert a bunch of audio files inside a folder and save them in another folder:
+.TP
+.B audiomass-cli -d /MyDirName/Music  -o '/MyOtherDir/converted
+.TP
+---------------------
+.TP
+Convert a queue of audio files and save the output in a specified folder:
+.TP
+.B audiomass -b '..STREAM1' '..STREAM2' '..STREAM3' '...' -o /output/dir
+
+.SH "SEE ALSO"
+.BR flac (1),
+.BR oggenc (1),
+.BR oggdec (1),
+.BR lame (1),
+.BR shntool (1),
+.BR wavpack (1)
+.SH AUTHORS
+Written by Gianluca Pernigotto, Alias: jeanslack <jeanlucperni@gmail.com> .
+Homepage: https://github.com/jeanslack/audiomass
+.SH COPYRIGHT
+Copyright  ©  2015-2019  Free Software Foundation, Inc.  License GPLv3+: GNU
+GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free  to  change  and  redistribute  it.
+There is NO WARRANTY, to the extent permitted by law.

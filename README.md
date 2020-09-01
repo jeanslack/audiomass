@@ -1,19 +1,15 @@
 
-# Audiomass - audio conversion utility.
+# Audiomass - wrapper for command line audio libraries.
 
-**Audiomass** is a command line wrapper that interfaces on differents 
-audio codecs for multiple input data streams conversions. It can be easily 
-implemented with other audio library codecs and currently supports: Flac, 
-Lame, Vorbis-tools, Monkey's Audio, Shntool and FFmpeg, etc.
+**Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools, 
+Monkey's Audio, Shntool and FFmpeg libraries. 
+It supports conversions of different audio formats at a time and the ability 
+to convert even groups of files in a directory, saving the output in a specific 
+folder.
 
-## Essential Dependencies
-
-**Required:**   
+## Dependencies  
 
 - python >=3.5.3   
-
-**Recommended:**   
-
 - flac   
 - lame   
 - vorbis-tools *(include: oggenc, oggdec)*   
@@ -27,10 +23,10 @@ usage: `audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK] [-f FILE] [-d D
   
 Optional arguments:   
 
-  `-f  --file`     single audio stream conversion.   
+  `-f  --file`     single audio conversion.   
   `-d, --dir`      specifies a directory to process   
   `-b, --batch`    run a process for different queued file formats   
-  `-o  --output`   write the output streams into specified folder   
+  `-o  --output`   save the output into specified folder   
   `-C, --check`    Check for required dependencies   
   `-h, --help`     print this help and exit   
   `-v, --version`  print version and date and exit   
@@ -38,15 +34,15 @@ Optional arguments:
 
 ## Examples 
 
-Convert a single file and write into same directory:   
+Convert a single file and save it into same directory:   
 
 `audiomass -f '/home/Name/my Music/audiofile.wav'`   
 
-Convert a group of audio stream and put output stream into specified folder:   
+Convert a bunch of audio files and save them in a specified folder:   
 
 `audiomass -d /MyDirName/Music -o '/MyOtherDir/converted`   
 
-Convert a queue audio streams and put output stream into specified folder:   
+Convert a queue of audio files and save the output in the specified folder:   
 
 `audiomass -b '..STREAM1.wav' '..STREAM2.mp3' '..STREAM3.flac' '...' -o /output/dir`
 
@@ -56,7 +52,7 @@ Convert a queue audio streams and put output stream into specified folder:
 
 ## License and Copyright
 
-Copyright © 2010 - 2019 Gianluca Pernigotto   
+Copyright © 2010 - 2020 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto   
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE file in the docs folder)   

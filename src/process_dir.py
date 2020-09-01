@@ -12,11 +12,11 @@ import subprocess
 import glob
 import sys
 import os
-from admspack.datastrings import msg_str
-from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats
-from admspack.comparisions import graphic_menu
-from admspack.comparisions import build_cmd
+from src.datastrings import msg_str
+from src.audio_formats import Audio_Formats
+from src.comparisions import supported_formats
+from src.comparisions import graphic_menu
+from src.comparisions import build_cmd
 
 
 def dir_parser(path_I, path_O):
@@ -160,7 +160,7 @@ def command_builder(tuple_data, bitrate,
                 continue
 
             command = build_cmd(id_codec, bitrate, path_name, norm)
-            print("\n\033[36;7m|%s| %s Output Stream:\033[0m >> '%s'\n" % (
+            print("\n\033[36;7m|%s| %s Output:\033[0m >> '%s'\n" % (
                                                             str(count),
                                                             output_format,
                                                             norm

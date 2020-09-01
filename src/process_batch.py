@@ -12,11 +12,11 @@ import subprocess
 import sys
 import os
 from collections import Counter
-from admspack.datastrings import msg_str
-from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats
-from admspack.comparisions import graphic_menu
-from admspack.comparisions import build_cmd
+from src.datastrings import msg_str
+from src.audio_formats import Audio_Formats
+from src.comparisions import supported_formats
+from src.comparisions import graphic_menu
+from src.comparisions import build_cmd
 
 
 def batch_parser(f_list, path_O):
@@ -64,7 +64,7 @@ def sorting_dictionary(f_list, path_O):
                                                                 ext
                                                                 ))
     if new_list == []:  # se i file importati sono tutti incompatibili
-        sys.exit('\n%s ...No audio streams to process, exit!' % msg[1])
+        sys.exit('\n%s ...No audio files to process, exit!' % msg[1])
     # Creazione dei records (valori) nel diz. formats
     for i in new_list:
         name, ext = os.path.splitext(i)
@@ -88,7 +88,7 @@ def menu_selections(formats, path_O):
         # integralmente con l'originale
         menu = graphic_menu()
         print("\n    Available formats for encoding/decoding "
-              "'\033[32;1m%s\033[0m' audio streams" % input_format)
+              "'\033[32;1m%s\033[0m' audio files" % input_format)
         # Dizion. = {chiavi'srtinga 1':(integear,'formato')}
         # itero sulla tupla valori
         for v in supported_formats().values():
@@ -186,7 +186,7 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
             continue
 
         command = build_cmd(id_codec, bitrate, path_name, norm)
-        print("\n\033[36;7m|%s| %s Output Stream:\033[0m >> "
+        print("\n\033[36;7m|%s| %s Output:\033[0m >> "
               "'%s'\n" % (str(count), output_format, norm)
               )
         try:
@@ -202,12 +202,12 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
         # print ("\n\033[31;7mStreams NOT Processed:\033[0m >> %s\n" % (
                                                             # not_processed
                                                             # ))
-        print("\n\033[33;7;3mStreams NOT Processed:\033[0m")
+        print("\n\033[33;7;3mFiles NOT Processed:\033[0m")
         for list1 in not_processed:
             print(list1)
     # print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
     if path_in:
-        print("\n\033[32;7mQueue Streams Processed:\033[0m")
+        print("\n\033[32;7mQueue Files Processed:\033[0m")
         for list2 in path_in:
             print(list2)
     print("\n\033[37;7mDone...\033[0m\n")

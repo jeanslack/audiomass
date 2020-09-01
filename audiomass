@@ -10,5 +10,5 @@
 # Rev: Aug 8 2018
 #########################################################
 
-from admspack import main_prg
-main_prg.main()
+from src import audiomass
+audiomass.main()

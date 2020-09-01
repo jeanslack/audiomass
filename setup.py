@@ -71,7 +71,7 @@ def build():
           data_files=data_files,
           zip_safe=False,
           python_requires=">=3.5.3, <4",
-          entry_points={'gui_scripts': ['audiomass=admspack.main_prg:main']},
+          entry_points={'gui_scripts': ['audiomass=src.audiomass:main']},
           classifiers=classifiers,
           )
 

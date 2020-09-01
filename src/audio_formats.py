@@ -9,7 +9,7 @@
 # Version:   (Ver.0.6) Febbruary 2015
 # Rev
 #########################################################
-from admspack.comparisions import supported_formats, comparision
+from src.comparisions import supported_formats, comparision
 
 
 class Audio_Formats(object):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #########################################################
-# Name: main_prg.py
+# Name: audiomass.py
 # Porpose:  Boot straps and arg parser for audiomass script
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -11,7 +11,7 @@
 #########################################################
 import sys
 import os
-from admspack import (
+from src import (
     __author__,
     __mail__,
     __copyright__,
@@ -27,11 +27,11 @@ from admspack import (
     __license__,
     __short_license__,
     )
-from admspack.datastrings import msg_str
-from admspack.whichcraft import check_dependencies
-from admspack.process_file import file_parser
-from admspack.process_dir import dir_parser
-from admspack.process_batch import batch_parser
+from src.datastrings import msg_str
+from src.whichcraft import check_dependencies
+from src.process_file import file_parser
+from src.process_dir import dir_parser
+from src.process_batch import batch_parser
 
 
 def main():

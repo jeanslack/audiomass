@@ -12,11 +12,11 @@
 import subprocess
 import sys
 import os
-from admspack.datastrings import msg_str
-from admspack.audio_formats import Audio_Formats
-from admspack.comparisions import supported_formats
-from admspack.comparisions import graphic_menu
-from admspack.comparisions import build_cmd
+from src.datastrings import msg_str
+from src.audio_formats import Audio_Formats
+from src.comparisions import supported_formats
+from src.comparisions import graphic_menu
+from src.comparisions import build_cmd
 
 
 def file_parser(input_format, path_name, path_O):
@@ -44,7 +44,7 @@ def file_parser(input_format, path_name, path_O):
                                                           path_name)))
     print("\n    Available formats for "
           "encoding/decoding '\033[32;1m%s\033[0m' audio "
-          "stream" % input_format.lower()
+          "file" % input_format.lower()
           )
     for outformat in menu:
         print("    %s" % (outformat))
@@ -119,7 +119,7 @@ def command_builder(tuple_data, bitrate, output_format, path_name, path_O):
         sys.exit("\n%s Already exists > '%s'" % (msg[0], norm))
 
     command = build_cmd(id_codec, bitrate, path_name, norm)
-    print("\n\033[36;7m %s Output Stream:\033[0m >> '%s'\n" % (output_format,
+    print("\n\033[36;7m %s Output:\033[0m >> '%s'\n" % (output_format,
                                                                norm))
     try:
         # print (command)# uncomment for debug
