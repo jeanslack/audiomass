@@ -11,7 +11,7 @@
 # Rev:           July.25.2020
 #########################################################
 from setuptools import setup, find_packages
-from admspack import (
+from src import (
     __author__,
     __mail__,
     __copyright__,
