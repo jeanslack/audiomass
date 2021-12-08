@@ -1,38 +1,38 @@
 # -*- coding: utf-8 -*-
-#
-#########################################################
-# Name: getcommand.py (module)
-# Porpose: parsing the data files list for batch process.
-# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Nov 27 2017, Dec.15 2017, Aug.10 2019
-#########################################################
+"""
+Name:         getcommand.py (module)
+Porpose:      parsing the data files list for batch process.
+Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
+license:      GPL3
+Rev:          Nov 27 2017, Dec.15 2017, Aug.10 2019, Dec 08 2021
+Code checker: flake8, pylint
+"""
 import subprocess
 import sys
 import os
 from collections import Counter
 from src.datastrings import msg_str
-from src.audio_formats import Audio_Formats
+from src.audio_formats import AudioFormats
 from src.comparisions import supported_formats
 from src.comparisions import graphic_menu
 from src.comparisions import build_cmd
 
 
-def batch_parser(f_list, path_O):
+def batch_parser(f_list, path_o):
     """
     Clean-up list contaminated by duplicate files.
 
     """
     msg = msg_str()
-    for k, v in Counter(f_list).items():  # controllo doppioni accidentali.
-        if v > 1:
-            print("%s Removing following duplicates: > '%s' >" % (msg[0], k))
+    for key, val in Counter(f_list).items():  # controllo doppioni accidentali.
+        if val > 1:
+            print(f"{msg[0]} Removing following duplicates: > '{key}' >")
     f_list = list(set(f_list))  # removal of any duplicates in the list
-    sorting_dictionary(f_list, path_O)
+    sorting_dictionary(f_list, path_o)
 
 
-def sorting_dictionary(f_list, path_O):
+def sorting_dictionary(f_list, path_o):
     """
     Dictionary creation key = format: value = [filename, filename,
     etc] in order to group the streams with the same format into
@@ -43,37 +43,35 @@ def sorting_dictionary(f_list, path_O):
     formats = {}  # Dizionario {formato1:[file1,file2,etc],..]}
     new_list = []  # La lista ripulita dai file non supportati
     all_formats = []  # tutti i formati supportati
-    for selection, upper_f, lower_f, limits in supported_formats().values():
-        all_formats.append(upper_f)  # WAV,AIF,FLAC,APE etc
-        all_formats.append(lower_f)  # wav,aif,flac,ape etc
+
+    for val in supported_formats().values():
+        all_formats.append(val[1])  # WAV,AIF,FLAC,APE etc
+        all_formats.append(val[2])  # wav,aif,flac,ape etc
 
     # Creazione keys (chiavi) nel diz. formats:
-    for i in f_list:  # Append separated file format
-        name, ext = os.path.splitext(i)
+    for finp in f_list:  # Append separated file format
+        name, ext = os.path.splitext(finp)
         new = ext.replace(".", "")  # Tolgo il punto all'estensione
         if new in all_formats:  # Se estens. input è supportata
-            new_list.append(i)  # Lista ripulita file importati
+            new_list.append(finp)  # Lista ripulita file importati
             if new.lower() not in formats:  # Add not present key at dict
                 # Aggiungo chiavi non presenti nel diz + il valore
                 # lista vuota: {formato:[]}
                 formats[new.lower()] = []
         else:
-            print('\n%s Not supported file format: "%s%s" >> skipping >>' % (
-                                                                msg[0],
-                                                                name,
-                                                                ext
-                                                                ))
-    if new_list == []:  # se i file importati sono tutti incompatibili
-        sys.exit('\n%s ...No audio files to process, exit!' % msg[1])
+            print(f'\n{msg[0]} Not supported file format: '
+                  f'"{name}{ext}" >> skipping >>')
+    if not new_list:  # se i file importati sono tutti incompatibili
+        sys.exit(f'\n{msg[1]} ...No audio files to process, exit!')
     # Creazione dei records (valori) nel diz. formats
     for i in new_list:
         name, ext = os.path.splitext(i)
         new = ext.replace(".", "")  # tolgo il punto all'estensione
-        formats[new.lower()].append("%s%s" % (name, ext))
-    menu_selections(formats, path_O)
+        formats[new.lower()].append(f"{name}{ext}")
+    menu_selections(formats, path_o)
 
 
-def menu_selections(formats, path_O):
+def menu_selections(formats, path_o):
     """
     - Make input menu
     - Make output menu
@@ -87,52 +85,51 @@ def menu_selections(formats, path_O):
         # NOTE 1 RELOAD: ricarico nuovamente il grafico dei formati
         # integralmente con l'originale
         menu = graphic_menu()
-        print("\n    Available formats for encoding/decoding "
-              "'\033[32;1m%s\033[0m' audio files" % input_format)
+        print(f"\n    Available formats for encoding/decoding "
+              f"'\033[32;1m{input_format}\033[0m' audio files")
         # Dizion. = {chiavi'srtinga 1':(integear,'formato')}
         # itero sulla tupla valori
-        for v in supported_formats().values():
+        for val in supported_formats().values():
             if formats == {}:  # se è completamente vuoto, esco
-                sys.exit('\n%s...End selection process, exit!\n' % msg[1])
-            if input_format in v[1:3]:  # mi prendo gli interi corrispondenti
-                input_selection.append(v[0])  # v[0] mi da l'intero
+                sys.exit(f'\n{msg[1]}...End selection process, exit!\n')
+            if input_format in val[1:3]:  # mi prendo gli interi corrispondenti
+                input_selection.append(val[0])  # val[0] mi da l'intero
                 menu = [menu[i] for i in range(len(menu))
-                        if i not in set(v[3])
+                        if i not in set(val[3])
                         ]
                 for outformat in menu:  # realizzazione menu di output
-                    print("    %s" % outformat)
-                output_selection = input("    Type a number corresponding"
-                                         " format and press enter key... ")
+                    print(f"    {outformat}")
+                output_selection = input("    Type a number corresponding "
+                                         "to the format and press Enter "
+                                         "key... ")
                 # ------------------- CREAZIONE OUTPUT MENU ------------------#
-                main = Audio_Formats(input_format)  # Have a ext input >
+                main = AudioFormats(input_format)  # Have a ext input >
                 output_format = main.output_selector(output_selection)
                 tuple_data = main.pairing_formats()  # return tuple data codec
-                if output_selection == 'a' or output_selection == 'A':
+                if output_selection in ('a', 'A'):
                     print('audiomass: \033[1mAbort!\033[0m')
                     sys.exit()
                 elif output_format is None:
                     # Se nessuna selezione e premi enter rimuovo chiave
                     # e valore dal dizionario, cioè escludo quei files
                     # dalla conversione.
-                    print("\n%s Unknow option '%s' >> skipping" % (
-                                                            msg[0],
-                                                            output_selection
-                                                            ))
+                    print(f"\n{msg[0]} Unknow option '{output_selection}' "
+                          f">> skipping")
                     formats.pop(input_format, None)
                     continue  # meglio partire da capo
 
                 if tuple_data == 'key_error':
-                    print("\n%s No match available for '%s' option >> "
-                          "skipping >>" % (msg[0], output_selection))
+                    print(f"\n{msg[0]} No match available for "
+                          f"'{output_selection}' option >> skipping >>")
                     formats.pop(input_format, None)
                     continue  # troppi errori, meglio contimuare da capo
 
                 bitrate_test(tuple_data, output_format,
-                             formats.get(input_format), path_O
+                             formats.get(input_format), path_o
                              )
 
 
-def bitrate_test(tuple_data, output_format, path_in, path_O):
+def bitrate_test(tuple_data, output_format, path_in, path_o):
     """
     Check if codec support bitrate for level compression.
 
@@ -148,17 +145,17 @@ def bitrate_test(tuple_data, output_format, path_in, path_O):
     else:
         print(graphic_bitrate)
         level = input(contestual_text)
-        a = Audio_Formats(None)
-        bitrate = a.quality_level(dict_bitrate, level)
+        audio = AudioFormats(None)
+        bitrate = audio.quality_level(dict_bitrate, level)
         valid = bitrate
         if valid is False:
-            print("\n%s Unknow quality level '%s', ...use default\n" % (
-                                                            msg[0], level))
+            print(f"\n{msg[0]} Unknow quality level "
+                  f"'{level}', ...use default\n")
             bitrate = ''
-    command_builder(tuple_data, bitrate, output_format, path_in, path_O)
+    command_builder(tuple_data, bitrate, output_format, path_in, path_o)
 
 
-def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
+def command_builder(tuple_data, bitrate, output_format, path_in, path_o):
     """
     command_builder build the command with the options, the paths names,
     etc. The 'id_codec' variable, contains the key (codec) for an
@@ -170,42 +167,39 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_O):
     count = 0
     not_processed = []
     for path_name in path_in:
-        stream_I = os.path.basename(path_name)  # input, es: nome-canzone.wav'
-        file_name = os.path.splitext(stream_I)[0]  # only stream with no ext
+        stream_i = os.path.basename(path_name)  # input, es: nome-canzone.wav'
+        file_name = os.path.splitext(stream_i)[0]  # only stream with no ext
         count += 1
-        if path_O is None:  # se scrive l'output nell'input source
-            path_O = os.path.dirname(path_name)  # prendo lo stesso input path
-        norm = os.path.join('%s' % path_O,
-                            '%s.%s' % (file_name,
-                                       output_format)
-                            )  # rendo portabili i pathnames
+        if path_o is None:  # se scrive l'output nell'input source
+            path_o = os.path.dirname(path_name)  # prendo lo stesso input path
+        # rendo portabili i pathnames:
+        norm = os.path.join(f'{path_o}' % path_o,
+                            f'{file_name}.{output_format}')
         if os.path.exists(norm):
-            print("\n%s Already exists > '%s' >> skipping >>" % (msg[0], norm))
+            print(f"\n{msg[0]} Already exists > '{norm}' >> skipping >>")
             # path_in.remove(path_name)
             not_processed.append(path_name)
             continue
 
         command = build_cmd(id_codec, bitrate, path_name, norm)
-        print("\n\033[36;7m|%s| %s Output:\033[0m >> "
-              "'%s'\n" % (str(count), output_format, norm)
+        print(f"\n\033[36;7m|{str(count)}| {output_format} "
+              f"Output:\033[0m >> '{norm}'\n"
               )
         try:
             # print (command) # uncomment for debug
             subprocess.check_call(command, shell=True)
         except subprocess.CalledProcessError as err:
-            sys.exit("audioamass:\033[31;1mERROR!\033[0m %s" % (err))
+            sys.exit(f"audioamass:\033[31;1mERROR!\033[0m {err}")
 
     if not_processed:
-        for fiLe in not_processed:
-            if fiLe in path_in:
-                path_in.remove(fiLe)
-        # print ("\n\033[31;7mStreams NOT Processed:\033[0m >> %s\n" % (
-                                                            # not_processed
-                                                            # ))
+        for _file in not_processed:
+            if _file in path_in:
+                path_in.remove(_file)
+
         print("\n\033[33;7;3mFiles NOT Processed:\033[0m")
         for list1 in not_processed:
             print(list1)
-    # print ("\n\033[32;7mQueue Streams Processed:\033[0m >> %s\n" % (path_in))
+
     if path_in:
         print("\n\033[32;7mQueue Files Processed:\033[0m")
         for list2 in path_in:

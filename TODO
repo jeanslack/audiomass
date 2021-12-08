@@ -1,29 +1,36 @@
 
 -----------------------------AUDIOMASS------------------------------
 leggend:
-        [?] not in working, [*] Needed soon, 
+        [?] not in working, [*] Needed soon,
 
-        [DONE] already working. [TESTING] check for errors 
+        [DONE] already working. [TESTING] check for errors
 
 --------------------------------------------------------------------
-- There is not a control interface for error, when not exist the codecs,
-  make this soon [DONE]
-  
-- make a file, dir and batch separate operations [DONE]
-  with batch operation  content for multiples file format [DONE]
-  
+- There is no error checking interface when codecs don't exist, do it soon [DONE]
+
+- Do separate operations on files, directories and batches with batch operation
+  content for multiple file formats [DONE]
+
+- escludi il formato aiff nella decodifica mp3 e forse anche ogg [DONE]
+
+- elimina cancel o quiet dai menu dei bit rate [DONE]
+
+- creare funzione per lo spostamentyo dei file in get_batch [DONE]
+
+- se importi un file senza estensione, procede. Questo è inamissibile!
+  ma c'è una attenuante: poi viene identificato e l'uscita è: Incompatible
+  conversion [DONE]
+
+- Check builds packages for distribuitions with python3 [DONE]
+
   ----------------------
-  - escludi il formato aiff nella decodifica mp3 e forse anche ogg [DONE]
-  - elimina cancel o quiet dai menu dei bit rate [DONE]
+
   - fare una verifica mirata sull'interazione con i menu [TESTING]
+
   - copia perfettamente i colori e i messaggi sui vari get_ [TESTING]
-  - creare funzione per lo spostamentyo dei file in get_batch [DONE]
+
   - Testare tutte le varianti di conversione [TESTING]
-  
-  - se importi un file senza estensione, procede. Questo è inamissibile!
-    ma c'è una attenuante: poi viene identificato e l'uscita è: Incompatible 
-    conversion [DONE]
-    
-  - Check builds packages for distribuitions with python3 [DONE]
-  - Migliora output di console in process_dir.py in command_builder()
-  - fare una ri-verifica per i nomi dei file upper e lower case
+
+  - Migliora output di console in process_dir.py in command_builder().
+
+  - Riverificare i nomi dei file upper e lower case.

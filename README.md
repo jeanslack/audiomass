@@ -9,7 +9,7 @@ folder.
 
 ## Dependencies  
 
-- python >=3.5.3   
+- python >=3.6   
 - flac   
 - lame   
 - vorbis-tools *(include: oggenc, oggdec)*   
@@ -20,7 +20,7 @@ folder.
 ## Usage
 
 ```
-audiomass [-h HELP] [-v VERSION] [-c COPYING] [-C CHECK]
+audiomass [-h HELP] [-v VERSION] [-C COPYING] [-c CHECK]
 [-f FILE {..FILENAME}]
 [-d DIRECTORY {..DIRNAME}]
 [-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] 
@@ -33,10 +33,10 @@ Optional arguments:
   `-d, --dir`      specifies a directory to process   
   `-b, --batch`    run a process for different queued file formats   
   `-o  --output`   save the output into specified folder   
-  `-C, --check`    Check for required dependencies   
+  `-c, --check`    Check of available audio libraries   
   `-h, --help`     print this help and exit   
   `-v, --version`  print version and date and exit   
-  `-c, --copying`  print license and exit   
+  `-C, --copying`  print license and exit   
 
 ## Examples 
 
@@ -54,11 +54,11 @@ Convert a queue of audio files and save the output in the specified folder:
 
 ## Installation
 
-`pip install audiomass`   
+`python3 -m pip install audiomass`   
 
 ## License and Copyright
 
-Copyright © 2010 - 2020 Gianluca Pernigotto   
+Copyright © 2010 - 2021 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto   
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE file in the docs folder)   

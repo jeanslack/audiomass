@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-#
-#########################################################
-# Name:         comparisions.py (module)
-# Porpose:      module for output strings commands and formats comparisions
-# Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright:    (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license:      GPL3
-# Version:      (Ver.0.6) Febbruary 2015
-# Rev
-#########################################################
+"""
+Name:         comparisions.py (module)
+Porpose:      module for output strings commands and formats comparisions
+Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright:    (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
+license:      GPL3
+Rev:          Dec 08 2021
+Code checker: flake8, pylint
+"""
 import os
+
 
 def graphic_menu():
     """
@@ -222,20 +222,18 @@ def build_cmd(id_codec, bitrate, path_name, norm):
     - norm: str('/dirname/filename.output_format')
 
     """
-    fname, output_format = os.path.splitext(os.path.basename(norm))
+    output_format = os.path.splitext(os.path.basename(norm))[1]
     dirname = os.path.dirname(norm)
     command_dict = {
-        'flac': 'flac -V %s "%s" -o "%s"' % (bitrate, path_name, norm),
-        'lame': 'lame --nohist %s "%s" "%s"' % (bitrate, path_name, norm),
-        'lame --decode': 'lame --decode "%s" "%s"' % (path_name, norm),
-        'oggenc': 'oggenc %s "%s" -o "%s"' % (bitrate, path_name, norm),
-        'mac': 'mac "%s" "%s" %s' % (path_name, norm, bitrate),
-        'ffmpeg': 'ffmpeg -i "%s" %s "%s"' % (path_name, bitrate, norm),
-        'oggdec': 'oggdec "%s" -o "%s"' % (path_name, norm),
-        'shntool': 'shntool conv -o %s -O always "%s" -d "%s"' % (
-                                        output_format.split('.')[1],
-                                        path_name,
-                                        dirname),
+        'flac': f'flac -V {bitrate} "{path_name}" -o "{norm}"',
+        'lame': f'lame --nohist {bitrate} "{path_name}" "{norm}"',
+        'lame --decode': f'lame --decode "{path_name}" "{norm}"',
+        'oggenc': f'oggenc {bitrate} "{path_name}" -o "{norm}"',
+        'mac': f'mac "{path_name}" "{norm}" {bitrate}',
+        'ffmpeg': f'ffmpeg -i "{path_name}" {bitrate} "{norm}"',
+        'oggdec': f'oggdec "{path_name}" -o "{norm}"',
+        'shntool': (f'shntool conv -o {output_format.split(".")[1]} '
+                    f'-O always "{path_name}" -d "{dirname}"')
                     }
 
     return command_dict[id_codec]

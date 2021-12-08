@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-#
-#########################################################
-# Name: audiomass launcher
-# Porpose: run audiomass module
-# Platform: Mac OsX, Gnu/Linux
-# Writer: jeanslack <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Aug 8 2018
-#########################################################
+"""
+Name: audiomass launcher
+Porpose: run audiomass module
+Platform: Mac OsX, Gnu/Linux
+Writer: jeanslack <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Aug 8 2018
 
-from src import audiomass
-audiomass.main()
+"""
+if __name__ == "__main__":
+    from src import audiomass
+    audiomass.main()

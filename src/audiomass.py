@@ -1,31 +1,30 @@
 # -*- coding: utf-8 -*-
-#
-#########################################################
-# Name: audiomass.py
-# Porpose:  Boot straps and arg parser for audiomass script
-# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2015/2017 Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license: GPL3
-# Version: (Ver.0.7) December 2017
-# Rev: dec 9 2017, Aug 8 2019
-#########################################################
+"""
+Name: audiomass.py
+Porpose:  Boot straps and arg parser for audiomass script
+Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright: (c) 2015/2021 Gianluca Pernigoto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: dec 9 2017, Aug 8 2019, Dec 08 2021
+Code checker: flake8, pylint
+"""
 import sys
 import os
 from src import (
-    __author__,
-    __mail__,
-    __copyright__,
+    # __author__,
+    # __mail__,
+    # __copyright__,
     __version__,
     __release__,
     __rls_name__,
-    __prg_name__,
-    __url__,
-    __short_descript__,
-    __long_descript__,
+    # __prg_name__,
+    # __url__,
+    # __short_descript__,
+    # __long_descript__,
     __usage__,
     __try__,
     __license__,
-    __short_license__,
+    # __short_license__,
     )
 from src.datastrings import msg_str
 from src.whichcraft import check_dependencies
@@ -40,38 +39,39 @@ def main():
 
     """
     msg = msg_str()
-    title = ("\033[1m%s\033[0m - Wrapper for multiple audio "
-             "conversion libraries." % (__rls_name__))
 
     if '-f' in sys.argv or '--file' in sys.argv:
-        print(title)
         get_file()
+
     elif '-d' in sys.argv or '--dir' in sys.argv:
-        print(title)
         get_dir()
+
     elif '-b' in sys.argv or '--batch' in sys.argv:
-        print(title)
         get_batch()
-    elif '-C' in sys.argv or '--check' in sys.argv:
-        print(title)
+
+    elif '-c' in sys.argv or '--check' in sys.argv:
+        print(f"\n\033[1m{__rls_name__}\033[0m - "
+              f"check of available audio libraries:")
         check_dependencies()
+
     elif '-v' in sys.argv or '--version' in sys.argv:
-        print("%s - version %s - released %s" % (__rls_name__,
-                                                 __version__,
-                                                 __release__
-                                                 ))
+        print(f"{__rls_name__} - version {__version__} - "
+              f"released {__release__}")
+
     elif '-h' in sys.argv or '--help' in sys.argv:
+        print(f"\n\033[1m{__rls_name__}\033[0m - Wrapper "
+              f"for multiple audio conversion libraries.\n")
         print(__usage__)
-    elif '-c' in sys.argv or '--copying' in sys.argv:
+
+    elif '-C' in sys.argv or '--copying' in sys.argv:
         print(__license__)
+
     elif len(sys.argv) == 1:
-        print(title)
         print(__try__)
+
     else:
-        raise SystemExit("%s Invalid options: '%s' \n%s" % (msg[1],
-                                                            sys.argv[1:][0],
-                                                            __try__
-                                                            ))
+        raise SystemExit(f"{msg[1]} Invalid options: "
+                         f"'{sys.argv[1:][0]}' \n{__try__}")
     return 0
 
 
@@ -86,27 +86,25 @@ def get_file():
         if os.path.isfile(sys.argv[2]):  # must be file only here
             path_in = os.path.abspath(os.path.join(sys.argv[2]))  # filename
         else:
-            sys.exit("%s %s" % (msg[2], sys.argv[2]))
+            sys.exit(f"{msg[2]} {sys.argv[2]}")
     except IndexError:
-        sys.exit("%s Missing argument after option '%s'\n%s" % (msg[1],
-                                                                sys.argv[1],
-                                                                __try__
-                                                                ))
+        sys.exit(f"{msg[1]} Missing argument after option "
+                 f"'{sys.argv[1]}'\n{__try__}")
+
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         # if sys.argv[3] != '-o':
         if sys.argv[3] not in opts:
-            raise SystemExit("%s Invalid option: '%s' \n%s" % (msg[1],
-                                                               sys.argv[3],
-                                                               __try__
-                                                               ))
+            raise SystemExit(f"{msg[1]} Invalid option: "
+                             f"'{sys.argv[3]}' \n{__try__}")
+
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
                 path_out = os.path.abspath(os.path.join(sys.argv[4]))  # dirn
             else:
-                raise SystemExit("%s %s" % (msg[3], sys.argv[4]))
+                raise SystemExit(f"{msg[3]} {sys.argv[4]}")
         else:
-            raise SystemExit("%s Missing output dir-name after option "
-                             "'%s'\n%s" % (msg[1], opts[0], __try__))
+            raise SystemExit(f"{msg[1]} Missing output dir-name after option "
+                             f"'{opts[0]}'\n{__try__}")
     else:
         path_out = None
     # input_format is the extension format of path_in
@@ -125,24 +123,22 @@ def get_dir():
         if os.path.isdir(sys.argv[2]):
             path_in = os.path.abspath(os.path.join(sys.argv[2]))  # dirname
         else:
-            sys.exit("%s %s" % (msg[3], sys.argv[2]))
+            sys.exit(f"{msg[3]} {sys.argv[2]}")
     except IndexError:
-        sys.exit("%s Missing argument\n%s" % (msg[1], __try__))
+        sys.exit(f"{msg[1]} Missing argument\n{__try__}")
 
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         if sys.argv[3] not in opts:
-            raise SystemExit("%s Invalid option: '%s' \n%s" % (msg[1],
-                                                               sys.argv[3],
-                                                               __try__
-                                                               ))
+            raise SystemExit(f"{msg[1]} Invalid option: '{sys.argv[3]}' "
+                             f"\n{__try__}")
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
                 path_out = os.path.abspath(os.path.join(sys.argv[4]))  # dirn
             else:
-                raise SystemExit("%s %s" % (msg[3], sys.argv[4]))
+                raise SystemExit(f"{msg[3]} {sys.argv[4]}")
         else:
-            raise SystemExit("%s Missing output dir-name after option "
-                             "'%s'\n%s" % (msg[1], opts[0], __try__))
+            raise SystemExit(f"{msg[1]} Missing output dir-name "
+                             f"after option '{opts[0]}'\n{__try__}")
     else:
         path_out = None
     dir_parser(path_in, path_out)
@@ -162,39 +158,35 @@ def get_batch():
         opt = sys.argv.index(opts[0])
         try:
             if sys.argv[opt + 1]:  # se trovo percorso dopo opzione -o --output
-                path_O = sys.argv[opt + 1]
+                path_o = sys.argv[opt + 1]
 
         except IndexError:
-            sys.exit("%s Missing argument after option '%s'\n%s" % (msg[1],
-                                                                    opts[0],
-                                                                    __try__
-                                                                    ))
+            sys.exit(f"{msg[1]} Missing argument "
+                     f"after option '{opts[0]}'\n{__try__}")
         else:
-            if os.path.isdir(path_O):  # se opzione e percorso output corretti
+            if os.path.isdir(path_o):  # se opzione e percorso output corretti
                 arg = sys.argv[2:]  # incorpora solo gli input pathnames
                 arg.remove(opts[0])  # infatti rimuovo '-o' , '--output'
-                arg.remove(path_O)  # e rimuovo l'eventuale output pathname
-                path_O = os.path.abspath(os.path.join(path_O))  # pathname set
+                arg.remove(path_o)  # e rimuovo l'eventuale output pathname
+                path_o = os.path.abspath(os.path.join(path_o))  # pathn set
             else:
-                raise SystemExit("%s %s" % (msg[3], path_O))
+                raise SystemExit(f"{msg[3]} {path_o}")
     else:
-        path_O = None
-        arg = sys.argv[2:]  # dal 2° arg. lista
+        path_o = None
+        arg = sys.argv[2:]  # list from 2° arg.
 
-    for f in arg:
-        if os.path.isfile(os.path.abspath(os.path.join(f))):  # must be file
-            queue.append(f)
+    for fname in arg:
+        # must be file
+        if os.path.isfile(os.path.abspath(os.path.join(fname))):
+            queue.append(fname)
         else:
-            raise SystemExit("%s '%s'" % (msg[2], f))
+            raise SystemExit(f"{msg[2]} '{fname}'")
     if not queue:
-        raise SystemExit("%s Missing argument after option '%s'\n%s" % (
-                                                                msg[1],
-                                                                sys.argv[1],
-                                                                __try__
-                                                                ))
-    batch_parser(queue, path_O)
+        raise SystemExit(f"{msg[1]} Missing argument "
+                         f"after option '{sys.argv[1]}'\n{__try__}")
+    batch_parser(queue, path_o)
 
 
 if __name__ == '__main__':
-    status = main()
-    sys.exit(status)
+    STATUS = main()
+    sys.exit(STATUS)
