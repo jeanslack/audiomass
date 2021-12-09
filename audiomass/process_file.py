@@ -12,11 +12,11 @@ Code checker: flake8
 import subprocess
 import sys
 import os
-from src.datastrings import msg_str
-from src.audio_formats import AudioFormats
-from src.comparisions import supported_formats
-from src.comparisions import graphic_menu
-from src.comparisions import build_cmd
+from audiomass.datastrings import msg_str
+from audiomass.audio_formats import AudioFormats
+from audiomass.comparisions import supported_formats
+from audiomass.comparisions import graphic_menu
+from audiomass.comparisions import build_cmd
 
 
 def file_parser(input_format, path_name, path_o):
@@ -105,6 +105,7 @@ def command_builder(tuple_data,
     (codec) for an corresponding value with command_dict.
 
     """
+    interrupted = None
     msg = msg_str()
     id_codec = tuple_data[0]  # as lame --decodec or oggenc, etc
     stream_i = os.path.basename(path_name)  # input, es: nome-canzone.wav'
@@ -118,10 +119,17 @@ def command_builder(tuple_data,
 
     command = build_cmd(id_codec, bitrate, path_name, norm)
     print(f"\n\033[36;7m {output_format} Output:\033[0m >> '{norm}'\n")
+
     try:
-        # print (command)# uncomment for debug
-        subprocess.check_call(command, shell=True)
+        #print(command) # uncomment for debug
+        subprocess.run(command, check=True, shell=True)
+
     except subprocess.CalledProcessError as err:
         sys.exit(f"audiomass:\033[31;1m ERROR!\033[0m {err}")
+    except KeyboardInterrupt:
+        interrupted = True
     else:
         print("\n\033[37;7mDone...\033[0m\n")
+
+    if interrupted:
+        sys.exit("\n\033[37;7mKeyboardInterrupt !\033[0m\n")

@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Name: audiomass.py
-Porpose:  Boot straps and arg parser for audiomass script
+Name: cli.py
+Porpose:  Main args parser for audiomass script
 Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright: (c) 2015/2021 Gianluca Pernigoto <jeanlucperni@gmail.com>
 license: GPL3
-Rev: dec 9 2017, Aug 8 2019, Dec 08 2021
+Rev: dec 9 2017, Aug 8 2019, Dec 09 2021
 Code checker: flake8, pylint
 """
 import sys
 import os
-from src import (
+from audiomass import (
     # __author__,
     # __mail__,
     # __copyright__,
@@ -26,11 +26,11 @@ from src import (
     __license__,
     # __short_license__,
     )
-from src.datastrings import msg_str
-from src.whichcraft import check_dependencies
-from src.process_file import file_parser
-from src.process_dir import dir_parser
-from src.process_batch import batch_parser
+from audiomass.datastrings import msg_str
+from audiomass.whichcraft import check_dependencies
+from audiomass.process_file import file_parser
+from audiomass.process_dir import dir_parser
+from audiomass.process_batch import batch_parser
 
 
 def main():
@@ -88,14 +88,14 @@ def get_file():
         else:
             sys.exit(f"{msg[2]} {sys.argv[2]}")
     except IndexError:
-        sys.exit(f"{msg[1]} Missing argument after option "
-                 f"'{sys.argv[1]}'\n{__try__}")
+        sys.exit(f"{msg[1]} Missing argument after '{sys.argv[1]}' "
+                 f"option\n{__try__}")
 
     if len(sys.argv) == 4 or len(sys.argv) >= 4:
         # if sys.argv[3] != '-o':
         if sys.argv[3] not in opts:
             raise SystemExit(f"{msg[1]} Invalid option: "
-                             f"'{sys.argv[3]}' \n{__try__}")
+                             f"'{sys.argv[3]}'\n{__try__}")
 
         if len(sys.argv) >= 5:
             if os.path.isdir(sys.argv[4]):
@@ -103,8 +103,8 @@ def get_file():
             else:
                 raise SystemExit(f"{msg[3]} {sys.argv[4]}")
         else:
-            raise SystemExit(f"{msg[1]} Missing output dir-name after option "
-                             f"'{opts[0]}'\n{__try__}")
+            raise SystemExit(f"{msg[1]} Missing output dirname "
+                             f"after '{opts[0]}' option\n{__try__}")
     else:
         path_out = None
     # input_format is the extension format of path_in
@@ -137,8 +137,8 @@ def get_dir():
             else:
                 raise SystemExit(f"{msg[3]} {sys.argv[4]}")
         else:
-            raise SystemExit(f"{msg[1]} Missing output dir-name "
-                             f"after option '{opts[0]}'\n{__try__}")
+            raise SystemExit(f"{msg[1]} Missing output dirname "
+                             f"after '{opts[0]}' option\n{__try__}")
     else:
         path_out = None
     dir_parser(path_in, path_out)
@@ -162,7 +162,7 @@ def get_batch():
 
         except IndexError:
             sys.exit(f"{msg[1]} Missing argument "
-                     f"after option '{opts[0]}'\n{__try__}")
+                     f"after '{opts[0]}' option\n{__try__}")
         else:
             if os.path.isdir(path_o):  # se opzione e percorso output corretti
                 arg = sys.argv[2:]  # incorpora solo gli input pathnames
@@ -183,7 +183,7 @@ def get_batch():
             raise SystemExit(f"{msg[2]} '{fname}'")
     if not queue:
         raise SystemExit(f"{msg[1]} Missing argument "
-                         f"after option '{sys.argv[1]}'\n{__try__}")
+                         f"after '{sys.argv[1]}' option\n{__try__}")
     batch_parser(queue, path_o)
 
 

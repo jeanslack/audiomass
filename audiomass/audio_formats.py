@@ -5,11 +5,11 @@ Porpose:   module to pair audio formats
 Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 license:   GPL3
-Rev        Dec 08 2021
+Rev        Dec 09 2021
 Code checker: flake8,
               pylint --ignore R0201
 """
-from src.comparisions import supported_formats, comparision
+from audiomass.comparisions import supported_formats, comparision
 
 
 class AudioFormats():

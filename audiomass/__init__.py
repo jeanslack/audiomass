@@ -31,16 +31,16 @@ SYNAPSY = ("usage: audiomass [-h HELP] [-v VERSION] [-C COPYING] "
 __usage__ = f"""{SYNAPSY}
 
 Optional arguments:
-   -f  --file     single audio file conversion
-   -d, --dir      specifies a directory to process
-   -b, --batch    run a process for different queued file formats
-   -o  --output   save the output into specified folder
+   -f  --file     Convert only one audio file at a time
+   -d, --dir      Converts a bunch of audio files contained in a directory
+   -b, --batch    Convert a queue of files even with different formats
+   -o  --output   Save the output files to a specified folder
    -c, --check    Check of available audio libraries
    -h, --help     print this help and exit
    -v, --version  print version and date and exit
    -C, --copying  print license and exit """
 
-__try__ = "type 'audiomass -h' or more detailed 'man audiomass'"
+__try__ = "type 'audiomass -h' for help or, more detailed, run 'man audiomass'"
 __license__ = (f"""
     Copyright {__copyright__} - {__author__[0]} {__author__[1]}
     Mail: {__mail__}

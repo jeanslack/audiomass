@@ -6,6 +6,12 @@ leggend:
         [DONE] already working. [TESTING] check for errors
 
 --------------------------------------------------------------------
+
+- E' utile intercettare 'Ctrl + c' o altra combinazione di tasti per fermare
+  il sottoprocesso in corso. Potrebbe essere necessario usare il metodo `run`
+  di subprocess o la classe Popen, con la quale è possibile usare il metodo
+  terminate() [DONE]
+
 - There is no error checking interface when codecs don't exist, do it soon [DONE]
 
 - Do separate operations on files, directories and batches with batch operation
@@ -24,6 +30,7 @@ leggend:
 - Check builds packages for distribuitions with python3 [DONE]
 
   ----------------------
+
 
   - fare una verifica mirata sull'interazione con i menu [TESTING]
 

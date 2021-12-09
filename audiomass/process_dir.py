@@ -13,11 +13,11 @@ import subprocess
 import glob
 import sys
 import os
-from src.datastrings import msg_str
-from src.audio_formats import AudioFormats
-from src.comparisions import supported_formats
-from src.comparisions import graphic_menu
-from src.comparisions import build_cmd
+from audiomass.datastrings import msg_str
+from audiomass.audio_formats import AudioFormats
+from audiomass.comparisions import supported_formats
+from audiomass.comparisions import graphic_menu
+from audiomass.comparisions import build_cmd
 
 
 def dir_parser(path_i, path_o):
@@ -29,12 +29,12 @@ def dir_parser(path_i, path_o):
 
     """
     msg = msg_str()
-    print('    Select the audio input file format in your directory:')
+    print('\n    Select the audio input file format in your directory:')
     for inputformat in graphic_menu():  # realizzazione menu di output
         print(f"    {inputformat}")
 
-    input_selection = input("    Type a number corresponding to the format "
-                            "and press Enter key... ")  # stringa num.
+    input_selection = input("    Type a number corresponding to the input "
+                            "format and press Enter key... ")  # stringa num.
 
     main = AudioFormats(None)  # not have a ext input = None
 
@@ -53,10 +53,11 @@ def dir_parser(path_i, path_o):
     menu = [rawmenu[i] for i in range(len(rawmenu))
             if i not in set(sel[0][3])
             ]
+    print("\n")
     for outformat in menu:
         print(f"    {outformat}")
     output_selection = input("    Type a number corresponding to "
-                             "the format and press Enter key... ")
+                             "the output format and press Enter key... ")
     output_format = main.output_selector(output_selection)
     tuple_data = main.pairing_formats()  # return a tuple data of the codec
 
@@ -129,6 +130,7 @@ def command_builder(tuple_data, bitrate,
     path_o = '/dir/dir solo output dir-name'
 
     """
+    interrupted = None
     msg = msg_str()
     id_codec = tuple_data[0]  # as lame --decodec or oggenc, etc
     exe = 'False'
@@ -154,13 +156,19 @@ def command_builder(tuple_data, bitrate,
             print(f"\n\033[36;7m|{str(count)}| {output_format} "
                   f"Output:\033[0m >> '{norm}'\n")
             try:
-                # print (command) # uncomment for debug
-                subprocess.check_call(command, shell=True)
+                #print(command) # uncomment for debug
+                subprocess.run(command, check=True, shell=True)
 
             except subprocess.CalledProcessError as err:
                 sys.exit(f"audiomass:\033[31;1m ERROR!\033[0m {err}")
-    if exe == 'False':
-        sys.exit(f"\n{msg[1]} Files missing: No files "
-                 f"'{input_format}' in '{path_i}' \n")
+            except KeyboardInterrupt:
+                interrupted = True
+                break
 
-    print("\n\033[37;7mDone...\033[0m\n")
+    if exe == 'False':
+        sys.exit(f"\n{msg[1]} Missing files: No '{input_format}' "
+                 f"files in '{path_i}' \n")
+    if interrupted:
+        sys.exit("\n\033[37;7mKeyboardInterrupt !\033[0m\n")
+
+    print("\n\033[37;7m...Done\033[0m\n")

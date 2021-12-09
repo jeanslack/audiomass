@@ -12,7 +12,8 @@ Code checker: flake8, pylint
 """
 
 from setuptools import setup, find_packages
-from src import (
+from os import path
+from audiomass import (
     __author__,
     __mail__,
     # __copyright__,
@@ -59,7 +60,9 @@ def build():
                                        'TODO']),
                   ]
 
-    with open('README.md', 'r', encoding='utf8') as readme:
+    here = path.abspath(path.dirname(__file__))
+
+    with open(path.join(here, 'README.md'), 'r', encoding='utf8') as readme:
         long_descript = readme.read()
 
     # Setup
@@ -77,7 +80,7 @@ def build():
           data_files=data_files,
           zip_safe=False,
           python_requires=">=3.6",
-          entry_points={'gui_scripts': ['audiomass=src.audiomass:main']},
+          entry_points={"console_scripts": ['audiomass = audiomass.cli:main']},
           classifiers=classifiers,
           )
 

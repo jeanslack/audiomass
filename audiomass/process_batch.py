@@ -12,11 +12,11 @@ import subprocess
 import sys
 import os
 from collections import Counter
-from src.datastrings import msg_str
-from src.audio_formats import AudioFormats
-from src.comparisions import supported_formats
-from src.comparisions import graphic_menu
-from src.comparisions import build_cmd
+from audiomass.datastrings import msg_str
+from audiomass.audio_formats import AudioFormats
+from audiomass.comparisions import supported_formats
+from audiomass.comparisions import graphic_menu
+from audiomass.comparisions import build_cmd
 
 
 def batch_parser(f_list, path_o):
@@ -162,6 +162,7 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_o):
     corresponding value with command_dict.
 
     """
+    interrupted = None
     msg = msg_str()
     id_codec = tuple_data[0]  # as lame --decodec or oggenc, etc
     count = 0
@@ -173,8 +174,7 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_o):
         if path_o is None:  # se scrive l'output nell'input source
             path_o = os.path.dirname(path_name)  # prendo lo stesso input path
         # rendo portabili i pathnames:
-        norm = os.path.join(f'{path_o}' % path_o,
-                            f'{file_name}.{output_format}')
+        norm = os.path.join(path_o, f'{file_name}.{output_format}')
         if os.path.exists(norm):
             print(f"\n{msg[0]} Already exists > '{norm}' >> skipping >>")
             # path_in.remove(path_name)
@@ -186,10 +186,16 @@ def command_builder(tuple_data, bitrate, output_format, path_in, path_o):
               f"Output:\033[0m >> '{norm}'\n"
               )
         try:
-            # print (command) # uncomment for debug
-            subprocess.check_call(command, shell=True)
+            #print(command) # uncomment for debug
+            subprocess.run(command, check=True, shell=True)
         except subprocess.CalledProcessError as err:
-            sys.exit(f"audioamass:\033[31;1mERROR!\033[0m {err}")
+            sys.exit(f"audiomass:\033[31;1m ERROR!\033[0m {err}")
+        except KeyboardInterrupt:
+            interrupted = True
+            break
+
+    if interrupted:
+        sys.exit("\n\033[37;7mKeyboardInterrupt !\033[0m\n")
 
     if not_processed:
         for _file in not_processed:
