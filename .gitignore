@@ -1,15 +1,17 @@
 #Files mentioned in this file will be ignored by git
 *.pyc
+*.eggs
 *.log
 *.mbtree
 dist
 build
 audiomass.egg-info
 deb_dist
+audiomass.spec
+Audiomass.spec
 *.tar.gz
 ENV
 env
-APPDIR_RELESES
 *.spec
 *.AppImage
 *.egg-info

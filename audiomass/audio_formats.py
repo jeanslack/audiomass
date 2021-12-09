@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-#
-#########################################################
-# Name:      audio_formats.py (module)
-# Porpose:   module to pair audio formats
-# Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license:   GPL3
-# Version:   (Ver.0.6) Febbruary 2015
-# Rev
-#########################################################
-from src.comparisions import supported_formats, comparision
+"""
+Name:      audio_formats.py (module)
+Porpose:   module to pair audio formats
+Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
+license:   GPL3
+Rev        Dec 09 2021
+Code checker: flake8,
+              pylint --ignore R0201
+"""
+from audiomass.comparisions import supported_formats, comparision
 
 
-class Audio_Formats(object):
+class AudioFormats():
     """
-    interface for comparison audio formats in the conversion
+    interface for comparing audio formats in conversion
     processes where different libraries and codecs are used.
 
     """
@@ -65,7 +65,7 @@ class Audio_Formats(object):
         returns data for that pair input_format and output_format
 
         """
-        pair = '%s > %s' % (self.input_format, self.output_format)
+        pair = f'{self.input_format} > {self.output_format}'
 
         if self.retcode == 'key_error':
             self.retcode = comparision
@@ -82,6 +82,6 @@ class Audio_Formats(object):
         if level in dict_bitrate:
             valid = True
             return dict_bitrate[level]
-        else:
-            valid = False
-            return valid
+
+        valid = False
+        return valid

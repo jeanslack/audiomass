@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-#
-#########################################################
-# Name:      whichcraft.py (module)
-# Porpose:   checks for binaries
-# Writer:    Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license:   GPL3
-# Version:   (Ver.0.6) Febbruary 2015
-# Rev        July.26.2020
-#########################################################
+"""
+Name:         whichcraft.py (module)
+Porpose:      checks for binaries
+Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
+license:      GPL3
+Rev           July.26.2020, Dec 08 2021
+Code checker: flake8, pylint
+"""
 import os
 from shutil import which
 
@@ -27,8 +26,9 @@ def check_dependencies(arg=None):
         for required in listing:
             # if which(required):
             if which(required, mode=os.F_OK | os.X_OK, path=None):
-                print("Check for: '%s' ..Ok" % required)
+                print(f"Check for: '{required}' ..Ok")
             else:
-                print("Check for: '%s' ..Not Installed" % required)
-    else:
-        return which(str(arg), mode=os.F_OK | os.X_OK, path=None)
+                print(f"Check for: '{required}' ..Not Installed")
+        return None
+
+    return which(str(arg), mode=os.F_OK | os.X_OK, path=None)

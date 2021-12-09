@@ -1,4 +1,23 @@
 +--------------------------+
+December 09 2021 Version 0.9.0
++--------------------------+
+
+- Changed 'src' to 'audiomass' for modules package.
+- Changed 'src/audiomass.py' to 'audiomass/cli.py'
+- All code now uses python3 f-string .
+- Some code refactoring (checked with flake8 and pylint).
+- Changed -c option to check dependencies.
+- Changed -C option to print copyright.
+- Fixed setup.py .
+- Updated the README.md file.
+- Updated man page.
+- Changed `subprocess.check_call` to `subprocess.run` with check=True and
+  shell=True args.
+- The `KeyboardInterrupt` exception is now handled if the user types the key
+  combination 'Ctrl+c' key shortcut to send a SIGINT signal, which cancels the
+  subprocess task.
+
++--------------------------+
 Aug. 31 2020 Version 0.8.1
 +--------------------------+
 
