@@ -9,7 +9,7 @@ Rev        Dec 09 2021
 Code checker: flake8,
               pylint --ignore R0201
 """
-from audiomass.comparisions import supported_formats, comparision
+from audiomass.comparisions import supported_formats, comparing
 
 
 class AudioFormats():
@@ -22,7 +22,7 @@ class AudioFormats():
         """
         Can be accept one argument of type string or None values.
         If not None, Argument is the audio input extension string
-        without dot punctuation.
+        without dot char .
 
         """
         self.input_format = input_format
@@ -53,11 +53,16 @@ class AudioFormats():
         output_menu in comparisions module.
 
         """
-        if output_selection in supported_formats():
-            # mi da il formato lower case:
-            self.output_format = supported_formats()[output_selection][2]
+        try:
+            selection = int(output_selection)
+        except ValueError:
+            return self.output_format  # None
+
+        if selection in supported_formats():
+            # get lower case str(audio format):
+            self.output_format = supported_formats().get(selection)[1]
         else:
-            return self.output_format  # output_format = None
+            return self.output_format  # None
         return self.output_format
 
     def pairing_formats(self,):
@@ -68,20 +73,18 @@ class AudioFormats():
         pair = f'{self.input_format} > {self.output_format}'
 
         if self.retcode == 'key_error':
-            self.retcode = comparision
+            self.retcode = comparing
         else:
-            self.retcode = comparision(pair)
+            self.retcode = comparing(pair)
         return self.retcode
 
     def quality_level(self, dict_bitrate, level):
         """
-        If audio codec support audio bitrate level, this method
+        If audio codec supports audio bitrate level, this method
         define true or false and return a level of bitrate.
 
         """
         if level in dict_bitrate:
-            valid = True
             return dict_bitrate[level]
 
-        valid = False
-        return valid
+        return False

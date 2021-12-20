@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Name:         getcommand.py (module)
+Name:         dir_conversion.py (module)
 Porpose:      parsing data directory content.
 Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -16,11 +16,11 @@ import os
 from audiomass.datastrings import msg_str
 from audiomass.audio_formats import AudioFormats
 from audiomass.comparisions import supported_formats
-from audiomass.comparisions import graphic_menu
+from audiomass.comparisions import text_menu
 from audiomass.comparisions import build_cmd
 
 
-def dir_parser(path_i, path_o):
+def dir_process(path_i, path_o):
     """
     1 - Show input menu to files input format choice
     2 - Create output menu
@@ -29,12 +29,12 @@ def dir_parser(path_i, path_o):
 
     """
     msg = msg_str()
-    print('\n    Select the audio input file format in your directory:')
-    for inputformat in graphic_menu():  # realizzazione menu di output
+    print('\n\033[1m    What is the files format to convert?\033[0m')
+    for inputformat in text_menu():  # realizzazione menu di output
         print(f"    {inputformat}")
 
-    input_selection = input("    Type a number corresponding to the input "
-                            "format and press Enter key... ")  # stringa num.
+    input_selection = input("    Type a format number among those "
+                            "available, and press the Enter key > ")
 
     main = AudioFormats(None)  # not have a ext input = None
 
@@ -43,21 +43,21 @@ def dir_parser(path_i, path_o):
         print('audiomass: \033[1mAbort!\033[0m')
         sys.exit()
     elif input_format is None:
-        sys.exit(f"\n{msg[1]} Unknow option '{input_selection}' "
-                 f"in select input format, Abort!"
-                 )
-    rawmenu = graphic_menu()
+        sys.exit(f"\n{msg[1]} Invalid option '{input_selection}'")
+
+    rawmenu = text_menu()
     sel = [x for x in supported_formats().values()
            if input_format in x[1:3]
            ]
     menu = [rawmenu[i] for i in range(len(rawmenu))
             if i not in set(sel[0][3])
             ]
-    print("\n")
+    print('\n\n\033[1m    Choose a conversion format:\033[0m')
+    #print("\n")
     for outformat in menu:
         print(f"    {outformat}")
-    output_selection = input("    Type a number corresponding to "
-                             "the output format and press Enter key... ")
+    output_selection = input("    Type a format number among those "
+                            "available, and press the Enter key > ")
     output_format = main.output_selector(output_selection)
     tuple_data = main.pairing_formats()  # return a tuple data of the codec
 
@@ -65,8 +65,7 @@ def dir_parser(path_i, path_o):
         print('audiomass: \033[1mAbort!\033[0m')
         sys.exit()
     elif output_format is None:
-        sys.exit(f"\n{msg[1]} Unknow option '{output_selection}' "
-                 f"in select output format, Abort!")
+        sys.exit(f"\n{msg[1]} Invalid option '{output_selection}'")
     if tuple_data == 'key_error':
         sys.exit(f"\n{msg[1]} No match available for "
                  f"'{output_selection}' option, Abort!")
@@ -100,7 +99,7 @@ def bitrate_test(tuple_data, output_format, path_i, path_o, input_format):
         valid = bitrate
 
         if valid is False:
-            print(f"\n{msg[0]} Unknow option '{level}', ...use default\n")
+            print(f"\n{msg[0]} Invalid option '{level}', ...use default\n")
             bitrate = ''
 
     command_builder(tuple_data,

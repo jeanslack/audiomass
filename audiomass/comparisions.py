@@ -11,9 +11,10 @@ Code checker: flake8, pylint
 import os
 
 
-def graphic_menu():
+def text_menu():
     """
-    Menu for output audio selection format used from all process(f,d,b)
+    Returns a descriptive list of string items to
+    realize a text menu in the audio formats selection
 
     """
     return [
@@ -31,20 +32,36 @@ def graphic_menu():
 
 def supported_formats():
     """
-    supported_format: it is useful to limit the choices within
-    the available options of the graphic_menu.
+    Returns a numbered collection of currently supported
+    formats with indexing list for the `text_menu()` function.
+    Given a format, enable to iterates over its indexes in order to
+    exclude the items indexed on the list returned by `text_menu()`
+    function, example:
+
+        menu = text_menu()
+        for formats in supported_formats().values():
+            if 'flac' in formats[0:2]:
+                setmenu = [menu[i] for i in range(len(menu))
+                           if i not in set(formats[2])
+                           ]
+                for items in setmenu:
+                    print(items)
+            else:
+                None
+
+    The example above removes index(3) from the text_menu()
 
     """
-    return {'1': (1, 'WAV', 'wav', [1]),
-            '2': (2, 'AIFF', 'aiff', [2, 4]),
-            '3': (3, 'FLAC', 'flac', [3]),
-            '4': (4, 'APE', 'ape', [3, 4]),
-            '5': (5, 'MP3', 'mp3', [3, 4, 5, 6]),
-            '6': (6, 'OGG', 'ogg', [3, 4, 5, 6]),
+    return {1: ('WAV', 'wav', [1]),
+            2: ('AIFF', 'aiff', [2, 4]),
+            3: ('FLAC', 'flac', [3]),
+            4: ('APE', 'ape', [3, 4]),
+            5: ('MP3', 'mp3', [3, 4, 5, 6]),
+            6: ('OGG', 'ogg', [3, 4, 5, 6]),
             }
 
 
-def comparision(pair):
+def comparing(pair):
     """
     returns the required values for each pair of audio formats.
     Accept one only string argument in this form: 'example > example'.
@@ -55,7 +72,7 @@ def comparision(pair):
     # ###------------------------------  BITRATES MENU:
     flac_menu = (
                 "\n\033[1m"
-                "References on quality for Flac format:\033[0m\n"
+                "Choose the quality for Flac format:\033[0m\n"
                 "  0 = low compression > more access space > better quality\n"
                 "  1\n"
                 "  2\n"
@@ -68,7 +85,7 @@ def comparision(pair):
                 )
 
     ape_menu = ("\n\033[1m"
-                "References on quality for Ape format:\033[0m\n"
+                "Choose the quality for Ape format:\033[0m\n"
                 "  1    -c1000 = Fast (Best quality)\n"
                 "  2    -c2000 = Normal\n"
                 "  3    -c3000 = High\n"
@@ -77,24 +94,25 @@ def comparision(pair):
                 )
 
     mp3_menu = ("\n\033[1m"
-                "References on quality and bit-rate for MP3:\033[0m\n"
+                "Choose the quality and bit-rate for MP3 format:\033[0m\n"
                 "  0     medium    >  VBR 92 kbit\n"
                 "  1     standard  >  VBR 112 kbit/s\n"
                 "  2     extreme   >  VBR 150 kbit/s\n"
                 "  3     insane    >  CBR 320 kbit/s\n\n"
                 )
 
-    ffmpeg_mp3_menu = ("\n\033[1m"
-                       "References on quality and bit-rate for MP3:\033[0m\n"
-                       "  0     >  VBR 128 kbit\n"
-                       "  1     >  VBR 160 kbit/s\n"
-                       "  2     >  VBR 192 kbit/s\n"
-                       "  3     >  VBR 260 kbit/s\n"
-                       "  4     >  CBR 320 kbit/s\n"
-                       )
+    ffmpeg_mp3_menu = (
+                "\n\033[1m"
+                "Choose the quality and bitrate for MP3 format:\033[0m\n"
+                "  0     >  VBR 128 kbit\n"
+                "  1     >  VBR 160 kbit/s\n"
+                "  2     >  VBR 192 kbit/s\n"
+                "  3     >  VBR 260 kbit/s\n"
+                "  4     >  CBR 320 kbit/s\n"
+                )
 
     ogg_menu = ("\n\033[1m"
-                "References on the quality and bit-rate for OGG:\033[0m\n"
+                "Choose the quality and bit-rate for OGG format:\033[0m\n"
                 "  1    >   80 kbit        |     6   >   192 kbit/s\n"
                 "  2    >   92 kbit/s      |     7   >   200 kbit/s\n"
                 "  3    >   100 kbit/s     |     8   >   260 kbit/s\n"
@@ -104,7 +122,7 @@ def comparision(pair):
 
     ffmpeg_ogg_menu = (
                 "\n\033[1m"
-                "References on the quality and bit-rate for OGG:\033[0m\n"
+                "Choose the quality and bit-rate for OGG format:\033[0m\n"
                 "  0    >  VBR 128 kbit\n"
                 "  1    >  VBR 160 kbit/s\n"
                 "  2    >  VBR 192 kbit/s\n"
@@ -210,7 +228,7 @@ def build_cmd(id_codec, bitrate, path_name, norm):
     """
     Since each command associated with a type of codec appears to be
     different, the key of the 'command_dict' must match with
-    the first value of the 'object assignment' dictionary.
+    the first value of the 'object_assignment' dictionary.
 
     This function Return a string with the command correctly formed.
 
