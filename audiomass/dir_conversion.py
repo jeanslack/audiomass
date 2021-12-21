@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Name:         dir_conversion.py (module)
-Porpose:      parsing data directory content.
+Porpose:      Handles the audio files conversions into specified folder.
 Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 license:      GPL3
@@ -23,13 +23,8 @@ from audiomass.utils import (show_format_menu,
 
 class DirConvert():
     """
-    The goal of this class is to obtain a catalog of one
-    or more audio files, even with different formats and
-    paths, and associate them with the data required for
-    conversion into other different audio formats,
-    all in a convenient data structure for processing.
-
-
+    Convert all audio files with a certain format and placed
+    in a given folder.
 
     USE:
         conv = BatchConvert([file.wav, file.flac, ...], out=None)
@@ -44,12 +39,12 @@ class DirConvert():
     """
     def __init__(self, path_i, path_o):
         """
-        1 - Show input menu to files input format choice
-        2 - Create output menu
-        During output menu creation, Get a tuple with specified command
-        elements
-
+        Print a text menu with a list of available formats
+        and wait for user input. The input value given by the
+        user represents the format of the files to be converted
+        in a given folder .
         """
+        # (too-many-instance-attributes) (FIXME)
         self.inputdir = path_i
         self.outputdir = path_o
         self.input_format = None
@@ -92,11 +87,12 @@ class DirConvert():
 
     def prompt_to_output_format(self):
         """
-        Get the prompt strings to set the audio bitrate
+        Prompt to get codec data and set the output audio format
         """
         msgcustom(f"\n\033[1mConvert the '\033[32;1m"
                   f"{self.input_format}\033[0m' format to:\033[0m")
         show_format_menu(self.index)  # show text menu before prompt
+
         while True:
             output_select = input("Type a format number among those "
                                   "available, and press the Enter key > ")
@@ -118,7 +114,7 @@ class DirConvert():
 
     def prompt_to_bitrate(self, data_codec):
         """
-        Get the prompt strings to set the audio bitrate
+        Prompt to set the audio bitrate
         """
         if data_codec[1] is not None:  # None bitrate
             msgcustom(data_codec[2])  # show menu
@@ -138,6 +134,7 @@ class DirConvert():
         Build the command and pass it to `run_subprocess` function
         """
         count = 0
+        pname = None
         for suffix in [self.input_format, self.input_format.upper()]:
             # itero su nomi formato upper-case e lower-case
             for pname in glob.glob(os.path.join(self.inputdir, f"*.{suffix}")):
@@ -162,6 +159,10 @@ class DirConvert():
 
                 self.processed.append(fname)
                 run_subprocess(command)
+
+        if not pname:
+            self.errors.append(f"No files found in '{self.input_format}' "
+                               f"format!")
     # ---------------------------------------------------------------#
 
     def end_check(self):

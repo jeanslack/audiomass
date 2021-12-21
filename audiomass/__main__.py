@@ -17,7 +17,7 @@ from audiomass import (
     __rls_name__,
     __prg_name__,
 )
-from audiomass.whichcraft import check_dependencies
+from audiomass.utils import whichcraft
 from audiomass.dir_conversion import DirConvert
 from audiomass.batch_conversion import BatchConvert
 
@@ -122,7 +122,7 @@ def main():
     if args.check_requires:
         print(f"\n\033[1m{__rls_name__}\033[0m - "
               f"check of available audio libraries:")
-        check_dependencies()
+        whichcraft()
 
     if args.directory:
         inp, out = on_folder(args.directory, args.output_folder)

@@ -89,7 +89,6 @@ class BatchConvert():
         """
         Clean-up list contaminated by possible duplicate files
         using set()
-
         """
         val = 0
         for key, val in Counter(f_list).items():
@@ -102,7 +101,7 @@ class BatchConvert():
 
     def prompt_to_output_format(self):
         """
-        Get the prompt strings to set codec and format
+        Prompt to set codec and output audio format.
         """
         for input_format, val in list(self.filecatalog.items()):
             msgcustom(f"\n\033[1mConvert the '\033[32;1m"
@@ -130,7 +129,7 @@ class BatchConvert():
 
     def prompt_to_bitrate(self, codec, input_format):
         """
-        Get the prompt strings to set the audio bitrate
+        Prompt to set the audio bitrate
         """
         if codec[1] is None:  # None bitrate
             bitrate = ''

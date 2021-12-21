@@ -1,19 +1,43 @@
 # -*- coding: utf-8 -*-
 """
 Name:         utils.py (module)
-Porpose:      Handles the audio data files for batch conversions.
+Porpose:      All the useful functions used by the program.
 Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 license:      GPL3
-Rev:          Dec 20 2021
+Rev:          Dec 21 2021
 Code checker: flake8, pylint
 """
 import subprocess
 import sys
 import os
+from shutil import which
 from audiomass.datastrings import msgdebug, msgcustom
 from audiomass.comparisions import supported_formats, comparing
 from audiomass.comparisions import text_menu
+
+
+def whichcraft(arg=None):
+    """
+    Without *arg* checks for binaries in *listing*
+    and print result. Otherwise accepts one argument
+    and returns result of *which*: `None` if not exist
+    or its executable path-name.
+
+    """
+    if not arg:
+        listing = ['ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc',
+                   'shntool', 'mac']
+        # listing = ['sox', 'wavpack']  # this are for futures implementations
+        for required in listing:
+            # if which(required):
+            if which(required, mode=os.F_OK | os.X_OK, path=None):
+                msgcustom(f"Check for: '{required}' ..Ok")
+            else:
+                msgcustom(f"Check for: '{required}' ..Not Installed")
+        return None
+
+    return which(str(arg), mode=os.F_OK | os.X_OK, path=None)
 
 
 def show_format_menu(indexes):
@@ -46,37 +70,39 @@ def get_codec_data(input_format, output_select):
     return codec_data
 
 
-def build_cmd(id_codec, bitrate, path_name, norm):
+def build_cmd(codec, bitrate, in_file, out_file):
     """
     Since each command associated with a type of codec appears
-    to be different, the key of the 'command_dict' must match
-    with the first value of the 'object_assignment' dictionary.
+    to be different, the key of the 'command_dict' must be equal
+    with the first value of the 'comparision.object_assignment'
+    dictionary.
 
     This function Return a string with the command correctly formed.
 
-    The parameters accepted are:
+    The accepted parameters are:
 
-    - id_codec: key of the command_dict
+    - codec: key of the command_dict
     - bitrate: str('value')
-    - path_name: str('/dirname/filename.input_format')
-    - norm: str('/dirname/filename.output_format')
+    - in_file: str('/dirname/inputfilename.ext')
+    - out_file: str('/dirname/outfilename.ext')
 
     """
-    output_format = os.path.splitext(os.path.basename(norm))[1]
-    dirname = os.path.dirname(norm)
+    output_format = os.path.splitext(os.path.basename(out_file))[1]
+    dirname = os.path.dirname(out_file)
+
     command_dict = {
-        'flac': f'flac -V {bitrate} "{path_name}" -o "{norm}"',
-        'lame': f'lame --nohist {bitrate} "{path_name}" "{norm}"',
-        'lame --decode': f'lame --decode "{path_name}" "{norm}"',
-        'oggenc': f'oggenc {bitrate} "{path_name}" -o "{norm}"',
-        'mac': f'mac "{path_name}" "{norm}" {bitrate}',
-        'ffmpeg': f'ffmpeg -i "{path_name}" {bitrate} "{norm}"',
-        'oggdec': f'oggdec "{path_name}" -o "{norm}"',
+        'flac': f'flac -V {bitrate} "{in_file}" -o "{out_file}"',
+        'lame': f'lame --nohist {bitrate} "{in_file}" "{out_file}"',
+        'lame --decode': f'lame --decode "{in_file}" "{out_file}"',
+        'oggenc': f'oggenc {bitrate} "{in_file}" -o "{out_file}"',
+        'mac': f'mac "{in_file}" "{out_file}" {bitrate}',
+        'ffmpeg': f'ffmpeg -i "{in_file}" {bitrate} "{out_file}"',
+        'oggdec': f'oggdec "{in_file}" -o "{out_file}"',
         'shntool': (f'shntool conv -o {output_format.split(".")[1]} '
-                    f'-O always "{path_name}" -d "{dirname}"')
+                    f'-O always "{in_file}" -d "{dirname}"')
                     }
 
-    return command_dict[id_codec]
+    return command_dict[codec]
 
 
 def run_subprocess(command):
