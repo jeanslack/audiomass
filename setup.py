@@ -10,9 +10,8 @@ license:       GPL3
 Rev:           July.25.2020, Dec 08 2021
 Code checker: flake8, pylint
 """
-
-from setuptools import setup, find_packages
 from os import path
+from setuptools import setup, find_packages
 from audiomass import (
     __author__,
     __mail__,
@@ -80,7 +79,8 @@ def build():
           data_files=data_files,
           zip_safe=False,
           python_requires=">=3.6",
-          entry_points={"console_scripts": ['audiomass = audiomass.cli:main']},
+          entry_points={
+              "console_scripts": ['audiomass = audiomass.__main__:main']},
           classifiers=classifiers,
           )
 

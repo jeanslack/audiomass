@@ -1,4 +1,15 @@
 +--------------------------+
+December 20 2021 Version 0.9.5
++--------------------------+
+
+- Removed -b option.
+- New simplified arguments syntax using argparse module.
+- Code refactor
+- Improved input prompt for user
+- Improved debug messages
+- Updated help and man page
+
++--------------------------+
 December 09 2021 Version 0.9.0
 +--------------------------+
 

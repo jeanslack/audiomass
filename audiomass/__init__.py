@@ -11,8 +11,8 @@ Code checker: flake8, pylint
 __author__ = ('Gianluca Pernigotto', '(aka jeanslack)')
 __mail__ = '<jeanlucperni@gmail.com>'
 __copyright__ = '© 2013-2021'
-__version__ = '0.9.0'
-__release__ = 'December 08 2021'
+__version__ = '0.9.5'
+__release__ = 'December 16 2021'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
 __url__ = "https://github.com/jeanslack/audiomass"
@@ -23,22 +23,6 @@ Monkey's Audio, Shntool and FFmpeg libraries. It supports conversions of
 different audio formats at a time and the ability to convert even groups of
 files in a directory, saving the output in a specific folder.
 """
-SYNAPSY = ("usage: audiomass [-h HELP] [-v VERSION] [-C COPYING] "
-           "[-c CHECK] [-f FILE {..FILENAME}] [-d DIRECTORY {..DIRNAME}] "
-           "[-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] "
-           "[-o OUTPUT {..DIRNAME}]"
-           )
-__usage__ = f"""{SYNAPSY}
-
-Optional arguments:
-   -f  --file     Convert only one audio file at a time
-   -d, --dir      Converts a bunch of audio files contained in a directory
-   -b, --batch    Convert a queue of files even with different formats
-   -o  --output   Save the output files to a specified folder
-   -c, --check    Check of available audio libraries
-   -h, --help     print this help and exit
-   -v, --version  print version and date and exit
-   -C, --copying  print license and exit """
 
 __try__ = "type 'audiomass -h' for help or, more detailed, run 'man audiomass'"
 __license__ = (f"""

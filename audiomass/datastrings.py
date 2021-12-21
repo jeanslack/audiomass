@@ -10,14 +10,44 @@ Code checker: flake8, pylint
 """
 
 
-def msg_str():
+def msgdebug(info=None, warn=None, err=None, head='', tail=''):
     """
-    All general info of the audiomass
-
+    print debug messages
     """
-    warnings = 'audiomass: \033[33;7;3mWarning!\033[0m'
-    errors = 'audiomass: \033[31;7;3mError!\033[0m'
-    file_access = f"{errors} Unable to access, invalid file-name  >\033[0m"
-    dir_access = f"{errors} Unable to access, Invalid dir-name  >\033[0m"
+    if info:
+        print(f"{head}\033[34;1mINFO:\033[0m {info}{tail}")
+    if warn:
+        print(f"{head}\033[33;1mWARNING:\033[0m {warn}{tail}")
+    if err:
+        print(f"{head}\033[31;1mERROR:\033[0m {err}{tail}")
 
-    return (warnings, errors, file_access, dir_access)
+
+def msgcolor(head='', tail='', orange=None, green=None, green2=None):
+    """
+    print informative messages
+    """
+    if orange:
+        print(f"{head}\033[33;7m{orange}\033[0m{tail}")
+
+    if green:
+        print(f"{head}\033[32;7m{green}\033[0m{tail}")
+
+    if green2:
+        print(f"{head}\033[36;7m{green2}\033[0m{tail}")
+
+
+def msgend(done=None, abort=None):
+    """
+    Print status messages
+    """
+    if done:
+        print("\n\033[1m..Finished!\033[0m\n")
+    if abort:
+        print("\n\033[1m..Abort!\033[0m\n")
+
+
+def msgcustom(message):
+    """
+    Print any string messages
+    """
+    print(message)
