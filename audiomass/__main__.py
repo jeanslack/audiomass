@@ -18,11 +18,11 @@ from audiomass import (
     __prg_name__,
 )
 from audiomass.whichcraft import check_dependencies
-from audiomass.dir_conversion import dir_process
+from audiomass.dir_conversion import DirConvert
 from audiomass.batch_conversion import BatchConvert
 
 
-def get_dir(inputdir, outputdir):
+def on_folder(inputdir, outputdir):
     """
     Check for dirs
     """
@@ -30,7 +30,7 @@ def get_dir(inputdir, outputdir):
         path_in = os.path.abspath(os.path.join(inputdir))
     else:
         sys.exit(f"\033[31;1mERROR:\033[0m "
-                 f"Invalid input directory '{inputdir}'")
+                 f"Invalid input folder '{inputdir}'")
 
     if outputdir == '.':
         path_out = None
@@ -39,12 +39,12 @@ def get_dir(inputdir, outputdir):
             path_out = os.path.abspath(os.path.join(outputdir))
         else:
             sys.exit(f"\033[31;1mERROR:\033[0m "
-                     f"Invalid output directory '{outputdir}'")
+                     f"Invalid output folder '{outputdir}'")
 
     return path_in, path_out
 
 
-def get_batch(inputfiles, outputdir):
+def on_files(inputfiles, outputdir):
     """
     Check for input files and output dir
 
@@ -61,7 +61,7 @@ def get_batch(inputfiles, outputdir):
             path_out = os.path.abspath(os.path.join(outputdir))
         else:
             sys.exit(f"\033[31;1mERROR:\033[0m "
-                     f"Invalid output directory '{outputdir}'")
+                     f"Invalid output folder '{outputdir}'")
 
     return inputfiles, path_out
 
@@ -76,7 +76,7 @@ def main():
                              f"for multiple audio conversion libraries.\n"),
                 )
 
-    parser.add_argument('-v', '--version',
+    parser.add_argument('--version',
                         help="Show the current version and exit",
                         action='version',
                         version=(f"{__rls_name__} - version {__version__} - "
@@ -86,52 +86,57 @@ def main():
                         help="List of installed or missing dependencies",
                         action="store_true",
                         )
-    parser.add_argument('-d', '--onedir',
-                        metavar='DIR',
+    parser.add_argument('-d', '--directory',
+                        metavar='INPUT_FOLDER',
                         type=str,
-                        help=("Converts a bunch of audio files "
-                              "contained in a directory"),
+                        help=("Path to input folder. Converts a bunch "
+                              "of audio files contained in a folder"),
                         action="store",
                         )
-    parser.add_argument('-b', '--batch',
+    parser.add_argument('-f', '--files',
                         type=str,
-                        help=("Convert a single file or a queue of "
-                              "files even with different formats"),
+                        help=("Convert one or more audio files separated "
+                              "by spaces, even with different formats"),
                         nargs='+',
                         metavar='..FILE ..FILE',
                         action="store",
                         )
-    parser.add_argument("-o", "--output-dir",
+    parser.add_argument("-o", "--output",
                         action="store",
                         type=str,
-                        dest="outputdir",
-                        help=("Output directory, default same "
+                        dest="output_folder",
+                        help=("Path to output folder, default same "
                               "destination as input file"),
                         required=False,
                         default='.'
                         )
     args = parser.parse_args()
 
-    if args.batch and args.onedir:
-        parser.error("Use the '-d' option or the '-b' option, "
-                     "not both. Invalid arguments.")
+    if len(sys.argv) == 1:
+        parser.error("Use at least one optional argument")
+
+    if args.files and args.directory:
+        parser.error("No action requested, add '--directory' "
+                     "or '-files', not both")
 
     if args.check_requires:
         print(f"\n\033[1m{__rls_name__}\033[0m - "
               f"check of available audio libraries:")
         check_dependencies()
 
-    if args.onedir:
-        inp, out = get_dir(args.onedir, args.outputdir)
-        dir_process(inp, out)
-
-    elif args.batch:
-        inp, out = get_batch(args.batch, args.outputdir)
-        conv = BatchConvert(inp, out)
-        conv.prompt_to_get_format_and_bitrate()
+    if args.directory:
+        inp, out = on_folder(args.directory, args.output_folder)
+        conv = DirConvert(inp, out)
+        conv.prompt_to_output_format()
         conv.command_builder()
         conv.end_check()
 
+    elif args.files:
+        inp, out = on_files(args.files, args.output_folder)
+        conv = BatchConvert(inp, out)
+        conv.prompt_to_output_format()
+        conv.command_builder()
+        conv.end_check()
 
     return 0
 

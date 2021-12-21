@@ -8,7 +8,6 @@ license:      GPL3
 Rev:          Dec 08 2021
 Code checker: flake8, pylint
 """
-import os
 
 
 def text_menu():
@@ -63,13 +62,16 @@ def supported_formats():
 
 def comparing(pair):
     """
-    returns the required values for each pair of audio formats.
-    Accept one only string argument in this form: 'example > example'.
+    Returns the required values for each pair of audio formats.
+    Accept one only string argument in this form: 'format > format'.
     You can add or remove new formats modules from here.
 
+    USE:
+        comparing('wav > mp3')
+        to get data to convert from wav format to mp3
     """
 
-    # ###------------------------------  BITRATES MENU:
+    # ------------------------------  BITRATES MENU:
     flac_menu = (
                 "\n\033[1m"
                 "Choose the quality for Flac format:\033[0m\n"
@@ -78,7 +80,7 @@ def comparing(pair):
                 "  2\n"
                 "  3\n"
                 "  4 = Great quality/compression ratio\n"
-                "  5 = Is the default compression \n"
+                "  5 = default\n"
                 "  6\n"
                 "  7\n"
                 "  8 = maximum compression > less space > lower quality\n"
@@ -130,7 +132,7 @@ def comparing(pair):
                 "  4    >  CBR 320 kbit/s\n"
                 )
 
-    # ### ----------------------------- BITRATES LEVELS:
+    # ----------------------------- BITRATES LEVELS:
 
     flac_opt_comp = {"0": "-0", "1": "-1", "2": "-2", "3": "-3",
                      "4": "-4", "5": "-5", "6": "-6", "7": "-7",
@@ -158,7 +160,9 @@ def comparing(pair):
                            "3": "-vn -acodec libvorbis -ar 44100 -ab 260k",
                            "4": "-vn -acodec libvorbis -ar 44100 -ab 320k",
                            }
-    # ###-------------------------------  PAIRING ASSOCIATIONS FORMATS:
+
+    # -------------------------------  PAIRING FORMATS:
+
     object_assignment = {
         'wav > aiff': ('shntool', None, None, None, 'aiff'),
         'aiff > wav': ('shntool', None, None, None, 'wav'),
@@ -221,37 +225,4 @@ def comparing(pair):
         'mp3 > aiff': ('ffmpeg', None, None, None, 'aiff'),
         'ogg > aiff': ('ffmpeg', None, None, None, 'aiff'),
         }
-    return object_assignment.get(pair, 'key_error')
-
-
-def build_cmd(id_codec, bitrate, path_name, norm):
-    """
-    Since each command associated with a type of codec appears to be
-    different, the key of the 'command_dict' must match with
-    the first value of the 'object_assignment' dictionary.
-
-    This function Return a string with the command correctly formed.
-
-    The parameters accepted are:
-
-    - id_codec: key of the command_dict
-    - bitrate: str('value')
-    - path_name: str('/dirname/filename.input_format')
-    - norm: str('/dirname/filename.output_format')
-
-    """
-    output_format = os.path.splitext(os.path.basename(norm))[1]
-    dirname = os.path.dirname(norm)
-    command_dict = {
-        'flac': f'flac -V {bitrate} "{path_name}" -o "{norm}"',
-        'lame': f'lame --nohist {bitrate} "{path_name}" "{norm}"',
-        'lame --decode': f'lame --decode "{path_name}" "{norm}"',
-        'oggenc': f'oggenc {bitrate} "{path_name}" -o "{norm}"',
-        'mac': f'mac "{path_name}" "{norm}" {bitrate}',
-        'ffmpeg': f'ffmpeg -i "{path_name}" {bitrate} "{norm}"',
-        'oggdec': f'oggdec "{path_name}" -o "{norm}"',
-        'shntool': (f'shntool conv -o {output_format.split(".")[1]} '
-                    f'-O always "{path_name}" -d "{dirname}"')
-                    }
-
-    return command_dict[id_codec]
+    return object_assignment.get(pair)

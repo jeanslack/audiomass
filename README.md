@@ -3,9 +3,16 @@
 
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools, 
 Monkey's Audio, Shntool and FFmpeg libraries. 
-It supports conversions of different audio formats at a time and the ability 
+It supports conversions of different audio file formats at a time and the ability 
 to convert even groups of files in a directory, saving the output in a specific 
 folder.
+
+For each input file, audiomass writes to a filename based on the name of the
+input file. If the (**-o**) option is not specified, it save any file at
+same destination as input file.
+
+It is possible to choose one or more conversion formats, based on the imported
+files, and then choose the respective bitrates.
 
 ## Dependencies  
 
@@ -20,23 +27,13 @@ folder.
 ## Usage
 
 ```
-audiomass [-h HELP] [-v VERSION] [-C COPYING] [-c CHECK]
-[-f FILE {..FILENAME}]
-[-d DIRECTORY {..DIRNAME}]
-[-b BATCH {..FILENAME_1 ..FILENAME_2 ..FILENAME_3 ..}] 
-[-o OUTPUT {..DIRNAME}]
+audiomass [-h]
+          [--version]
+          [-c]
+          [-d INPUT_FOLDER, --directory INPUT_FOLDER]
+          [-f FILE [FILE.. FILE.. ...], --files FILE [FILE.. FILE.. ...]]
+          [-o OUTPUT_FOLDER, --output OUTPUT_FOLDER]
 ```   
-  
-Optional arguments:   
-
-  `-f  --file`     Convert only one audio file at a time.   
-  `-d, --dir`      Converts a bunch of audio files contained in a directory.   
-  `-b, --batch`    Convert a queue of files even with different formats.   
-  `-o  --output`   Save the output files to a specified folder.   
-  `-c, --check`    Check of available audio libraries used by audiomass   
-  `-h, --help`     print this help and exit   
-  `-v, --version`  print version and date and exit   
-  `-C, --copying`  print license and exit   
 
 ## Examples 
 
@@ -46,11 +43,11 @@ Convert a single audio file and save it into same directory:
 
 Convert a bunch of audio files inside a folder and save them in another folder:   
 
-`audiomass -d /MyDirName/Music -o '/MyOtherDir/converted'`   
+`audiomass -d '/MyDirName/Music' -o '/MyOtherDir/converted'`   
 
 Convert a queue of audio files and save them in a specified folder:   
 
-`audiomass -b '..FILE 1.wav' '..FILE 2.mp3' '..FILE 3.flac' '...' -o '/MyOtherDir/converted'`
+`audiomass -f '..FILE 1.wav' '..FILE 2.mp3' '..FILE 3.flac' '...' -o '/MyOtherDir/converted'`
 
 ## Installation
 

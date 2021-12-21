@@ -9,6 +9,7 @@ Rev:          nov 22 2017, Dec 15 2017, Aug 8 2019, Dec 08 2021
 Code checker: flake8, pylint
 """
 
+
 def msgdebug(info=None, warn=None, err=None, head='', tail=''):
     """
     print debug messages
@@ -37,6 +38,7 @@ def msgcolor(head='', tail='', orange=None, green=None, green2=None):
 
 def msgend(done=None, abort=None):
     """
+    Print status messages
     """
     if done:
         print("\n\033[1m..Finished!\033[0m\n")
@@ -46,18 +48,6 @@ def msgend(done=None, abort=None):
 
 def msgcustom(message):
     """
+    Print any string messages
     """
     print(message)
-
-
-def msg_str():
-    """
-    All general info of the audiomass
-
-    """
-    warnings = 'audiomass: \033[33;1mWARNING:\033[0m'
-    errors = 'audiomass: \033[31;1mERROR:\033[0m'
-    file_access = f"{errors} Unable to access, invalid file-name  >\033[0m"
-    dir_access = f"{errors} Unable to access, Invalid dir-name  >\033[0m"
-
-    return (warnings, errors, file_access, dir_access)

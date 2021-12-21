@@ -7,15 +7,7 @@ leggend:
 
 --------------------------------------------------------------------
 
-- E' utile intercettare 'Ctrl + c' o altra combinazione di tasti per fermare
-  il sottoprocesso in corso. Potrebbe essere necessario usare il metodo `run`
-  di subprocess o la classe Popen, con la quale è possibile usare il metodo
-  terminate() [DONE]
-
 - There is no error checking interface when codecs don't exist, do it soon [DONE]
-
-- Do separate operations on files, directories and batches with batch operation
-  content for multiple file formats [DONE]
 
 - escludi il formato aiff nella decodifica mp3 e forse anche ogg [DONE]
 
@@ -29,15 +21,13 @@ leggend:
 
 - Check builds packages for distribuitions with python3 [DONE]
 
+- fare una verifica mirata sull'interazione con i menu [DONE]
+
+- copia perfettamente i colori e i messaggi sui vari get_ [DONE]
+
+- Migliora output di console in dir_conversion.py in command_builder() [DONE].
+
   ----------------------
-
-
-  - fare una verifica mirata sull'interazione con i menu [TESTING]
-
-  - copia perfettamente i colori e i messaggi sui vari get_ [TESTING]
 
   - Testare tutte le varianti di conversione [TESTING]
 
-  - Migliora output di console in process_dir.py in command_builder().
-
-  - Riverificare i nomi dei file upper e lower case.
