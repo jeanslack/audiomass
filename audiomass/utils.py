@@ -19,11 +19,11 @@ from audiomass.comparisions import text_menu
 
 def whichcraft(arg=None):
     """
-    Without *arg* checks for binaries in *listing*
-    and print result. Otherwise accepts one argument
-    and returns result of *which*: `None` if not exist
+    With default ``arg=None`` checks for binaries in default
+    *listing* and prints a formatted result. If ``arg`` is used
+    to pass a specified binary as string argument, this function
+    returns result of *which*, e.g: Returns `None` if not exist
     or its executable path-name.
-
     """
     if not arg:
         listing = ['ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc',
@@ -40,20 +40,27 @@ def whichcraft(arg=None):
     return which(str(arg), mode=os.F_OK | os.X_OK, path=None)
 
 
-def show_format_menu(indexes):
+def show_format_menu(indexes=None):
     """
-    print a text menu with audio format references
-    currently supported.
+    print a text menu with a list of audio format references
+    currently supported. ``indexes`` argument is used  to
+    indexing (show) specified formats. For more info, see
+    ``text_menu()`` and ``supported_formats()`` examples
+    in comparisions module.
     """
+    indexes = [] if indexes is None else indexes
     menu = text_menu()
     setmenu = [menu[i] for i in range(len(menu)) if i not in set(indexes)]
-    for outformat in setmenu:  # realizzazione menu di output
+    for outformat in setmenu:
         msgcustom(f"{outformat}")
 
 
 def get_codec_data(input_format, output_select):
     """
-    Return an available audio format and its codec data
+    Given a ``str(input_format)`` and an ``int(output_select)``
+    returns the available audio format and its codec data. For
+    more info, see ``supported_formats()`` function in comparisions
+    module.
     """
     try:
         selection = int(output_select)

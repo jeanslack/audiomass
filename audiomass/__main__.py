@@ -24,7 +24,7 @@ from audiomass.batch_conversion import BatchConvert
 
 def on_folder(inputdir, outputdir):
     """
-    Check for dirs
+    Check for input, output dirs
     """
     if os.path.isdir(inputdir):
         path_in = os.path.abspath(os.path.join(inputdir))
@@ -113,7 +113,7 @@ def main():
     args = parser.parse_args()
 
     if len(sys.argv) == 1:
-        parser.error("Use at least one optional argument")
+        parser.error("Require an action, please use one optional argument")
 
     if args.files and args.directory:
         parser.error("No action requested, add '--directory' "

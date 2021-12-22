@@ -6,15 +6,16 @@ Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
 Copyright:    (c) Gianluca Pernigoto <jeanlucperni@gmail.com>
 license:      GPL3
 Rev:          Nov. 2017, Dec 08 2021
-Code checker: flake8,
-              pylint --ignore R0913
+Code checker: flake8, pylint
 """
 import glob
 import sys
 import os
 from audiomass.comparisions import supported_formats
-from audiomass.comparisions import text_menu
-from audiomass.datastrings import msgdebug, msgcolor, msgcustom, msgend
+from audiomass.datastrings import (msgdebug,
+                                  msgcolor,
+                                  msgcustom,
+                                  msgend)
 from audiomass.utils import (show_format_menu,
                              get_codec_data,
                              build_cmd,
@@ -23,14 +24,14 @@ from audiomass.utils import (show_format_menu,
 
 class DirConvert():
     """
-    Convert all audio files with a certain format and placed
+    Convert all audio files with a certain format placed
     in a given folder.
 
     USE:
-        conv = BatchConvert([file.wav, file.flac, ...], out=None)
-        conv.prompt_to_format()
-        conv.command_builder()
-        conv.end_check()
+        dirconv = BatchConvert(directory, out=None)
+        dirconv.prompt_to_format()
+        dirconv.command_builder()
+        dirconv.end_check()
 
     NOTE: the ``out`` default argument can accept the
           path of an output folder.
@@ -59,8 +60,7 @@ class DirConvert():
         self.errors = []
 
         msgcustom("\n\033[1mWhat is the files format to convert?\033[0m")
-        for inputformat in text_menu():
-            msgcustom(f"{inputformat}")  # show menu
+        show_format_menu()  # to show completed menu index must be empty
 
         while True:
             input_selection = input("Type a format number among those "
@@ -138,19 +138,19 @@ class DirConvert():
         for suffix in [self.input_format, self.input_format.upper()]:
             # itero su nomi formato upper-case e lower-case
             for pname in glob.glob(os.path.join(self.inputdir, f"*.{suffix}")):
-                stream_i = os.path.basename(pname)
-                file_name = os.path.splitext(stream_i)[0]
+                basename = os.path.basename(pname)
+                name = os.path.splitext(basename)[0]
                 count += 1
                 if self.outputdir is None:
-                    # prendo lo stesso input path
+                    # same dest as input file
                     self.outputdir = os.path.dirname(pname)
 
                 fname = os.path.join(self.outputdir,
-                                     f'{file_name}.{self.output_format}')
+                                     f'{name}.{self.output_format}')
                 if os.path.exists(fname):
                     self.warnings.append(f"Already exists > '{fname}' ..skip")
                     self.not_processed.append(pname)
-                    continue
+                    continue  # next
 
                 command = build_cmd(self.codec, self.bitrate, pname, fname)
                 msgcolor(head='\n', green2=(f"|{str(count)}| "

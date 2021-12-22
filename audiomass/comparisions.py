@@ -12,9 +12,18 @@ Code checker: flake8, pylint
 
 def text_menu():
     """
-    Returns a descriptive list of string items to
-    realize a text menu in the audio formats selection
+    Returns a pre-formatted list of string items of audio formats.
+    To index this list do:
 
+    ```
+    menu = text_menu()
+    if indexes:  # get from supported_formats() function below
+        setmenu = [menu[i] for i in range(len(menu)) if i not in set(indexes)]
+        for items in setmenu:
+            print(items)
+    ```
+    The example above prints all items minus those of the
+    indexes var, in this case removes index(3) .
     """
     return [
       "------------",
@@ -31,25 +40,19 @@ def text_menu():
 
 def supported_formats():
     """
-    Returns a numbered collection of currently supported
-    formats with indexing list for the `text_menu()` function.
-    Given a format, enable to iterates over its indexes in order to
-    exclude the items indexed on the list returned by `text_menu()`
-    function, example:
+    Returns a numbered collection of the currently supported
+    formats (Upper and Lower cases) with indexes by use to
+    indexing the above `text_menu()` function, example:
 
-        menu = text_menu()
-        for formats in supported_formats().values():
-            if 'flac' in formats[0:2]:
-                setmenu = [menu[i] for i in range(len(menu))
-                           if i not in set(formats[2])
-                           ]
-                for items in setmenu:
-                    print(items)
-            else:
-                None
+    ```
+    for formats in supported_formats().values():
+        if 'flac' in formats:
+            indexes = formats[2]  # list of indexes, can include more items
+        else:
+            indexes = None
 
-    The example above removes index(3) from the text_menu()
-
+    See text_menu()
+    ```
     """
     return {1: ('WAV', 'wav', [1]),
             2: ('AIFF', 'aiff', [2, 4]),
@@ -62,13 +65,24 @@ def supported_formats():
 
 def comparing(pair):
     """
-    Returns the required values for each pair of audio formats.
-    Accept one only string argument in this form: 'format > format'.
-    You can add or remove new formats modules from here.
+    Returns the required values (codec data) for each pair
+    of audio formats. Accept one only string argument in
+    this form:
 
-    USE:
-        comparing('wav > mp3')
-        to get data to convert from wav format to mp3
+        pair = `inputformat > outputformat`
+
+    if no pair match with keys of `object_assignment` dict,
+    it returns `None`
+
+    Example:
+
+    ```
+    # to get data to convert files from wav format to mp3:
+    comparing('wav > mp3')
+    ```
+
+    Note, you can implement new audio formats
+    modules by editing this file.
     """
 
     # ------------------------------  BITRATES MENU:
