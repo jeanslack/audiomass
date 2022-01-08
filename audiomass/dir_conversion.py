@@ -161,8 +161,8 @@ class DirConvert():
                 run_subprocess(command)
 
         if not pname:
-            self.errors.append(f"No files found in '{self.input_format}' "
-                               f"format!")
+            self.errors.append(f"No files in '{self.input_format}' "
+                               f"format found!")
     # ---------------------------------------------------------------#
 
     def end_check(self):
@@ -190,5 +190,4 @@ class DirConvert():
             msgcolor(green="\nConverted successfully:")
             for list2 in self.processed:
                 msgcustom(list2)
-
         msgend(done=True)

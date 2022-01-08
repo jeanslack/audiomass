@@ -62,7 +62,7 @@ class BatchConvert():
         self.info = []
         self.errors = []
         f_list = self.remove_duplicates_from_list(f_list)
-        unsupported = []
+        supp = []
 
         # populate self.filecatalog:
         for infile in f_list:
@@ -74,15 +74,16 @@ class BatchConvert():
                         self.filecatalog[frmt[1]] = {'files': [],
                                                      'index': None}
                     # ...and
-                    unsupported.append(infile)
+                    supp.append(infile)
                     self.filecatalog[frmt[1]]['files'].append(infile)
                     self.filecatalog[frmt[1]]['index'] = frmt[2]
 
         # append unsupported files for debug messages
-        unsupported = [val for val in f_list if val not in unsupported]
-        for unsup in unsupported:
-            if unsup:
-                self.warnings.append(f"Unsupported: '{unsup}' ..skip")
+        unsupp = [val for val in f_list if val not in supp]
+        # unsupp = list(set.symmetric_difference(set(supp), set(f_list)))
+        for files in unsupp:
+            if files:
+                self.warnings.append(f"Unsupported: '{files}' ..skip")
         # if not files...
         if not self.filecatalog:
             self.errors.append('No audio files to convert!')
