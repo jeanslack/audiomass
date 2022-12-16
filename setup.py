@@ -7,7 +7,7 @@ Platform:      Gnu/Linux, Unix
 Writer:        jeanslack <jeanlucperni@gmail.com>
 Copyright:     (c) 2015 jeanslack <jeanlucperni@gmail.com>
 license:       GPL3
-Rev:           July.25.2020, Dec 08 2021
+Rev:           Dec 15 2022
 Code checker: flake8, pylint
 """
 from os import path

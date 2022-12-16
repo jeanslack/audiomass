@@ -13,8 +13,10 @@ import sys
 import os
 from shutil import which
 from audiomass.datastrings import msgdebug, msgcustom
-from audiomass.comparisions import supported_formats, comparing
-from audiomass.comparisions import text_menu
+from audiomass.comparisions import (comparing,
+                                    text_menu,
+                                    output_formats
+                                    )
 
 
 def whichcraft(arg=None):
@@ -26,8 +28,7 @@ def whichcraft(arg=None):
     or its executable path-name.
     """
     if not arg:
-        listing = ['ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc',
-                   'shntool', 'mac']
+        listing = ('ffmpeg', 'flac', 'lame', 'oggdec', 'oggenc',)
         # listing = ['sox', 'wavpack']  # this are for futures implementations
         for required in listing:
             # if which(required):
@@ -45,12 +46,13 @@ def show_format_menu(indexes=None):
     print a text menu with a list of audio format references
     currently supported. ``indexes`` argument is used  to
     indexing (show) specified formats. For more info, see
-    ``text_menu()`` and ``supported_formats()`` examples
+    ``text_menu()`` and ``input_formats()`` examples
     in comparisions module.
     """
     indexes = [] if indexes is None else indexes
     menu = text_menu()
     setmenu = [menu[i] for i in range(len(menu)) if i not in set(indexes)]
+
     for outformat in setmenu:
         msgcustom(f"{outformat}")
 
@@ -59,7 +61,7 @@ def get_codec_data(input_format, output_select):
     """
     Given a ``str(input_format)`` and an ``int(output_select)``
     returns the available audio format and its codec data. For
-    more info, see ``supported_formats()`` function in comparisions
+    more info, see ``input_formats()`` function in comparisions
     module.
     """
     try:
@@ -67,11 +69,10 @@ def get_codec_data(input_format, output_select):
     except ValueError:
         return None
 
-    if selection in supported_formats():
-        # get lower case str(audio format):
-        output_format = supported_formats().get(selection)[1]
-        codec_data = comparing(f'{input_format} > {output_format}')
-    else:
+    try:
+        codec_data = comparing(f'{input_format} > '
+                               f'{output_formats()[selection-1]}')
+    except IndexError:
         return None
 
     return codec_data
@@ -94,19 +95,14 @@ def build_cmd(codec, bitrate, in_file, out_file):
     - out_file: str('/dirname/outfilename.ext')
 
     """
-    output_format = os.path.splitext(os.path.basename(out_file))[1]
-    dirname = os.path.dirname(out_file)
-
     command_dict = {
         'flac': f'flac -V {bitrate} "{in_file}" -o "{out_file}"',
         'lame': f'lame --nohist {bitrate} "{in_file}" "{out_file}"',
         'lame --decode': f'lame --decode "{in_file}" "{out_file}"',
         'oggenc': f'oggenc {bitrate} "{in_file}" -o "{out_file}"',
-        'mac': f'mac "{in_file}" "{out_file}" {bitrate}',
-        'ffmpeg': f'ffmpeg -i "{in_file}" {bitrate} "{out_file}"',
         'oggdec': f'oggdec "{in_file}" -o "{out_file}"',
-        'shntool': (f'shntool conv -o {output_format.split(".")[1]} '
-                    f'-O always "{in_file}" -d "{dirname}"')
+        'ffmpeg': (f'ffmpeg -i "{in_file}" -stats -hide_banner '
+                   f'-map_metadata 0 {bitrate} "{out_file}"'),
                     }
 
     return command_dict[codec]

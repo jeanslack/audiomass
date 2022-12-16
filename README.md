@@ -2,10 +2,9 @@
 # Audiomass - wrapper for multiple audio conversion libraries.
 
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools, 
-Monkey's Audio, Shntool and FFmpeg libraries. 
-It supports conversions of different audio file formats at a time and the ability 
-to convert even groups of files in a directory, saving the output in a specific 
-folder.
+and FFmpeg libraries. It supports conversions of different audio file formats at 
+a time and the ability to convert even groups of files in a directory, saving the 
+output in a specific folder.
 
 For each input file, audiomass writes to a filename based on the name of the
 input file. If the (**-o**) option is not specified, it save any file at
@@ -19,10 +18,8 @@ files, and then choose the respective bitrates.
 - python >=3.6   
 - flac   
 - lame   
-- vorbis-tools *(include: oggenc, oggdec)*   
-- shntool   
-- ffmpeg   
-- mac *(monkey's-audio, name depends to your O.S., try search: libmac2, mac)*   
+- vorbis-tools *(include: oggenc, oggdec)*    
+- ffmpeg    
 
 ## Usage
 
@@ -55,7 +52,7 @@ Convert a queue of audio files and save them in a specified folder:
 
 ## License and Copyright
 
-Copyright © 2010 - 2021 Gianluca Pernigotto   
+Copyright © 2010 - 2022 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto   
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE file in the docs folder)   

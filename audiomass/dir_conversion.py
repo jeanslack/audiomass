@@ -11,11 +11,11 @@ Code checker: flake8, pylint
 import glob
 import sys
 import os
-from audiomass.comparisions import supported_formats
+from audiomass.comparisions import input_formats
 from audiomass.datastrings import (msgdebug,
-                                  msgcolor,
-                                  msgcustom,
-                                  msgend)
+                                   msgcolor,
+                                   msgcustom,
+                                   msgend)
 from audiomass.utils import (show_format_menu,
                              get_codec_data,
                              build_cmd,
@@ -60,27 +60,24 @@ class DirConvert():
         self.errors = []
 
         msgcustom("\n\033[1mWhat is the files format to convert?\033[0m")
-        show_format_menu()  # to show completed menu index must be empty
+        menu = ("------------",
+                " \033[41;37;1m A \033[0m \033[1m..ABORT\033[0m",
+                "------------")
+        for outformat in menu:
+            msgcustom(f"{outformat}")
 
         while True:
-            input_selection = input("Type a format number among those "
-                                    "available, and press the Enter key > ")
-
+            input_selection = input("Type a file format to convert, "
+                                    "and press the Enter key > ")
             if input_selection in ('a', 'A'):
                 msgend(abort=True)
                 sys.exit()
-
-            try:
-                selection = int(input_selection)
-            except ValueError:
-                msgdebug(err=(f"Invalid option '{input_selection}'"))
-                continue
-
-            if supported_formats().get(selection):
-                self.input_format = supported_formats().get(selection)[1]
-                self.index = supported_formats().get(selection)[2]
-            else:
-                msgdebug(err=(f"Invalid option '{input_selection}'"))
+            for frmt in input_formats():
+                if input_selection.lower() in frmt[0]:
+                    self.input_format = input_selection
+                    self.index = frmt[1]
+            if self.input_format is None:
+                msgdebug(err=(f"Unsupported format: '{input_selection}'"))
                 continue
             break
     # ---------------------------------------------------------------#

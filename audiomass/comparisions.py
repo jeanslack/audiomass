@@ -3,9 +3,9 @@
 Name:         comparisions.py (module)
 Porpose:      module for output strings commands and formats comparisions
 Writer:       Gianluca Pernigoto <jeanlucperni@gmail.com>
-Copyright:    (c) 2015/2016 Gianluca Pernigoto <jeanlucperni@gmail.com>
+Copyright:    (c) 2015/2022 Gianluca Pernigoto <jeanlucperni@gmail.com>
 license:      GPL3
-Rev:          Dec 08 2021
+Rev:          Dec 16 2022
 Code checker: flake8, pylint
 """
 
@@ -17,50 +17,77 @@ def text_menu():
 
     ```
     menu = text_menu()
-    if indexes:  # get from supported_formats() function below
+    if indexes:  # get from input_formats() function below
         setmenu = [menu[i] for i in range(len(menu)) if i not in set(indexes)]
         for items in setmenu:
             print(items)
     ```
     The example above prints all items minus those of the
     indexes var, in this case removes index(3) .
+
+    Also, see `output_formats() function.
+
     """
-    return [
+    return (
       "------------",
-      " \033[1m 1 \033[0m> Wav   (WAVEform audio format, PCM uncompresed)",
-      " \033[1m 2 \033[0m> Aiff  (Apple Interchange File Format)",
-      " \033[1m 3 \033[0m> Flac  (Free Lossless Audio Codecs)",
-      " \033[1m 4 \033[0m> Ape   (Monkey's audio)",
-      " \033[1m 5 \033[0m> Mp3   (MPEG-1 Audio Layer 3)",
-      " \033[1m 6 \033[0m> Ogg   (ogg-vorbis lossy format)",
+      " \033[1m 1 \033[0m> WAV   (WAVEform audio format, PCM uncompresed)",
+      " \033[1m 2 \033[0m> AIFF  (Apple Interchange File Format)",
+      " \033[1m 3 \033[0m> FLAC  (Free Lossless Audio Codecs)",
+      " \033[1m 4 \033[0m> MP3   (MPEG-1 Audio Layer 3)",
+      " \033[1m 5 \033[0m> OGG   (ogg-vorbis lossy format)",
       "------------",
       " \033[41;37;1m A \033[0m \033[1m..ABORT\033[0m",
-      "------------"]
+      "------------")
 
 
-def supported_formats():
+def output_formats():
     """
-    Returns a numbered collection of the currently supported
-    formats (Upper and Lower cases) with indexes by use to
-    indexing the above `text_menu()` function, example:
+    Return a tupla of supported output format to conversion.
+    If you plan to extend support for program output formats,
+    you should start here and add the new format to the
+    text_menu() function in the same indexing order of
+    output_formats().
 
+    """
+    return 'wav', 'aiff', 'flac', 'mp3', 'ogg'
+
+
+def input_formats():
+    """
+    Returns a sequence of the currently supported input
+    formats. Each item of the sequence contains two items
+    of type tuple: format(s) and the associative indices
+    for use with the text menu.
+    If you plan to extend support for program input formats,
+    you should start here.
+
+    Usage example:
     ```
-    for formats in supported_formats().values():
-        if 'flac' in formats:
-            indexes = formats[2]  # list of indexes, can include more items
+    for formats in input_formats():
+        if 'mp3' in formats[0]:
+            indexes = formats[1]  # list of output formats indexes for menu
+            break
         else:
             indexes = None
 
-    See text_menu()
+    menu = text_menu()
+    setmenu = [menu[i] for i in range(len(menu)) if i not in set(indexes)]
+
+    for outformat in setmenu:
+        print(outformat)
+        #  or `msgcustom(f"{outformat}")`
     ```
+    Also, see `text_menu()` function.
+
     """
-    return {1: ('WAV', 'wav', [1]),
-            2: ('AIFF', 'aiff', [2, 4]),
-            3: ('FLAC', 'flac', [3]),
-            4: ('APE', 'ape', [3, 4]),
-            5: ('MP3', 'mp3', [3, 4, 5, 6]),
-            6: ('OGG', 'ogg', [3, 4, 5, 6]),
-            }
+    return (
+        (('wav', 'wave',), (1,)),
+        (('aiff', 'aif', 'aifc',), (2,)),
+        (('flac',), (3,)),
+        (('ape',), (3, 4, 5)),
+        (('mp3',), (3, 4, 5)),
+        (('ogg', 'oga', 'spx',), (3, 4, 5))
+           )
 
 
 def comparing(pair):
@@ -99,16 +126,6 @@ def comparing(pair):
                 "  7\n"
                 "  8 = maximum compression > less space > lower quality\n"
                 )
-
-    ape_menu = ("\n\033[1m"
-                "Choose the quality for Ape format:\033[0m\n"
-                "  1    -c1000 = Fast (Best quality)\n"
-                "  2    -c2000 = Normal\n"
-                "  3    -c3000 = High\n"
-                "  4    -c4000 = Extra\n"
-                "  5    -c5000 = Insane\033[0m\n"
-                )
-
     mp3_menu = ("\n\033[1m"
                 "Choose the quality and bit-rate for MP3 format:\033[0m\n"
                 "  0     medium    >  VBR 92 kbit\n"
@@ -116,7 +133,6 @@ def comparing(pair):
                 "  2     extreme   >  VBR 150 kbit/s\n"
                 "  3     insane    >  CBR 320 kbit/s\n\n"
                 )
-
     ffmpeg_mp3_menu = (
                 "\n\033[1m"
                 "Choose the quality and bitrate for MP3 format:\033[0m\n"
@@ -126,7 +142,6 @@ def comparing(pair):
                 "  3     >  VBR 260 kbit/s\n"
                 "  4     >  CBR 320 kbit/s\n"
                 )
-
     ogg_menu = ("\n\033[1m"
                 "Choose the quality and bit-rate for OGG format:\033[0m\n"
                 "  1    >   80 kbit        |     6   >   192 kbit/s\n"
@@ -135,7 +150,6 @@ def comparing(pair):
                 "  4    >   128 kbit/s     |     9   >   320 kbit/s\n"
                 "  5    >   134 kbit/s     |     10  >   520 kbit/s\n"
                 )
-
     ffmpeg_ogg_menu = (
                 "\n\033[1m"
                 "Choose the quality and bit-rate for OGG format:\033[0m\n"
@@ -152,9 +166,6 @@ def comparing(pair):
                      "4": "-4", "5": "-5", "6": "-6", "7": "-7",
                      "8": "-8"
                      }
-    ape_opt_comp = {"1": "-c1000", "2": "-c2000", "3": "-c3000",
-                    "4": "-c4000", "5": "-c5000"
-                    }
     mp3_opt_comp = {"0": "--preset medium", "1": "--preset standard",
                     "2": "--preset extreme", "3": "--preset insane"
                     }
@@ -178,16 +189,10 @@ def comparing(pair):
     # -------------------------------  PAIRING FORMATS:
 
     object_assignment = {
-        'wav > aiff': ('shntool', None, None, None, 'aiff'),
-        'aiff > wav': ('shntool', None, None, None, 'wav'),
-        # 'aiff > ape': ('shntool', None, None, None, 'ape'),
-        'flac > wav': ('shntool', None, None, None, 'wav'),
-        'flac > aiff': ('shntool', None, None, None, 'aiff'),
-        'flac > ape': ('shntool', None, None, None, 'ape'),
-        'ape > wav': ('shntool', None, None, None, 'wav'),
-        'ape > aiff': ('shntool', None, None, None, 'aiff'),
-        # 'ape > flac': ('shntool', None, None, None, 'flac'),
-
+        'wav > aiff': ('ffmpeg', None, None, None, 'aiff'),
+        'aiff > wav': ('ffmpeg', None, None, None, 'wav'),
+        'flac > wav': ('ffmpeg', None, None, None, 'wav'),
+        'flac > aiff': ('ffmpeg', None, None, None, 'aiff'),
         'wav > flac': ('flac', flac_opt_comp, flac_menu, 'Type the '
                        'compression level in digits 0 to 8, and press '
                        'enter key > ', 'flac'
@@ -217,10 +222,6 @@ def comparing(pair):
                        'enter key > ', 'ogg'
                        ),
         'ogg > wav': ('oggdec', None, None, None, 'wav'),
-        'wav > ape': ('mac', ape_opt_comp, ape_menu, 'Type the compression '
-                      'level in digits 1 to 5, and press enter key > ',
-                      'ape'
-                      ),
         'flac > mp3': ('ffmpeg', ffmpeg_mp3_opt_comp, ffmpeg_mp3_menu,
                        'Type the compression level in digits 0 to 4, '
                        'and press enter key > ',
@@ -236,6 +237,8 @@ def comparing(pair):
                       'and press enter key > ',
                       'ogg'
                       ),
+        'ape > wav': ('ffmpeg', None, None, None, 'wav'),
+        'ape > aiff': ('ffmpeg', None, None, None, 'aiff'),
         'mp3 > aiff': ('ffmpeg', None, None, None, 'aiff'),
         'ogg > aiff': ('ffmpeg', None, None, None, 'aiff'),
         }

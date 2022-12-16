@@ -15,7 +15,7 @@ from audiomass.datastrings import (msgdebug,
                                    msgcolor,
                                    msgcustom,
                                    msgend)
-from audiomass.comparisions import supported_formats
+from audiomass.comparisions import input_formats
 from audiomass.utils import (show_format_menu,
                              get_codec_data,
                              build_cmd,
@@ -63,20 +63,18 @@ class BatchConvert():
         self.errors = []
         f_list = self.remove_duplicates_from_list(f_list)
         supp = []
-
         # populate self.filecatalog:
         for infile in f_list:
             ext = os.path.splitext(infile)[1].replace(".", "")
-
-            for frmt in supported_formats().values():
-                if ext in frmt:
-                    if frmt[1] not in self.filecatalog:  # create the key...
-                        self.filecatalog[frmt[1]] = {'files': [],
-                                                     'index': None}
+            for frmt in input_formats():
+                if ext.lower() in frmt[0]:
+                    if ext not in self.filecatalog:  # create the key...
+                        self.filecatalog[ext] = {'files': [],
+                                                 'index': None}
                     # ...and
                     supp.append(infile)
-                    self.filecatalog[frmt[1]]['files'].append(infile)
-                    self.filecatalog[frmt[1]]['index'] = frmt[2]
+                    self.filecatalog[ext]['files'].append(infile)
+                    self.filecatalog[ext]['index'] = frmt[1]
 
         # append unsupported files for debug messages
         unsupp = [val for val in f_list if val not in supp]
@@ -109,7 +107,7 @@ class BatchConvert():
         """
         for input_format, val in list(self.filecatalog.items()):
             msgcustom(f"\n\033[1mConvert the '\033[32;1m"
-                      f"{input_format}\033[0m'format to:\033[0m")
+                      f"{input_format}\033[0m' format to:\033[0m")
 
             show_format_menu(val['index'])  # show text menu before prompt
             while True:
@@ -141,7 +139,7 @@ class BatchConvert():
             msgcustom(codec[2])  # show text menu before prompt
 
             while True:
-                level = input(codec[3]) # input prompt
+                level = input(codec[3])  # input prompt
                 if level in codec[1]:
                     bitrate = codec[1][level]
                 else:

@@ -10,18 +10,18 @@ Code checker: flake8, pylint
 
 __author__ = ('Gianluca Pernigotto', '(aka jeanslack)')
 __mail__ = '<jeanlucperni@gmail.com>'
-__copyright__ = '© 2013-2021'
+__copyright__ = '2013-2022'
 __version__ = '0.9.5'
-__release__ = 'December 16 2021'
+__release__ = 'December 15 2022'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
 __url__ = "https://github.com/jeanslack/audiomass"
 __short_descript__ = 'Wrapper for multiple audio conversion libraries. '
 __long_descript__ = """
 **Audiomass** is a command line audio wrapper of the Flac, Lame, Vorbis-tools,
-Monkey's Audio, Shntool and FFmpeg libraries. It supports conversions of
-different audio formats at a time and the ability to convert even groups of
-files in a directory, saving the output in a specific folder.
+and FFmpeg libraries. It supports conversions of different audio formats at a
+time and the ability to convert even groups of files in a directory, saving the
+output in a specific folder.
 """
 
 __try__ = "type 'audiomass -h' for help or, more detailed, run 'man audiomass'"
