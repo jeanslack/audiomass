@@ -11,7 +11,7 @@ Code checker: flake8, pylint
 __author__ = ('Gianluca Pernigotto', '(aka jeanslack)')
 __mail__ = '<jeanlucperni@gmail.com>'
 __copyright__ = '2013-2022'
-__version__ = '0.9.5'
+__version__ = '0.9.6'
 __release__ = 'December 15 2022'
 __rls_name__ = "Audiomass"
 __prg_name__ = "audiomass"
