@@ -1,5 +1,5 @@
 +--------------------------+
-December 20 2021 Version 0.9.5
+December 15 2022 Version 0.9.5
 +--------------------------+
 
 - Removed -b option.
@@ -8,6 +8,11 @@ December 20 2021 Version 0.9.5
 - Improved input prompt for user
 - Improved debug messages
 - Updated help and man page
+- Removed `Monkey's Audio` (mac) library for output APE codec support (input is
+  supported from FFmpeg)
+- Replaced shntool utility with ffmpeg, because it doesn't
+  convert audio tracks with sample-rate/bit-rate other than
+  44100Hz/16bit.
 
 +--------------------------+
 December 09 2021 Version 0.9.0

@@ -11,8 +11,11 @@ Code checker: flake8, pylint
 import sys
 import os
 from collections import Counter
-from audiomass.datastrings import msgdebug, msgcolor, msgcustom, msgend
-from audiomass.comparisions import supported_formats
+from audiomass.datastrings import (msgdebug,
+                                   msgcolor,
+                                   msgcustom,
+                                   msgend)
+from audiomass.comparisions import input_formats
 from audiomass.utils import (show_format_menu,
                              get_codec_data,
                              build_cmd,
@@ -59,30 +62,29 @@ class BatchConvert():
         self.info = []
         self.errors = []
         f_list = self.remove_duplicates_from_list(f_list)
-        unsupported = []
-
+        supp = []
         # populate self.filecatalog:
         for infile in f_list:
             ext = os.path.splitext(infile)[1].replace(".", "")
-
-            for frmt in supported_formats().values():
-                if ext in frmt:
-                    if frmt[1] not in self.filecatalog:  # create the key...
-                        self.filecatalog[frmt[1]] = {'files': [],
-                                                     'index': None}
+            for frmt in input_formats():
+                if ext.lower() in frmt[0]:
+                    if ext not in self.filecatalog:  # create the key...
+                        self.filecatalog[ext] = {'files': [],
+                                                 'index': None}
                     # ...and
-                    unsupported.append(infile)
-                    self.filecatalog[frmt[1]]['files'].append(infile)
-                    self.filecatalog[frmt[1]]['index'] = frmt[2]
+                    supp.append(infile)
+                    self.filecatalog[ext]['files'].append(infile)
+                    self.filecatalog[ext]['index'] = frmt[1]
 
-        # make unsupported debug
-        unsupported = [val for val in f_list if val not in unsupported]
-        for unsup in unsupported:
-            if unsup:
-                self.warnings.append(f"Unsupported: '{unsup}' ..skip")
+        # append unsupported files for debug messages
+        unsupp = [val for val in f_list if val not in supp]
+        # unsupp = list(set.symmetric_difference(set(supp), set(f_list)))
+        for files in unsupp:
+            if files:
+                self.warnings.append(f"Unsupported: '{files}' ..skip")
         # if not files...
         if not self.filecatalog:
-            self.errors.append('...No audio files to convert, exit!')
+            self.errors.append('No audio files to convert!')
     # ------------------------------------------------------------------#
 
     def remove_duplicates_from_list(self, f_list):
@@ -105,7 +107,7 @@ class BatchConvert():
         """
         for input_format, val in list(self.filecatalog.items()):
             msgcustom(f"\n\033[1mConvert the '\033[32;1m"
-                      f"{input_format}\033[0m'format to:\033[0m")
+                      f"{input_format}\033[0m' format to:\033[0m")
 
             show_format_menu(val['index'])  # show text menu before prompt
             while True:
@@ -134,10 +136,10 @@ class BatchConvert():
         if codec[1] is None:  # None bitrate
             bitrate = ''
         else:
-            msgcustom(codec[2])  # show menu
+            msgcustom(codec[2])  # show text menu before prompt
 
             while True:
-                level = input(codec[3])  # show text menu before prompt
+                level = input(codec[3])  # input prompt
                 if level in codec[1]:
                     bitrate = codec[1][level]
                 else:
@@ -155,28 +157,27 @@ class BatchConvert():
         count = 0
         for key, val in self.filecatalog.items():
             for fname in val['files']:
-                inputfile = os.path.basename(fname)
-                file_name = os.path.splitext(inputfile)[0]
+                basename = os.path.basename(fname)
+                name = os.path.splitext(basename)[0]
                 count += 1
                 if self.outdir is None:
                     self.outdir = os.path.dirname(fname)
                 # rendo portabili i pathnames:
-                norm = os.path.join(self.outdir,
-                                    f"{file_name}.{val['format']}")
-                if os.path.exists(norm):
-                    self.warnings.append(f"Already exists > '{norm}' ..skip")
+                pname = os.path.join(self.outdir, f"{name}.{val['format']}")
+                if os.path.exists(pname):
+                    self.warnings.append(f"Already exists > '{pname}' ..skip")
                     self.not_processed.append(fname)
                     continue
                 command = build_cmd(val['codec'],
                                     val['bitrate'],
                                     fname,
-                                    norm
+                                    pname
                                     )
                 msgcolor(head='\n', green2=(f"|{str(count)}| "
                                             # f"{val['format']} "
                                             f"{key} "
-                                            f"Output:"), tail=f" >> '{norm}'")
-                self.processed.append(norm)
+                                            f"Output:"), tail=f" >> '{pname}'")
+                self.processed.append(pname)
                 run_subprocess(command)
     # ------------------------------------------------------------------#
 
