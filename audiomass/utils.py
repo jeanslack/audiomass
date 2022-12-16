@@ -70,8 +70,9 @@ def get_codec_data(input_format, output_select):
         return None
 
     try:
-        codec_data = comparing(f'{input_format} > '
+        codec_data = comparing(f'{input_format.lower()} > '
                                f'{output_formats()[selection-1]}')
+        print(codec_data, input_format, selection)
     except IndexError:
         return None
 
